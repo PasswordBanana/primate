@@ -1,20 +1,91 @@
 <!doctype html>
 <html ng-app="primate">
 <head>
+    <meta charset="utf-8">
     <title>Primate</title>
     <link rel="stylesheet" href="css/main.css">
+	<script src="bower_components/angular/angular.js"></script>
 </head>
-<body>
+<body ng-controller="StateController">
     <h1>Primate Password Manager</h1>
-    <script src="bower_components/angular/angular.js"></script>
-    <script>
-        var app = angular.module("primate", []);
-        app.directive('openFile', function() {
-            return function (scope, element, attrs) {
-                element.bind('click', function() { alert("Click!") });
-            };
-        });
-    </script>
-    <p open-file>T E S T . D I R E C T I V E . > click me!</p>
+	<div ng-switch on="state">
+		<div ng-switch-when="locked">
+			<p>Lock Screen</p>
+			<button ng-click="unlockDb()">Unlock</button>
+			<button ng-click="closeDb()">Close Database</button>
+		</div>
+		<div ng-switch-when="unlocked">
+			<p>File Unlocked</p>
+			<button ng-click="lockDb()">Lock</button>
+			<button ng-click="closeDb()">Close Database</button>
+		</div>
+		<div ng-switch-default>
+			<p>Open Password Database</p>
+			<div ng-controller="FilePicker">
+				<input type="file" value="Open Password Database" ng-model="pwdb" onchange="angular.element(this).scope().fileChanged(this)">
+				<p ng-show="invalidFile">Invalid Password Database</p>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	    var primate = angular.module("primate", []);
+		
+		primate.factory("Database", ["$rootScope", function($rootScope) {
+			var file, 
+			    state = "unloaded";
+				
+			var validateFile = function(f) {
+				var reader = new FileReader();
+				reader.onloadend = function(event) {
+				    //For now, simply test that the TAG is in place
+				    var txt = reader.result.slice(0, 4);
+					if (txt == "PWS3") {
+						file = reader.result;
+						setState("locked");
+					} else {
+						$rootScope.$broadcast("databaseInvalid");
+					}
+				};
+				reader.readAsText(f);
+			};
+			
+			var update = function() {
+				$rootScope.$broadcast("databaseStateUpdate", state);
+			};
+			
+			var setState = function(s) {
+				state = s;
+				update();
+			};
+			
+			var service = {};
+			
+			service.setFile = function(f) {
+				validateFile(f);
+			};
+			
+			return service;
+		}]);
+		
+		primate.controller("StateController", ["$scope", "Database", function($scope, Database) {
+			$scope.state = "unloaded";
+			$scope.$on("databaseStateUpdate", function(event, state) {
+				$scope.state = state;
+				$scope.$digest();
+			});
+		}]);
+		
+		primate.controller("FilePicker", ["$scope", "Database", function($scope, Database) {
+			$scope.invalidFile = false;
+			$scope.fileChanged = function(f) {
+			    Database.setFile(f.files[0]);
+			};
+			$scope.$on("databaseInvalid", function(event) {
+				$scope.invalidFile = true;
+				$scope.$digest();
+			});
+		}]);
+	</script>
 </body>
 </html>
