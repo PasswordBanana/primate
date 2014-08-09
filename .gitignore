@@ -1,0 +1,15 @@
+logs
+.log
+
+pids
+*.pid
+*.seed
+
+.grunt
+
+#Exclude these for now, may be worth committing in the future: http://addyosmani.com/blog/checking-in-front-end-dependencies/
+node_modules
+bower_components
+
+dist
+cache

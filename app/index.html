@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app="primate">
+<head>
+    <title>Primate</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <h1>Primate Password Manager</h1>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module("primate", []);
+        app.directive('openFile', function() {
+            return function (scope, element, attrs) {
+                element.bind('click', function() { alert("Click!") });
+            };
+        });
+    </script>
+    <p open-file>T E S T . D I R E C T I V E . > click me!</p>
+</body>
+</html>
