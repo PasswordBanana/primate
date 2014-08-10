@@ -8,21 +8,24 @@
 </head>
 <body ng-controller="StateController">
     <h1>Primate Password Manager</h1>
+	<h3>Database: {{databaseName}}<h3>
 	<div ng-switch on="state">
-		<div ng-switch-when="locked">
-			<p>Lock Screen</p>
+		<div ng-switch-when="locked" ng-controller="LockScreenController">
+			<p>Database is locked.</p>
+			<input type="password" ng-model="pass">
 			<button ng-click="unlockDb()">Unlock</button>
-			<button ng-click="closeDb()">Close Database</button>
+			<button ng-click="unloadDb()">Close Database</button>
 		</div>
 		<div ng-switch-when="unlocked">
 			<p>File Unlocked</p>
 			<button ng-click="lockDb()">Lock</button>
-			<button ng-click="closeDb()">Close Database</button>
+			<button ng-click="unloadDb()">Close Database</button>
 		</div>
 		<div ng-switch-default>
-			<p>Open Password Database</p>
+			<p>Open Password Database File</p>
 			<div ng-controller="FilePicker">
-				<input type="file" value="Open Password Database" ng-model="pwdb" onchange="angular.element(this).scope().fileChanged(this)">
+				<input type="file" value="Open Password Database" onchange="angular.element(this).scope().fileChanged(this)">
+				<input type="button" value="New Database">
 				<p ng-show="invalidFile">Invalid Password Database</p>
 			</div>
 		</div>
@@ -32,7 +35,8 @@
 	    var primate = angular.module("primate", []);
 		
 		primate.factory("Database", ["$rootScope", function($rootScope) {
-			var file, 
+			var file,
+				name = "No database loaded",
 			    state = "unloaded";
 				
 			var validateFile = function(f) {
@@ -42,6 +46,7 @@
 				    var txt = reader.result.slice(0, 4);
 					if (txt == "PWS3") {
 						file = reader.result;
+						name = f.name;
 						setState("locked");
 					} else {
 						$rootScope.$broadcast("databaseInvalid");
@@ -65,15 +70,53 @@
 				validateFile(f);
 			};
 			
+			service.unload = function() {
+				file = undefined;
+				name = "No database loaded";
+				setState("unloaded");
+			};
+			
+			service.lock = function() {
+				setState("locked");
+			};
+			
+			service.getName = function() {
+				return name;
+			};
+			
+			service.unlock = function(key) {
+				if (key == "pass") {
+					setState("unlocked");
+				}
+			};
+			
 			return service;
 		}]);
 		
 		primate.controller("StateController", ["$scope", "Database", function($scope, Database) {
 			$scope.state = "unloaded";
+			$scope.databaseName = "No database loaded";
+			
 			$scope.$on("databaseStateUpdate", function(event, state) {
 				$scope.state = state;
+				$scope.databaseName = Database.getName();
 				$scope.$digest();
 			});
+			
+			$scope.lockDb = function() {
+				Database.lock();
+			};
+			
+			$scope.unloadDb = function() {
+				Database.unload();
+			};
+		}]);
+		
+		primate.controller("LockScreenController", ["$scope", "Database", function($scope, Database) {
+			$scope.unlockDb = function() {
+				Database.unlock($scope.pass);
+				$scope.pass = ""; //Clear the password field
+			};
 		}]);
 		
 		primate.controller("FilePicker", ["$scope", "Database", function($scope, Database) {
