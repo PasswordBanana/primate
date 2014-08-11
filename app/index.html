@@ -5,6 +5,7 @@
     <title>Primate</title>
     <link rel="stylesheet" href="css/main.css">
     <script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/zxcvbn/zxcvbn.js"></script>
 </head>
 <body ng-controller="StateController">
     <h1>Primate Password Manager</h1>
@@ -16,10 +17,28 @@
 			<button ng-click="unlockDb()">Unlock</button>
 			<button ng-click="unloadDb()">Close Database</button>
 		</div>
-		<div ng-switch-when="unlocked">
-			<p>File Unlocked</p>
+		<div ng-switch-when="unlocked" ng-controller="MainScreenController">
 			<button ng-click="lockDb()">Lock</button>
 			<button ng-click="unloadDb()">Close Database</button>
+			
+			<h4>Accounts</h4>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Password</th>
+					<th>Strength</th>
+					<th>Show?</th>
+				</tr>
+				<tr ng-repeat="user in users">
+					<td>{{user.name}}</td>
+					<td ng-switch on="showPw">
+						<span ng-switch-when="true">{{user.password}}</span>
+						<span ng-switch-default>{{user.password | hash}}</span>
+					</td>
+					<td>{{user.password | passwordStrengthScore}}</td>
+					<td><input type="checkbox" ng-model="showPw"></td>
+				</tr>
+			</table>
 		</div>
 		<div ng-switch-default>
 			<p>Open Password Database File</p>
@@ -118,6 +137,35 @@
 				$scope.pass = ""; //Clear the password field
 			};
 		}]);
+		
+		primate.controller("MainScreenController", ["$scope", "Database", function($scope, Database) {
+			$scope.users = [
+				{name: "google - primary", password: "g1s3cu2E"},
+				{name: "google - secondary", password: "g2"},
+				{name: "runescape", password: "hunter2"},
+				{name: "xkcd forums", password: "correct horse battery staple"},
+				{name: "bank account", password: "WtfzG6fmTZFuOtAP"}
+			];
+		}]);
+		
+		primate.filter("hash", function() {
+			return function(input) {
+				var input = input || "";
+				var out = "";
+				for (var i = 0, il = input.length; i < il; i++) {
+					out += "*";
+				}
+				
+				return out;
+			};
+		});
+		
+		primate.filter("passwordStrengthScore", function() {
+			return function(input) {
+				var input = input || "";
+				return zxcvbn(input).score;
+			};
+		});
 		
 		primate.controller("FilePicker", ["$scope", "Database", function($scope, Database) {
 			$scope.invalidFile = false;
