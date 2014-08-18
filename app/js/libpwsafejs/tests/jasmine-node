@@ -1,2 +1,0 @@
-#!/bin/bash
-jasmine-node --color spec/
