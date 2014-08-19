@@ -1,0 +1,13 @@
+{
+  "name": "libpwsafejs",
+  "homepage": "https://github.com/scintill/libpwsafejs",
+  "_release": "a78b48cfd5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a78b48cfd59df736f57a61bb2cd2c4cfd969ee36"
+  },
+  "_source": "git://github.com/scintill/libpwsafejs.git",
+  "_target": "*",
+  "_originalSource": "scintill/libpwsafejs"
+}
