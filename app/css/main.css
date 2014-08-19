@@ -1,17 +1,9 @@
 html, body {
-    background-color: #222;
+    /*background-color: #222;
     color: white;
-    text-shadow: 2px 2px 2px black;
+    text-shadow: 2px 2px 2px black;*/
     text-align: center;
 	margin: 0;
-}
-
-h1 {
-    color: white;
-}
-
-a {
-	color: white;
 }
 
 
@@ -45,4 +37,119 @@ td {
 	width: 100%;
 	margin: 0 auto;
 	min-height: 50%;
+}
+
+#fileInput {
+	visibility: hidden;
+	display: none;
+}
+
+#openFileArea {
+	width: 1.2em;
+	height: 1em;
+	font-size: 10em;
+	margin: 2cm auto;
+}
+
+#openFileArea:hover, #openFileArea:active {
+	cursor: pointer;
+}
+
+#openFileWrapper {
+	width: 40%;
+	min-width: 600px;
+	margin: 0 auto;
+}
+
+.openFileButton {
+	width: 100%;
+	height: 3em;
+	border: 0;
+	margin-top: 10px;
+	color: #222;
+	font-size: 1.5em;
+	border-radius: 0 0 10px 10px;
+}
+
+.openFileButton:hover {
+	cursor: pointer;
+	color: white;
+	background-color: #333;
+}
+
+header {
+	box-sizing: border-box;
+	width: 100%;
+	border-bottom: 1px solid black;
+	box-shadow: 0 2px 4px #222;
+	padding: 10px 10px 5px 10px;
+	font-size: xx-large;
+}
+
+.filename {
+	margin-top: 5px;
+}
+
+.hoverCursor:hover {
+	cursor: pointer;
+}
+
+.menuButtonContainer {
+	float: right;
+}
+
+.filename {
+	font-size: large;
+}
+
+.recordContainer {
+	display: block;
+	font-size: large;
+	text-align: left;
+	margin: 0;
+}
+
+.record {
+	display: block;
+	background-color: #DDD;
+	border-bottom: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	box-shadow: 2px 2px 2px #AAA;
+	line-height: 2em;
+}
+
+.recordButtonContainer {
+	float: right;
+	margin: 0 10px;
+}
+
+.recordHandle {
+	margin: 0 5px;
+}
+
+.recordHandle:hover, .recordHandle:active {
+	color: #00BFFF;
+}
+
+.recordHandle:hover {
+	cursor: grabbing;
+	cursor: grab;
+}
+
+.recordHandle:active {
+	cursor: grabbing;
+}
+
+.lightText {
+	color: #AAA;
+}
+
+.record a {
+	display: inline-block;
+	list-style-type: none;
+	color: black;
+}
+
+.record a:hover, .record a:active {
+	cursor: pointer;
 }

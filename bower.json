@@ -12,6 +12,7 @@
   "dependencies": {
     "angular": "~1.2.21",
     "zxcvbn": "*",
-    "libpwsafejs": "scintill/libpwsafejs"
+    "libpwsafejs": "scintill/libpwsafejs",
+    "bootstrap": "~3.2.0"
   }
 }

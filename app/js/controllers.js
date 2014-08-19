@@ -1,25 +1,34 @@
-primate.controller("FilePicker", ["$scope", "Database", function($scope, db) {
-	$scope.invalidFile = false;
-
-	$scope.open = function() {
-		var f = document.getElementById("fileInput").files[0];
-
-		var promise = db.setFile(f, $scope.pass);
-
-		promise.then(function(success) {
-			$scope.$parent.setRecords(db.getDb().records);
-			$scope.$parent.setState("loaded");
-		}, function(failure) {
-			$scope.invalidFile = true;
-		});
-	};
-}]);
-
 primate.controller("StateController", ["$scope", "Database", function($scope, db) {
 	$scope.state = "unloaded"; //State of the main database
+	$scope.databaseFile;
+	$scope.databaseFilename;
 	$scope.records;
 	$scope.currentRecord;
 	$scope.viewing = false;
+	$scope.invalidFile = false;
+	$scope.pass;
+	$scope.filePicker;
+
+	$scope.fileChanged = function(newFile) {
+		$scope.filePicker = newFile;
+		$scope.databaseFile = newFile.files[0];
+		$scope.databaseFilename = $scope.databaseFile.name;
+		$scope.setState("loaded");
+		$scope.$apply();
+	};
+
+	$scope.open = function() {
+		var promise = db.setFile($scope.databaseFile, $scope.pass);
+
+		promise.then(function(success) {
+			$scope.setRecords(db.getDb().records);
+			$scope.setState("unlocked");
+		}, function(failure) {
+			$scope.invalidFile = true;
+		});
+
+		$scope.pass = "";
+	};
 
 	$scope.setState = function(state) {
 		$scope.state = state;
@@ -30,9 +39,15 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		$scope.currentRecord = $scope.records[0];
 	};
 
-	$scope.closeDb = function() {
+	$scope.lockDb = function() {
 		db.close();
 		$scope.records = undefined;
+		$scope.setState("loaded");
+	};
+
+	$scope.closeDb = function() {
+		$scope.lockDb();
+		$scope.filePicker.value = "";
 		$scope.setState("unloaded");
 	};
 
@@ -49,22 +64,4 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		$scope.currentRecord = undefined;
 		$scope.viewing = false;
 	};
-}]);
-
-primate.controller("LibraryTestController", ["$scope", function($scope) {
-	$scope.records;
-	
-	var loadDb = function(pdb) {
-		if (pdb instanceof Error) {
-			console.log("Error, couldn't load password database");
-			return;
-		}
-		
-		$scope.records = pdb.records;
-		$scope.$apply();
-
-		console.log(pdb.records[1].passphraseHistory);
-	};
-	
-	PWSafeDB.decryptFromUrl("password-is-pass.psafe3", "pass", {}, loadDb);
 }]);

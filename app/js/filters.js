@@ -16,3 +16,10 @@ primate.filter("passwordStrengthScore", function() {
 		return zxcvbn(input).score;
 	};
 });
+
+primate.filter("recordIndent", function() {
+	return function(record) {
+		var level = record.group.split(".").length - 1;
+		return 20 * level;
+	};
+});

@@ -4,7 +4,6 @@ primate.factory("Database", ["$q", function($q) {
 		pass,
 		name = "No database loaded";
 
-	
 	var service = {};
 
 	service.setFile = function(f, p) {
