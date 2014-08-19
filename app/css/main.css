@@ -1,9 +1,3 @@
-html, body {
-    background-color: white;
-    color: black;
-	text-align: center;
-}
-
 h1 {
     color: blue;
 }
@@ -16,6 +10,12 @@ table {
 td {
 	border: 1px solid black;
 	border-collapse: collapse;
+}
+
+html, body {
+    background-color: #222;
+    color: white;
+    text-shadow: 2px 2px 2px black;
 }
 
 .animate-if.ng-enter, .animate-if.ng-leave {
