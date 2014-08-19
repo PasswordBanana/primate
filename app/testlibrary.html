@@ -19,11 +19,47 @@
 <body ng-controller="LibraryTestController">
     <h1>Primate Password Manager</h1>
 	
-	<select ng-model="currentRecord" ng-options="record.title for record in records"></select>
-	
 	<div>
-		Title: <input type="text" ng-model="currentRecord.title">
-		Password: <input type="text" ng-model="currentRecord.password">
+	<select ng-model="currentRecord" ng-options="record.title for record in records"></select>
 	</div>
+	<div>
+	<fieldset>
+	<form name="form">
+	<legend>Record</legend><br>
+	<label>ID&nbsp;:</label> 
+	<input type="text" size="30" ng-model="currentRecord.uuid"> <br><br>
+	<label>Title&nbsp;:</label> 
+	<input type="text" size="30" ng-model="currentRecord.title"> <br><br>
+	<label>Group&nbsp;:</label> 
+	<input type="text"  size="30" ng-model="currentRecord.group"> <br><br>
+	<label>UserName&nbsp;:</label> 
+	<input type="text"  size="30" ng-model="currentRecord.username"> <br><br>
+	<label>Notes&nbsp;:</label>
+	<input type="text"  size="30" ng-model="currentRecord.notes"> <br><br>
+	<label>Password&nbsp;:</label> 
+	<input type="text"  size="30" ng-model="currentRecord.password"> <br><br>
+	<label>CreateTime&nbsp;:</label>
+	<input type="date"  size="30" ng-model="currentRecord.createTime"> <br><br>
+	<label>PassPhraseModifyTime&nbsp;:</label> 
+	<input type="text"  size="30" ng-model="currentRecord.passphraseModifyTime"> <br><br>
+	<label>ModifyTime&nbsp;:</label>
+	<input type="text"  size="30" ng-model="currentRecord.modifyTime"> <br><br>
+	<label>URL&nbsp;:</label> 
+	<input type="text"  size="30" ng-model="currentRecord.URL"> <br><br>
+	<label>Autotype&nbsp;:</label> 
+	<input type="text"  size="30" ng-model="currentRecord.autotype"> <br><br>
+	<label>History&nbsp;:</label> 
+	<input type="checkbox"  size="30" ng-model="checked" ng-init="checked=true" /><br>
+	<p ng-if="checked" class="animate-if">
+	<label>Passphrases&nbsp;:</label>
+	<input type="text" size="30" ng-model="currentRecord.passphraseHistory" required /><br><br>
+	<p ng-if="currentRecord.passphraseHistory==null" class="animate-if">
+	<pre>No History!!! </pre>
+	</p>
+	</p>
+	</form>
+	</fieldset>
+<div ng-repeat="entry in currentRecord.passphraseHistory">
+</div>
 </body>
 </html>
