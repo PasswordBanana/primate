@@ -67,14 +67,15 @@ td {
 	border: 0;
 	margin-top: 10px;
 	color: #222;
+	background-color: white;
 	font-size: 1.5em;
 	border-radius: 0 0 10px 10px;
 }
 
 .openFileButton:hover {
 	cursor: pointer;
-	color: white;
-	background-color: #333;
+	color: black;
+	background-color: #DDD;
 }
 
 header {
@@ -82,8 +83,11 @@ header {
 	width: 100%;
 	border-bottom: 1px solid black;
 	box-shadow: 0 2px 4px #222;
-	padding: 10px 10px 5px 10px;
+	padding: 10px 10px 0 10px;
 	font-size: xx-large;
+	background-color: #222;
+	color: white;
+	text-shadow: 2px 2px 4px black;
 }
 
 .filename {
@@ -124,7 +128,12 @@ header {
 }
 
 .recordHandle {
-	margin: 0 5px;
+	display: inline-block;
+	margin: 0.5em 5px;
+	width: 2pt;
+	height: 2em;
+	background-color: #CCC;
+	box-shadow: -1px -1px 1px #777;
 }
 
 .recordHandle:hover, .recordHandle:active {
@@ -134,6 +143,8 @@ header {
 .recordHandle:hover {
 	cursor: grabbing;
 	cursor: grab;
+	background-color: deepskyblue;
+	box-shadow: inset 1px 1px 1px skyblue;
 }
 
 .recordHandle:active {
@@ -152,4 +163,10 @@ header {
 
 .record a:hover, .record a:active {
 	cursor: pointer;
+}
+
+.menuButton:hover, .menuButton:active {
+	cursor: pointer;
+	background-color: #DDD;
+	color: red;
 }

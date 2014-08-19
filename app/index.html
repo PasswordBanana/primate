@@ -34,8 +34,10 @@
 
     	<div ng-if="$parent.state === 'loaded'">
     		<p class="filename">{{databaseFilename}} <span ng-click="closeDb()" class="hoverCursor glyphicon glyphicon-remove-circle"></span></p>
-    		<input type="password" id="passwordField" ng-model="$parent.$parent.pass">
-			<input type="button" value="Unlock" ng-click="open()" class="openFileButton">
+    		<form ng-submit="open()">
+	    		<input type="password" id="passwordField" ng-model="$parent.$parent.pass">
+				<input type="submit" value="Unlock" class="openFileButton">
+			</form>
     	</div>
     	<input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton">
     	<p ng-show="invalidFile">Invalid Password Database</p>
@@ -60,7 +62,7 @@
 
     	<p ng-repeat="record in records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}">
     		<span class="record">
-    			<span class="recordHandle glyphicon glyphicon-pause"></span>
+    			<span class="recordHandle">&nbsp;</span>
     			<a ng-click="showRecord(record.uuid)">{{record.title}}</a>
     			<span class="recordButtonContainer">
     				<span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>

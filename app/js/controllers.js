@@ -15,6 +15,8 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		$scope.databaseFilename = $scope.databaseFile.name;
 		$scope.setState("loaded");
 		$scope.$apply();
+
+		document.getElementById("passwordField").focus();
 	};
 
 	$scope.open = function() {
