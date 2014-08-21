@@ -9,6 +9,14 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	$scope.pass;
 	$scope.filePicker;
 
+	var getRecord = function(uuid) {
+		for (var i = 0, il = $scope.records.length; i < il; i++) {
+			if ($scope.records[i].uuid === uuid) {
+				return $scope.records[i];
+			}
+		}
+	};
+
 	$scope.fileChanged = function(newFile) {
 		$scope.filePicker = newFile;
 		$scope.databaseFile = newFile.files[0];
@@ -65,5 +73,13 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	$scope.closeView = function() {
 		$scope.currentRecord = undefined;
 		$scope.viewing = false;
+	};
+
+	$scope.gotoUrl = function(uuid) {
+		var r = getRecord(uuid);
+		var url = r.URL;
+		if (url != null) {
+			window.open(url, '_blank').focus();
+  		}
 	};
 }]);
