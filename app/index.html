@@ -63,8 +63,26 @@
     	<p ng-repeat="record in records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}">
     		<span class="record">
     			<span class="recordHandle">&nbsp;</span>
-    			<a ng-click="showRecord(record.uuid)">{{record.title}}</a>
-    			<span class="recordButtonContainer">
+    			<a>{{record.title}}</a>
+				<input type="checkbox"  size="30" ng-model="checked" ng-init="checked=false" />
+				<span ng-show="checked">
+				<br>
+				<label>ID:</label> 
+				{{record.uuid}}
+				<br>
+				<label>Group&nbsp;:</label> 
+				{{record.group}}
+				<br>
+				<label>UserName&nbsp;:</label> 
+				{{record.username}}
+				<br>
+				<label>Notes&nbsp;:</label>
+				{{record.notes}}
+				<br>
+				<label>Password&nbsp;:</label>
+				{{record.password}}
+				</span>
+    			<span class="recordButtonContainer clearfix">
     				<span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
     				<span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
     				<span ng-click="copyPassword(record.uuid)" class="hoverCursor glyphicon glyphicon-asterisk" alt="Copy Password"></span>

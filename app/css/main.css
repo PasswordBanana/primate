@@ -122,6 +122,10 @@ header {
 	line-height: 2em;
 }
 
+.record input[type="checkbox"]{
+display:inline-block;
+}
+
 .recordButtonContainer {
 	float: right;
 	margin: 0 10px;

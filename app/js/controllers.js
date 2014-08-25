@@ -82,4 +82,5 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 			window.open(url, '_blank').focus();
   		}
 	};
+	
 }]);
