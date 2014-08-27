@@ -32,6 +32,10 @@ primate.factory("Database", ["$q", function($q) {
 		return db;
 	};
 
+	service.save = function() {
+		db.encryptAndSaveFile(pass, name);
+	};
+
 	service.close = function() {
 		db = undefined;
 		file = undefined;

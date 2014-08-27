@@ -9,27 +9,28 @@
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <script src="bower_components/angular/angular.js"></script>
-	<script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
-	<script src="js/libpwsafejs/jDataView/src/jdataview.js"></script>
-	<script src="js/libpwsafejs/jDataView/src/jdataview-jquery-converter.js"></script>
-	<script src="js/libpwsafejs/crypto-sha256-hmac.js"></script>
-	<script src="js/libpwsafejs/twofish.js"></script>
-	<script src="js/libpwsafejs/pwsafedb.js"></script>
-	<script src="bower_components/zxcvbn/zxcvbn.js"></script>
-	<script src="js/app.js"></script>
-	<script src="js/factories.js"></script>
-	<script src="js/services.js"></script>
-	<script src="js/filters.js"></script>
-	<script src="js/controllers.js"></script>
+    <script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
+    <script src="js/libpwsafejs/jDataView/src/jdataview.js"></script>
+    <script src="js/libpwsafejs/jDataView/src/jdataview-jquery-converter.js"></script>
+    <script src="js/libpwsafejs/crypto-sha256-hmac.js"></script>
+    <script src="js/libpwsafejs/twofish.js"></script>
+    <script src="js/libpwsafejs/pwsafedb.js"></script>
+    <script src="bower_components/zxcvbn/zxcvbn.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/factories.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="bower_components/file-saver/FileSaver.js"></script>
 </head>
 <body ng-controller="StateController">
 	<!-- Open file -->
     <div ng-if="state === 'unloaded' || state === 'loaded'" id="openFileWrapper">
     	<h1>Primate Password Manager</h1>
-    	<p>Open Password Database File</p>
     	<input type="file" id="fileInput" onchange="angular.element(this).scope().fileChanged(this)">
     	<div onclick="document.getElementById('fileInput').click()" id="openFileArea">
     		<span class="glyphicon glyphicon-folder-open"></span>
+            <p>Open</p>
     	</div>
 
     	<div ng-if="$parent.state === 'loaded'">

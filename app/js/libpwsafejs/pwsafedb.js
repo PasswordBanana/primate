@@ -5,12 +5,30 @@ function PWSafeDB() {}
 // constants
 PWSafeDB.isWebWorker = typeof importScripts != 'undefined'; // am I a web worker?
 PWSafeDB.isNode = typeof module !== 'undefined';
+PWSafeDB.isNW = typeof process === "object"; //Node Webkit
 PWSafeDB.BLOCK_SIZE = 16;
 PWSafeDB.MIN_HASH_ITERATIONS = 2048; // recommended in specs
 
 if (PWSafeDB.isNode) {
     var fs = require('fs');
 }
+
+/* Set the database view from buffer */
+PWSafeDB.setView = function(buffer) {
+    this._view = buffer;
+};
+
+PWSafeDB.decryptCurrent = function(passphrase, options, callback) {
+    new PWSafeDB().decrypt(this._view, passphrase, options, callback);
+};
+
+PWSafeDB.validate = function() {
+    return this._validateFile();
+};
+
+PWSafeDB.save = function(pass, name) {
+    this.encryptAndSaveFile(pass, name);
+};
 
 // Load and return a database from the given url and passphrase
 PWSafeDB.decryptFromUrl = function(url, passphrase, options, callback) {
@@ -536,64 +554,66 @@ _serializeFields: function() {
         modifyTime: 0x0c, URL: 0x0d, autotype: 0x0e, passphraseHistory: 0x0f, passphrasePolicy: 0x10, emailAddress: 0x14, ownPassphraseSymbols: 0x16 };
     for (i in this.records) {
         for (k in this.records[i]) {
-            if (!(k in types)) {
-                throw new Error('unknown field property '+k);
-            }
-
-            fieldStartOffset = view.tell();
-
-            switch(k) {
-            case 'uuid':
-                writeUuid(this.records[i][k], types[k]);
-                break;
-            case 'group': case 'title': case 'username': case 'notes': case 'password': case 'URL': case 'autotype':
-            case 'emailAddress': case 'ownPassphraseSymbols':
-                writeString(this.records[i][k], types[k]);
-                break;
-            case 'createTime': case 'passphraseModifyTime': case 'modifyTime':
-                writeTimestamp(this.records[i][k], types[k]);
-                break;
-            case 'passphrasePolicy':
-                var pol = this.records[i][k];
-                str = hexpad(pol.flags, 4);
-                var arr = [pol.length, pol.minLowercase, pol.minUppercase, pol.minDigit, pol.minSymbol];
-                for (j in arr) {
-                    str += hexpad(arr[j], 3);
-                }
-                writeString(str, types[k]);
-                break;
-            case 'passphraseHistory':
-                var hist = this.records[i][k];
-                // I tried building a string and then writing it with the writeString helper, but I think the leading 0/1 byte gets encoded by UTF-8, so
-                // it's easiest to just do it all by hand here.
-
-                view.seek(view.tell() + 4); // placeholder for size
-                view.writeUint8(types[k]);
-                var startPos = view.tell();
-                view.writeUint8(hist.isEnabled ? 1 : 0);
-                view.writeBinaryString(hexpad(hist.maxSize, 2));
-                view.writeBinaryString(hexpad(hist.currentSize, 2));
-                var bytes;
-                for (j in hist.passphrases) {
-                    var pass = hist.passphrases[j];
-                    view.writeBinaryString(hexpad(pass.timestamp.getTime() / 1000, 8));
-                    bytes = Crypto.charenc.UTF8.stringToBytes(pass.passphrase);
-                    view.writeBinaryString(hexpad(bytes.length, 4));
-                    view.writeBytes(bytes);
+            if (k !== "$$hashKey") { //AngularJS creates a $$hashKey property, ignore it
+                if (!(k in types)) {
+                    throw new Error('unknown field property ' + k + " || " + this.records[i].k);
                 }
 
-                // go back and write size
-                var endPos = view.tell();
-                view.seek(startPos - 5);
-                view.writeUint32(endPos - startPos);
-                view.seek(endPos);
-                break;
-            default:
-                throw new Error('unknown field property '+k);
-            }
+                fieldStartOffset = view.tell();
 
-            onFieldFinish.call(this, fieldStartOffset, false);
-            this._alignToBlockBoundary(view);
+                switch(k) {
+                case 'uuid':
+                    writeUuid(this.records[i][k], types[k]);
+                    break;
+                case 'group': case 'title': case 'username': case 'notes': case 'password': case 'URL': case 'autotype':
+                case 'emailAddress': case 'ownPassphraseSymbols':
+                    writeString(this.records[i][k], types[k]);
+                    break;
+                case 'createTime': case 'passphraseModifyTime': case 'modifyTime':
+                    writeTimestamp(this.records[i][k], types[k]);
+                    break;
+                case 'passphrasePolicy':
+                    var pol = this.records[i][k];
+                    str = hexpad(pol.flags, 4);
+                    var arr = [pol.length, pol.minLowercase, pol.minUppercase, pol.minDigit, pol.minSymbol];
+                    for (j in arr) {
+                        str += hexpad(arr[j], 3);
+                    }
+                    writeString(str, types[k]);
+                    break;
+                case 'passphraseHistory':
+                    var hist = this.records[i][k];
+                    // I tried building a string and then writing it with the writeString helper, but I think the leading 0/1 byte gets encoded by UTF-8, so
+                    // it's easiest to just do it all by hand here.
+
+                    view.seek(view.tell() + 4); // placeholder for size
+                    view.writeUint8(types[k]);
+                    var startPos = view.tell();
+                    view.writeUint8(hist.isEnabled ? 1 : 0);
+                    view.writeBinaryString(hexpad(hist.maxSize, 2));
+                    view.writeBinaryString(hexpad(hist.currentSize, 2));
+                    var bytes;
+                    for (j in hist.passphrases) {
+                        var pass = hist.passphrases[j];
+                        view.writeBinaryString(hexpad(pass.timestamp.getTime() / 1000, 8));
+                        bytes = Crypto.charenc.UTF8.stringToBytes(pass.passphrase);
+                        view.writeBinaryString(hexpad(bytes.length, 4));
+                        view.writeBytes(bytes);
+                    }
+
+                    // go back and write size
+                    var endPos = view.tell();
+                    view.seek(startPos - 5);
+                    view.writeUint32(endPos - startPos);
+                    view.seek(endPos);
+                    break;
+                default:
+                    throw new Error('unknown field property '+k);
+                }
+
+                onFieldFinish.call(this, fieldStartOffset, false);
+                this._alignToBlockBoundary(view);
+            }
         }
 
         // terminate record
@@ -642,12 +662,17 @@ encrypt: function(passphrase, iterations) {
 },
 
 encryptAndSaveFile: function(passphrase, fileName, iterations) {
-    if (!PWSafeDB.isNode) {
-        throw new Error('saving files not supported in browser');
+    var buffer = this.encrypt(passphrase, iterations);
+    var blob;
+
+    if (PWSafeDB.isNW) {
+        //Workaround for Chrome 35 (used by Node-webkit)
+        blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
+    } else {
+        blob = new Blob([buffer], {type: "application/octet-stream"});
     }
 
-    var buffer = this.encrypt(passphrase, iterations);
-    fs.writeFileSync(fileName, buffer, { mode: 384 /* 0600 - lint complains about using octal */ });
+    saveAs(blob, fileName);
 }
 
 });
@@ -721,5 +746,6 @@ exports.PWSafeDBField = PWSafeDBField;
 if (typeof module !== 'undefined') { // node.js
     var jDataView = require('./jDataView/src/jdataview.js'),
         TwoFish = require('./twofish.js'),
-        Crypto = require('./crypto-sha256-hmac.js');
+        Crypto = require('./crypto-sha256-hmac.js'),
+        fs = require('fs');
 }

@@ -55,6 +55,10 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		$scope.setState("loaded");
 	};
 
+	$scope.saveDb = function() {
+		db.save();
+	};
+
 	$scope.closeDb = function() {
 		$scope.lockDb();
 		$scope.filePicker.value = "";

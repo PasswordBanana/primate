@@ -45,14 +45,23 @@ td {
 }
 
 #openFileArea {
-	width: 1.2em;
-	height: 1em;
+	/*width: 1.2em;*/
+	/*height: 1em;*/
 	font-size: 10em;
 	margin: 2cm auto;
+	border: 3px dashed #AAA;
+	border-radius: 20px;
 }
 
 #openFileArea:hover, #openFileArea:active {
 	cursor: pointer;
+	background-color: #ccc;
+}
+
+#openFileArea p {
+	position: relative;
+	font-size: 0.3em;
+	top: -1em;
 }
 
 #openFileWrapper {
@@ -66,7 +75,7 @@ td {
 	height: 3em;
 	border: 0;
 	margin-top: 10px;
-	color: #222;
+	color: #AAA;
 	background-color: white;
 	font-size: 1.5em;
 	border-radius: 0 0 10px 10px;
