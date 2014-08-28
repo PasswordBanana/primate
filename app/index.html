@@ -24,75 +24,77 @@
     <script src="bower_components/file-saver/FileSaver.js"></script>
 </head>
 <body ng-controller="StateController">
-	<!-- Open file -->
+    <!-- Open file -->
     <div ng-if="state === 'unloaded' || state === 'loaded'" id="openFileWrapper">
-    	<h1>Primate Password Manager</h1>
-    	<input type="file" id="fileInput" onchange="angular.element(this).scope().fileChanged(this)">
-    	<div onclick="document.getElementById('fileInput').click()" id="openFileArea">
-    		<span class="glyphicon glyphicon-folder-open"></span>
+        <h1>Primate Password Manager</h1>
+        <input type="file" id="fileInput" onchange="angular.element(this).scope().fileChanged(this)">
+        <div onclick="document.getElementById('fileInput').click()" id="openFileArea">
+            <span class="glyphicon glyphicon-folder-open"></span>
             <p>Open</p>
-    	</div>
+        </div>
 
-    	<div ng-if="$parent.state === 'loaded'">
-    		<p class="filename">{{databaseFilename}} <span ng-click="closeDb()" class="hoverCursor glyphicon glyphicon-remove-circle"></span></p>
-    		<form ng-submit="open()">
-	    		<input type="password" id="passwordField" ng-model="$parent.$parent.pass">
-				<input type="submit" value="Unlock" class="openFileButton">
-			</form>
-    	</div>
-    	<input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton">
-    	<p ng-show="invalidFile"><font color="red">Invalid Password Database, Try again</font></p>
-		
+        <div ng-if="$parent.state === 'loaded'">
+            <p class="filename">{{databaseFilename}} <span ng-click="closeDb()" class="hoverCursor glyphicon glyphicon-remove-circle"></span></p>
+            <form ng-submit="open()">
+                <input type="password" id="passwordField" ng-model="$parent.$parent.pass">
+                <input type="submit" value="Unlock" class="openFileButton">
+            </form>
+        </div>
+        <input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton">
+        <p ng-show="invalidFile"><font color="red">Invalid Password Database, Try again</font></p>
+        
     </div>
     <!-- End open file -->
 
     <!-- Main application -->
     <div ng-if="state === 'unlocked'">
-    	<header>
-    		<p>
-    			<span id="yes">Primate</span>
-    			<span class="menuButtonContainer">
-    				<span class="filename">{{databaseFilename}}</span>
-    				<span ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-floppy-disk"></span>
-	    			<span ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-lock"></span>
-	    			<span ng-click="dbSettings()" class="hoverCursor glyphicon glyphicon-cog"></span>
-    			</span>
-    		</p>
-    	</header>
+        <header>
+            <p>
+                <span id="yes">Primate</span>
+                <span class="menuButtonContainer">
+                    <span class="filename">{{databaseFilename}}</span>
+                    <span ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-floppy-disk"></span>
+                    <span ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-lock"></span>
+                    <span ng-click="dbSettings()" class="hoverCursor glyphicon glyphicon-cog"></span>
+                </span>
+            </p>
+        </header>
 
-    	<h2>Accounts</h2>
+        <h2>Accounts</h2>
 
-    	<p ng-repeat="record in records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}">
-    		<span class="record">
-    			<span class="recordHandle">&nbsp;</span>
-    			<a>{{record.title}}</a>
-				<input type="checkbox"  size="30" ng-model="checked" ng-init="checked=false" />
-				<span ng-show="checked">
-				<br>
-				<label>ID:</label> 
-				{{record.uuid}}
-				<br>
-				<label>Group&nbsp;:</label> 
-				{{record.group}}
-				<br>
-				<label>UserName&nbsp;:</label> 
-				<input type="text" value="{{record.username}}" ng-model="record.username">
-				<br>
-				<label>Notes&nbsp;:</label>
-				<input type="text" value="{{record.notes}}" ng-model="record.notes">
-				<br>
-				<label>Password&nbsp;:</label>
-				<input type="password" value="{{record.password}}" ng-model="record.password">
-				</span>
-    			<span class="recordButtonContainer clearfix">
-    				<span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
-    				<span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
-    				<span ng-click="copyPassword(record.uuid)" class="hoverCursor glyphicon glyphicon-asterisk" alt="Copy Password"></span>
-    				<span ng-click="gotoUrl(record.uuid)" class="hoverCursor glyphicon glyphicon-globe" alt="Copy URL"></span>
-    				<span ng-click="editAccount(record.uuid)" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
-    			</span>
-    		</span>
-    	</p>
+        <p ng-repeat="record in records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}">
+            <span class="record">
+                <span class="recordHandle">&nbsp;</span>
+                <a>{{record.title}}</a>
+                <input type="checkbox"  size="30" ng-model="checked" ng-init="checked=false" />
+                <span ng-show="checked">
+                    <br>
+                    <label>ID:</label>
+                    {{record.uuid}}
+                    <br>
+                    <label>Group:</label>
+                    {{record.group}}
+                    <br>
+                    <label>UserName:</label>
+                    <input type="text" value="{{record.username}}" ng-model="record.username">
+                    <br>
+                    <label>Password:</label>
+                    <input type="password" value="{{record.password}}" ng-model="record.password">
+                    <br>
+                    <label>Notes:</label>
+                    <input type="text" value="{{record.notes}}" ng-model="record.notes">
+                    <br>
+                    <label>History: {{(record.history.isEnabled) ? "" : "History Disabled"}}</label>
+                </span>
+                <span class="recordButtonContainer clearfix">
+                    <span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
+                    <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
+                    <span ng-click="copyPassword(record.uuid)" class="hoverCursor glyphicon glyphicon-asterisk" alt="Copy Password"></span>
+                    <span ng-click="gotoUrl(record.uuid)" class="hoverCursor glyphicon glyphicon-globe" alt="Copy URL"></span>
+                    <span ng-click="editAccount(record.uuid)" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
+                </span>
+            </span>
+        </p>
     </div>
 </body>
 </html>
