@@ -6,7 +6,6 @@ html, body {
 	margin: 0;
 }
 
-
 table {
 	width: 100%;
 }
@@ -108,9 +107,11 @@ header {
 }
 
 .menuButtonContainer {
-	float: right;
+	float:right;
 }
-
+#yes{
+margin-left:200px;
+}
 .filename {
 	font-size: large;
 }

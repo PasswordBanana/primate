@@ -41,7 +41,8 @@
 			</form>
     	</div>
     	<input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton">
-    	<p ng-show="invalidFile">Invalid Password Database</p>
+    	<p ng-show="invalidFile"><font color="red">Invalid Password Database, Try again</font></p>
+		
     </div>
     <!-- End open file -->
 
@@ -49,7 +50,7 @@
     <div ng-if="state === 'unlocked'">
     	<header>
     		<p>
-    			<span>Primate</span>
+    			<span id="yes">Primate</span>
     			<span class="menuButtonContainer">
     				<span class="filename">{{databaseFilename}}</span>
     				<span ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-floppy-disk"></span>
