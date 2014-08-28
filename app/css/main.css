@@ -184,3 +184,50 @@ display:inline-block;
 	background-color: #DDD;
 	color: red;
 }
+
+.recordModalWrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	z-index: 999;
+}
+.recordModal {
+	position: relative;
+	width: 80%;
+	top: 10%;
+	background-color: #DDD;
+	margin: 0 auto;
+	text-align: justify;
+	box-shadow: 0 0 8px #222;
+}
+
+.recordModal input[type=button] {
+	box-sizing: border-box;
+	padding: 20px;
+	border: 0;
+}
+
+.recordModal input[type=button]:hover {
+	background-color: #00BFFF;
+	cursor: pointer;
+	color: black;
+	text-shadow: 0 0 2px white;
+}
+
+.recordModalClose {
+	width: 100%;
+}
+
+.recordModalTab {
+	display: inline-block;
+	width: 33%;
+	margin: 0 auto;
+	border-bottom: 1px solid black;
+}
+
+.recordModal > div {
+	padding: 20px;
+}

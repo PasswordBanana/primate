@@ -62,29 +62,10 @@
 
         <h2>Accounts</h2>
 
-        <p ng-repeat="record in records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}">
+        <div ng-repeat="record in records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}">
             <span class="record">
                 <span class="recordHandle">&nbsp;</span>
                 <a>{{record.title}}</a>
-                <span ng-show="recordShown" ng-init="recordShown = false">
-                    <br>
-                    <label>ID:</label>
-                    {{record.uuid}}
-                    <br>
-                    <label>Group:</label>
-                    {{record.group}}
-                    <br>
-                    <label>UserName:</label>
-                    <input type="text" value="{{record.username}}" ng-model="record.username">
-                    <br>
-                    <label>Password:</label>
-                    <input type="password" value="{{record.password}}" ng-model="record.password">
-                    <br>
-                    <label>Notes:</label>
-                    <input type="text" value="{{record.notes}}" ng-model="record.notes">
-                    <br>
-                    <label>History: {{(record.history.isEnabled) ? "" : "History Disabled"}}</label>
-                </span>
                 <span class="recordButtonContainer clearfix">
                     <span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
                     <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
@@ -93,7 +74,40 @@
                     <span ng-click="editAccount(record.uuid); recordShown = !recordShown" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
                 </span>
             </span>
-        </p>
+            <div class="recordModalWrapper" ng-show="recordShown" ng-init="recordShown = false" ng-click="recordShown = !recordShown">
+                <div class="recordModal" ng-click="$event.stopPropagation()" ng-switch="currentTab">
+                    <input type="button" class="recordModalTab" value="Edit" ng-click="currentTab = 'Edit'">
+                    <input type="button" class="recordModalTab" value="History" ng-click="currentTab = 'History'">
+                    <input type="button" class="recordModalTab" value="Settings" ng-click="currentTab = 'Settings'">
+                    <div ng-switch-when="History">
+                        <p>Password History</p>
+                    </div>
+                    <div ng-switch-when="Settings">
+                        <p>Password Settings</p>
+                    </div>
+                    <div ng-switch-default>
+                        <br>
+                        <label>ID:</label>
+                        {{record.uuid}}
+                        <br>
+                        <label>Group:</label>
+                        {{record.group}}
+                        <br>
+                        <label>UserName:</label>
+                        <input type="text" value="{{record.username}}" ng-model="record.username">
+                        <br>
+                        <label>Password:</label>
+                        <input type="password" value="{{record.password}}" ng-model="record.password">
+                        <br>
+                        <label>Notes:</label>
+                        <input type="text" value="{{record.notes}}" ng-model="record.notes">
+                        <br>
+                        <label>History: {{(record.history.isEnabled) ? "" : "History Disabled"}}</label>
+                    </div>
+                    <input type="button" value="Close" class="recordModalClose" ng-click="recordShown = false">
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
