@@ -76,13 +76,13 @@
 				{{record.group}}
 				<br>
 				<label>UserName&nbsp;:</label> 
-				{{record.username}}
+				<input type="text" value="{{record.username}}" ng-model="record.username">
 				<br>
 				<label>Notes&nbsp;:</label>
-				{{record.notes}}
+				<input type="text" value="{{record.notes}}" ng-model="record.notes">
 				<br>
 				<label>Password&nbsp;:</label>
-				{{record.password}}
+				<input type="password" value="{{record.password}}" ng-model="record.password">
 				</span>
     			<span class="recordButtonContainer clearfix">
     				<span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
