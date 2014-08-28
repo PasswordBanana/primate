@@ -746,6 +746,5 @@ exports.PWSafeDBField = PWSafeDBField;
 if (typeof module !== 'undefined') { // node.js
     var jDataView = require('./jDataView/src/jdataview.js'),
         TwoFish = require('./twofish.js'),
-        Crypto = require('./crypto-sha256-hmac.js'),
-        fs = require('fs');
+        Crypto = require('./crypto-sha256-hmac.js');
 }
