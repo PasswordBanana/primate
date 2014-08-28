@@ -66,8 +66,7 @@
             <span class="record">
                 <span class="recordHandle">&nbsp;</span>
                 <a>{{record.title}}</a>
-                <input type="checkbox"  size="30" ng-model="checked" ng-init="checked=false" />
-                <span ng-show="checked">
+                <span ng-show="recordShown" ng-init="recordShown = false">
                     <br>
                     <label>ID:</label>
                     {{record.uuid}}
@@ -91,7 +90,7 @@
                     <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
                     <span ng-click="copyPassword(record.uuid)" class="hoverCursor glyphicon glyphicon-asterisk" alt="Copy Password"></span>
                     <span ng-click="gotoUrl(record.uuid)" class="hoverCursor glyphicon glyphicon-globe" alt="Copy URL"></span>
-                    <span ng-click="editAccount(record.uuid)" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
+                    <span ng-click="editAccount(record.uuid); recordShown = !recordShown" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
                 </span>
             </span>
         </p>
