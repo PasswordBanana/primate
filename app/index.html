@@ -65,7 +65,20 @@
         <div ng-repeat="record in records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}">
             <span class="record">
                 <span class="recordHandle">&nbsp;</span>
-                <a>{{record.title}}</a>
+                <a ng-click="title; recordShown1 = !recordShown1" >{{record.title}}</a>
+				 <span ng-show="recordShown1" ng-init="recordShown1 = false">
+				 <a ng-click="title; recordShown2 = !recordShown2" >{{record.username}}</a>
+				 <ul ng-show="recordShown2" ng-init="recordShown2 = false">
+				 <li> <label>ID:</label>{{record.uuid}}</li>
+				 <li><label>Group:</label>{{record.group}}</li>
+				 <li><label>Notes:</label>{{record.notes}}</li>
+				 <li><label>CreateTime:</label>{{record.createTime}}</li>
+				 <li><label>passphraseModifyTime:</label>{{record.passphraseModifyTime}}</li>
+				 <li><label>ModifyTime:</label>{{record.modifyTime}}</li>
+				 <li><label>URL:</label>{{record.URL}}</li>
+				 <li><label>Autotype:</label>{{record.autotype}}</li>
+				 </ul>
+				 </span>
                 <span class="recordButtonContainer clearfix">
                     <span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
                     <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
