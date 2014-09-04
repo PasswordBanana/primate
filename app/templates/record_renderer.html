@@ -1,6 +1,6 @@
 <span class="record">
     <span class="recordHandle">&nbsp;</span>
-    <a>{{record.title}}</a>
+    <a ng-click="editAccount(record.uuid); recordShown = !recordShown" >{{record.title}}</a>
     <span class="recordButtonContainer clearfix">
         <span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
         <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
@@ -21,23 +21,15 @@
             <p>Password Settings</p>
         </div>
         <div ng-switch-default>
-            <br>
-            <label>ID:</label>
-            {{record.uuid}}
-            <br>
-            <label>Group:</label>
-            {{record.group}}
-            <br>
-            <label>UserName:</label>
-            <input type="text" value="{{record.username}}" ng-model="record.username">
-            <br>
-            <label>Password:</label>
-            <input type="password" value="{{record.password}}" ng-model="record.password">
-            <br>
-            <label>Notes:</label>
-            <input type="text" value="{{record.notes}}" ng-model="record.notes">
-            <br>
-            <label>History: {{(record.history.isEnabled) ? "" : "History Disabled"}}</label>
+            <ul>
+                <li><label>ID:</label>{{record.uuid}}</li>
+                <li><label>Group:</label>{{record.group}}</li>
+                <li><label>Title:</label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
+                <li><label>Username:</label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
+                <li><label>Password:</label><input type="password" value="{{record.password}}" ng-model="record.password"></li>
+                <li><label>Notes:</label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
+                <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
+            </ul>
         </div>
         <input type="button" value="Close" class="recordModalClose" ng-click="recordShown = false">
     </div>
