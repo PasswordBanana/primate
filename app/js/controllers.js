@@ -4,6 +4,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	$scope.databaseFilename;
 	$scope.records;
 	$scope.currentRecord;
+	$scope.groups;
 	$scope.viewing = false;
 	$scope.invalidFile = false;
 	$scope.pass;
@@ -31,7 +32,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		var promise = db.setFile($scope.databaseFile, $scope.pass);
 
 		promise.then(function(success) {
-			$scope.setRecords(db.getDb().records);
+			$scope.setRecords(db.getDb());
 			$scope.setState("unlocked");
 		}, function(failure) {
 			$scope.invalidFile = true;
@@ -44,9 +45,10 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		$scope.state = state;
 	};
 
-	$scope.setRecords = function(records) {
-		$scope.records = records;
+	$scope.setRecords = function(db) {
+		$scope.records = db.records;
 		$scope.currentRecord = $scope.records[0];
+		$scope.recordTree = db.recordTree;
 	};
 
 	$scope.lockDb = function() {

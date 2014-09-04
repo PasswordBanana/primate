@@ -19,7 +19,13 @@ primate.filter("passwordStrengthScore", function() {
 
 primate.filter("recordIndent", function() {
 	return function(record) {
-		var group = record.group || "";
-		return 20 * group.split(".").length;
+		return (record.group && record.group !== "") ? 20 : 0;
 	};
+});
+
+primate.filter("groupIndent", function() {
+	return function(group) {
+		var level = group.level - 1 || 0;
+		return 20 * level;
+	}
 });

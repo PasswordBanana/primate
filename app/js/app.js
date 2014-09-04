@@ -1,1 +1,1 @@
-var primate = angular.module("primate", []);
+var primate = angular.module("primate", ['ngAnimate']);

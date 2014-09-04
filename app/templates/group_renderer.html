@@ -1,0 +1,12 @@
+<span ng-click="data.expanded = !data.expanded" class="group" ng-if="data.level !== 0">
+	<span ng-switch="data.expanded" class="groupChevronContainer">
+		<span ng-switch-when="true" class="glyphicon glyphicon-chevron-down groupChevronClose"></span>
+		<span ng-switch-when="false" class="glyphicon glyphicon-chevron-right groupChevronOpen"></span>
+	</span>
+    <span class="groupArrow">&nbsp;</span>
+    <a>{{data.name}}</a>
+</span>
+<div class="animate-if" ng-if="data.expanded">
+	<div ng-repeat="data in data.subgroups" class="groupContainer" ng-style="{'margin-left': '{{data | groupIndent}}px'}" ng-include="'templates/group_renderer.html'"></div>
+	<div ng-repeat="record in data.records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}" ng-include="'templates/record_renderer.html'"></div>
+</div>

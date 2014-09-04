@@ -1,7 +1,4 @@
 html, body {
-    /*background-color: #222;
-    color: white;
-    text-shadow: 2px 2px 2px black;*/
     text-align: center;
 	margin: 0;
 }
@@ -15,19 +12,40 @@ td {
 	border-collapse: collapse;
 }
 
-.animate-if.ng-enter, .animate-if.ng-leave {
-  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+.animate-if.ng-enter, .animate-if.ng-leave, .groupChevronOpen.ng-enter {
+  -webkit-transition: 0.15s linear all;
+  transition: 0.15s linear all;
+}
+
+.groupChevronOpen.ng-leave {
+	-webkit-transition: 0;
+	transition: 0;
 }
 
 .animate-if.ng-enter,
 .animate-if.ng-leave.ng-leave-active {
-  opacity:0;
+  opacity: 0;
 }
 
 .animate-if.ng-leave,
 .animate-if.ng-enter.ng-enter-active {
-  opacity:1;
+  opacity: 1;
+}
+
+.groupChevronContainer {
+	width: 1em;
+	height: 1em;
+	margin-left: 1em;
+	overflow: hidden;
+}
+
+.groupChevronOpen.ng-leave.ng-leave-active,
+.groupChevronOpen.ng-enter {
+  transform: rotate(90deg);
+}
+.groupChevronOpen.ng-leave,
+.groupChevronOpen.ng-enter.ng-enter-active {
+  transform: none;
 }
 
 #viewBox {
@@ -44,8 +62,6 @@ td {
 }
 
 #openFileArea {
-	/*width: 1.2em;*/
-	/*height: 1em;*/
 	font-size: 10em;
 	margin: 2cm auto;
 	border: 3px dashed #AAA;
@@ -109,9 +125,6 @@ header {
 .menuButtonContainer {
 	float:right;
 }
-#yes{
-margin-left:200px;
-}
 .filename {
 	font-size: large;
 }
@@ -130,10 +143,6 @@ margin-left:200px;
 	border-right: 1px solid #CCC;
 	box-shadow: 2px 2px 2px #AAA;
 	line-height: 2em;
-}
-
-.record input[type="checkbox"]{
-display:inline-block;
 }
 
 .recordButtonContainer {
@@ -163,6 +172,26 @@ display:inline-block;
 
 .recordHandle:active {
 	cursor: grabbing;
+}
+
+.groupContainer {
+	display: block;
+	font-size: large;
+	text-align: left;
+	margin: 0;
+}
+
+.group {
+	display: block;
+	background-color: #DDD;
+	border-bottom: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	box-shadow: 2px 2px 2px #AAA;
+	line-height: 2em;
+}
+
+.group:hover {
+	cursor: pointer;
 }
 
 .lightText {
