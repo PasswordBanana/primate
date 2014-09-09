@@ -51,17 +51,15 @@
     <div ng-if="state === 'unlocked'">
         <header>
             <p>
-                <span id="yes">Primate</span>
+                <span id="heading">Primate</span>
                 <span class="menuButtonContainer">
-                    <span class="filename">{{databaseFilename}}</span>
-                    <span ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-floppy-disk"></span>
+                    <span ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-save"></span>
                     <span ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-lock"></span>
                     <span ng-click="dbSettings()" class="hoverCursor glyphicon glyphicon-cog"></span>
                 </span>
+                <span class="filename">{{databaseFilename}}</span>
             </p>
         </header>
-
-        <h2>Accounts</h2>
 
         <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
     </div>

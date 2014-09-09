@@ -33,7 +33,8 @@ primate.factory("Database", ["$q", function($q) {
 	};
 
 	service.save = function() {
-		db.encryptAndSaveFile(pass, name);
+		var blob = db.getBlob(pass);
+		saveAs(blob, name);
 	};
 
 	service.close = function() {

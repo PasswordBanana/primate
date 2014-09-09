@@ -5,7 +5,6 @@ function PWSafeDB() {}
 // constants
 PWSafeDB.isWebWorker = typeof importScripts != 'undefined'; // am I a web worker?
 PWSafeDB.isNode = typeof module !== 'undefined';
-PWSafeDB.isNW = typeof process === "object"; //Node Webkit
 PWSafeDB.BLOCK_SIZE = 16;
 PWSafeDB.MIN_HASH_ITERATIONS = 2048; // recommended in specs
 
@@ -13,21 +12,13 @@ if (PWSafeDB.isNode) {
     var fs = require('fs');
 }
 
-/* Set the database view from buffer */
-PWSafeDB.setView = function(buffer) {
-    this._view = buffer;
-};
-
-PWSafeDB.decryptCurrent = function(passphrase, options, callback) {
-    new PWSafeDB().decrypt(this._view, passphrase, options, callback);
-};
-
-PWSafeDB.validate = function() {
-    return this._validateFile();
-};
-
-PWSafeDB.save = function(pass, name) {
-    this.encryptAndSaveFile(pass, name);
+/**
+ * Added
+ *
+**/
+PWSafeDB.validate = function(buffer) {
+    var mockdb = new PWSafeDB();
+    return mockdb._validate(mockdb._newjDataView(buffer));
 };
 
 // Load and return a database from the given url and passphrase
@@ -134,16 +125,20 @@ decrypt: function(buffer, passphrase, options, callback) {
     }, callback);
 },
 
-_validateFile: function() {
-    if (this._view.getBinaryString(4) != "PWS3") {
+/**
+ * Modified: code from _validateFile broken out to enable validation of files that haven't been set as this._view for feedback in an open file page
+ *
+**/
+_validate: function(view) {
+    if (view.getBinaryString(4) != "PWS3") {
         throw new Error("Not a PWS v3 file");
     }
 
-    this._eofMarkerPos = this._view.byteLength - 32 - PWSafeDB.BLOCK_SIZE;
+    this._eofMarkerPos = view.byteLength - 32 - PWSafeDB.BLOCK_SIZE;
 
     var eofMarker = null;
     if (this._eofMarkerPos > 0) {
-        eofMarker = this._view.getBinaryString(PWSafeDB.BLOCK_SIZE, this._eofMarkerPos);
+        eofMarker = view.getBinaryString(PWSafeDB.BLOCK_SIZE, this._eofMarkerPos);
     }
 
     if (eofMarker != "PWS3-EOFPWS3-EOF") {
@@ -151,6 +146,10 @@ _validateFile: function() {
     }
 
     return true;
+},
+
+_validateFile: function() {
+    return this._validate(this._view);
 },
 
 _decryptFields: function(keys) {
@@ -712,14 +711,24 @@ encryptAndSaveFile: function(passphrase, fileName, iterations) {
     var buffer = this.encrypt(passphrase, iterations);
     var blob;
 
-    if (PWSafeDB.isNW) {
-        //Workaround for Chrome 35 (used by Node-webkit)
-        blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
-    } else {
-        blob = new Blob([buffer], {type: "application/octet-stream"});
-    }
+    // if (PWSafeDB.isNW) {
+    //     //Workaround for Chrome 35 (used by Node-webkit)
+    //     blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
+    // } else {
+    //     blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
+    // }
 
+    blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
     saveAs(blob, fileName);
+},
+
+/** 
+ * Added
+ *
+**/
+getBlob: function(passphrase, iterations) {
+    var buffer = this.encrypt(passphrase, iterations);
+    return new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
 }
 
 });

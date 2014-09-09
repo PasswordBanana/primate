@@ -3,6 +3,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	$scope.databaseFile;
 	$scope.databaseFilename;
 	$scope.records;
+	$scope.headers;
 	$scope.currentRecord;
 	$scope.groups;
 	$scope.viewing = false;
@@ -47,6 +48,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 
 	$scope.setRecords = function(db) {
 		$scope.records = db.records;
+		$scope.headers = db.headers;
 		$scope.currentRecord = $scope.records[0];
 		$scope.recordTree = db.recordTree;
 	};
@@ -71,6 +73,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		for (var i = 0, il = $scope.records.length; i < il; i++) {
 			if ($scope.records[i].uuid === uuid) {
 				$scope.currentRecord = $scope.records[i];
+				$scope.currentRecordHeaders = $scope.getHeaders($scope.currentRecord.uuid);
 				$scope.viewing = true;
 			}
 		}
@@ -78,15 +81,26 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 
 	$scope.closeView = function() {
 		$scope.currentRecord = undefined;
+		$scope.currentRecordHeaders = undefined;
 		$scope.viewing = false;
 	};
 
 	$scope.gotoUrl = function(uuid) {
-		var r = getRecord(uuid);
-		var url = r.URL;
+		var url = getRecord(uuid).URL;
 		if (url != null) {
 			window.open(url, '_blank').focus();
   		}
 	};
-	
+
+	$scope.getHeaders = function(uuid) {
+		for (key in $scope.headers) {
+			console.log(key + ": " + $scope.headers[key]);
+		}
+		return $scope.headers;
+		for (var i = 0, il = $scope.headers.length; i < il; i++) {
+			if ($scope.headers[i].uuid === uuid) {
+				return $scope.headers[i];
+			}
+		}
+	};
 }]);

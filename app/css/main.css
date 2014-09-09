@@ -1,4 +1,8 @@
+/* REPLACE WITH LOCAL STATIC COPY TODO */
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300);
+
 html, body {
+	font-family: 'Roboto';
     text-align: center;
 	margin: 0;
 }
@@ -103,19 +107,27 @@ td {
 }
 
 header {
+	font-weight: lighter;
+	text-shadow: 0 0 1px white;
+	font-family: 'Roboto';
 	box-sizing: border-box;
 	width: 100%;
 	border-bottom: 1px solid black;
-	box-shadow: 0 2px 4px #222;
 	padding: 10px 10px 0 10px;
 	font-size: xx-large;
-	background-color: #222;
-	color: white;
-	text-shadow: 2px 2px 4px black;
+	background-color: #f8f8f8;
+	color: black;
+}
+
+#heading {
+	float: left;
+	margin-left: 1em;
+	font-weight: lighter;
 }
 
 .filename {
 	margin-top: 5px;
+	float: right;
 }
 
 .hoverCursor:hover {
@@ -123,8 +135,27 @@ header {
 }
 
 .menuButtonContainer {
-	float:right;
+	display: inline-block;
+	color: #00BFFF;
+	border: 2px solid #00BFFF;
+	border-radius: 4px;
+	padding: 0;
+	margin: 0;
 }
+
+.menuButtonContainer span {
+	display: inline-block;
+	padding: 5px 4em;
+	margin: 0;
+	line-height: 1.2;
+}
+
+.menuButtonContainer span:hover, .menuButtonContainer span:active {
+	background-color: #00bfff;
+	color: white;
+	cursor: pointer;
+}
+
 .filename {
 	font-size: large;
 }
@@ -138,7 +169,7 @@ header {
 
 .record {
 	display: block;
-	background-color: #DDD;
+	background-color: #f8f8f8;
 	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	box-shadow: 2px 2px 2px #AAA;
@@ -183,11 +214,11 @@ header {
 
 .group {
 	display: block;
-	background-color: #DDD;
+	background-color: #f8f8f8;
 	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	box-shadow: 2px 2px 2px #AAA;
-	line-height: 2em;
+	line-height: 3em;
 }
 
 .group:hover {
@@ -205,6 +236,16 @@ header {
 }
 
 .record a:hover, .record a:active {
+	cursor: pointer;
+}
+
+.group a {
+	display: inline-block;
+	list-style-type: none;
+	color: #00BFFF;
+}
+
+.group a:hover, .group a:active {
 	cursor: pointer;
 }
 
