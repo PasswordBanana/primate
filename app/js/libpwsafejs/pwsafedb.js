@@ -13,7 +13,9 @@ if (PWSafeDB.isNode) {
 }
 
 /**
- * Added
+ * Validate a buffer as a pwsafev3 database file
+ * Used for feedback when selecting a file to open
+ * Added for DECO3801
  *
 **/
 PWSafeDB.validate = function(buffer) {
@@ -126,8 +128,8 @@ decrypt: function(buffer, passphrase, options, callback) {
 },
 
 /**
- * Modified: code from _validateFile broken out to enable validation of files that haven't been set as this._view for feedback in an open file page
- *
+ * Validate a given view
+ * Separated from _validateFile for DECO3801
 **/
 _validate: function(view) {
     if (view.getBinaryString(4) != "PWS3") {
@@ -357,54 +359,6 @@ _readAllRecords: function(fieldView, strictFieldType) {
 
         return records;
     }).call(this);
-
-    var Group = function(groupName, nestingLevel) {
-        var name = groupName || "No name";
-        var level = nestingLevel;
-        var expanded = true;
-        return {
-            name: name,
-            level: level,
-            expanded: expanded,
-            subgroups: [],
-            records: []
-        };
-    };
-
-    var groupIndex = function(arr, groupName) {
-        for (var i = 0, il = arr.length; i < il; i++) {
-            if (arr[i].name && arr[i].name === groupName) {
-                return i;
-            }
-        }
-        return -1;
-    };
-
-    var generateRecordTree = (function(records) {
-        var tree = [], currentNode;
-        tree.push(new Group("", 0));
-        for (var r = 0, rl = records.length; r < rl; r++) {
-            var rGroups = (records[r].group) ? records[r].group.split(".") || [] : [];
-
-            currentNode = tree[0];
-
-            for (var g = 0, gl = rGroups.length; g < gl; g++) {
-                var idx = groupIndex.call(this, currentNode.subgroups, rGroups[g]);
-
-                if (idx >= 0) {
-                    currentNode = currentNode.subgroups[idx];
-                } else {
-                    currentNode.subgroups.push(new Group(rGroups[g], g + 1));
-                    currentNode = currentNode.subgroups[currentNode.subgroups.length - 1];
-                }
-            }
-            currentNode.records.push(records[r]);
-        }
-
-        return tree;
-    });
-
-    this.recordTree = generateRecordTree.call(this, this.records);
 },
 
 _readField: function(view, isHeader) {
@@ -707,23 +661,10 @@ encrypt: function(passphrase, iterations) {
     return view.buffer;
 },
 
-encryptAndSaveFile: function(passphrase, fileName, iterations) {
-    var buffer = this.encrypt(passphrase, iterations);
-    var blob;
-
-    // if (PWSafeDB.isNW) {
-    //     //Workaround for Chrome 35 (used by Node-webkit)
-    //     blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
-    // } else {
-    //     blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
-    // }
-
-    blob = new Blob([new Uint8Array(buffer)], {type: "application/octet-stream"});
-    saveAs(blob, fileName);
-},
-
 /** 
- * Added
+ * Return a blob object, to let the application handle how to save the file
+ * as saving is heavily dependent on platform.
+ * Added for DECO3801
  *
 **/
 getBlob: function(passphrase, iterations) {

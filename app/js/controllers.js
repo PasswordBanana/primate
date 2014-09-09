@@ -1,3 +1,8 @@
+/**
+ * AngularJS Controllers for DECO3801 Project
+ *
+**/
+
 primate.controller("StateController", ["$scope", "Database", function($scope, db) {
 	$scope.state = "unloaded"; //State of the main database
 	$scope.databaseFile;
@@ -50,7 +55,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		$scope.records = db.records;
 		$scope.headers = db.headers;
 		$scope.currentRecord = $scope.records[0];
-		$scope.recordTree = db.recordTree;
+		$scope.recordTree = generateRecordTree.call(this, $scope.records);
 	};
 
 	$scope.lockDb = function() {

@@ -1,3 +1,8 @@
+/**
+ * AngularJS Filters for DECO3801 Project
+ *
+**/
+
 primate.filter("hash", function() {
 	return function(input) {
 		var input = input || "";

@@ -1,7 +1,10 @@
+/**
+ * AngularJS Factories for DECO3801 Project
+ *
+**/
+
 primate.factory("Database", ["$q", function($q) {
-	var file,
-		db,
-		pass,
+	var file, db, pass,
 		name = "No database loaded";
 
 	var service = {};
