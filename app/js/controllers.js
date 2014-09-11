@@ -3,19 +3,25 @@
  *
 **/
 
+/*
+ * StateController handles all the primary application controls
+ * including the application state (unloaded, loaded, unlocked)
+ */
 primate.controller("StateController", ["$scope", "Database", function($scope, db) {
-	$scope.state = "unloaded"; //State of the main database
-	$scope.databaseFile;
+	var databaseFile;
+	$scope.state = "unloaded"; //State of the main database ["unloaded", "loaded", "unlocked"]
 	$scope.databaseFilename;
-	$scope.records;
-	$scope.headers;
-	$scope.currentRecord;
-	$scope.groups;
-	$scope.viewing = false;
-	$scope.invalidFile = false;
-	$scope.pass;
-	$scope.filePicker;
+	$scope.records; //Array of all records in the database
+	$scope.headers; //Object containing the database headers
+	$scope.recordTree; //$scope.records organised in a tree, nested by groups
+	$scope.viewing = false; //Is the edit modal visible
+	$scope.invalidFile = false; //Should the invalid file message be displayed
+	$scope.pass; //Master password field contents
+	$scope.filePicker; //File input object
 
+	/*
+	 * Return the record with the given UUID
+	 */
 	var getRecord = function(uuid) {
 		for (var i = 0, il = $scope.records.length; i < il; i++) {
 			if ($scope.records[i].uuid === uuid) {
@@ -24,18 +30,24 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		}
 	};
 
+	/*
+	 * Handle file input object in open screen changing state
+	 */
 	$scope.fileChanged = function(newFile) {
 		$scope.filePicker = newFile;
-		$scope.databaseFile = newFile.files[0];
-		$scope.databaseFilename = $scope.databaseFile.name;
+		databaseFile = newFile.files[0];
+		$scope.databaseFilename = databaseFile.name;
 		$scope.setState("loaded");
 		$scope.$apply();
 
 		document.getElementById("passwordField").focus();
 	};
 
+	/*
+	 * Open the database file
+	 */
 	$scope.open = function() {
-		var promise = db.setFile($scope.databaseFile, $scope.pass);
+		var promise = db.setFile(databaseFile, $scope.pass);
 
 		promise.then(function(success) {
 			$scope.setRecords(db.getDb());
@@ -51,61 +63,50 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		$scope.state = state;
 	};
 
+	/*
+	 * Update records with current list from the database
+	 * and re-generate recordTree.
+	 */
 	$scope.setRecords = function(db) {
 		$scope.records = db.records;
 		$scope.headers = db.headers;
-		$scope.currentRecord = $scope.records[0];
 		$scope.recordTree = generateRecordTree.call(this, $scope.records);
 	};
 
+	/*
+	 * Lock the database and clear variables
+	 */
 	$scope.lockDb = function() {
 		db.close();
 		$scope.records = undefined;
+		$scope.recordTree = undefined;
+		$scope.headers = undefined;
 		$scope.setState("loaded");
 	};
 
+	/*
+	 * Pass through a save call to the Database factory
+	 */
 	$scope.saveDb = function() {
 		db.save();
 	};
 
+	/*
+	 * Close the database and clear inputs, resetting whole application state
+	 */
 	$scope.closeDb = function() {
 		$scope.lockDb();
 		$scope.filePicker.value = "";
 		$scope.setState("unloaded");
 	};
 
-	$scope.viewRecord = function(uuid) {
-		for (var i = 0, il = $scope.records.length; i < il; i++) {
-			if ($scope.records[i].uuid === uuid) {
-				$scope.currentRecord = $scope.records[i];
-				$scope.currentRecordHeaders = $scope.getHeaders($scope.currentRecord.uuid);
-				$scope.viewing = true;
-			}
-		}
-	};
-
-	$scope.closeView = function() {
-		$scope.currentRecord = undefined;
-		$scope.currentRecordHeaders = undefined;
-		$scope.viewing = false;
-	};
-
+	/*
+	 * Open a new window with the URL set in a record with the given UUID
+	 */
 	$scope.gotoUrl = function(uuid) {
 		var url = getRecord(uuid).URL;
 		if (url != null) {
 			window.open(url, '_blank').focus();
   		}
-	};
-
-	$scope.getHeaders = function(uuid) {
-		for (key in $scope.headers) {
-			console.log(key + ": " + $scope.headers[key]);
-		}
-		return $scope.headers;
-		for (var i = 0, il = $scope.headers.length; i < il; i++) {
-			if ($scope.headers[i].uuid === uuid) {
-				return $scope.headers[i];
-			}
-		}
 	};
 }]);

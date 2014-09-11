@@ -145,7 +145,7 @@ header {
 
 .menuButtonContainer span {
 	display: inline-block;
-	padding: 5px 4em;
+	padding: 5px 3em;
 	margin: 0;
 	line-height: 1.2;
 }
@@ -158,6 +158,11 @@ header {
 
 .filename {
 	font-size: large;
+}
+
+.openFilename {
+	font-size: large;
+	text-align: center;
 }
 
 .recordContainer {

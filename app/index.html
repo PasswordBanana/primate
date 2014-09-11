@@ -8,7 +8,7 @@
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
-    
+
     <script src="bower_components/angular/angular.js"></script>
     <script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
     <script src="js/libpwsafejs/jDataView/src/jdataview.js"></script>
@@ -36,7 +36,7 @@
         </div>
 
         <div ng-if="$parent.state === 'loaded'">
-            <p class="filename">{{databaseFilename}} <span ng-click="closeDb()" class="hoverCursor glyphicon glyphicon-remove-circle"></span></p>
+            <p class="openFilename">{{databaseFilename}} <span ng-click="closeDb()" class="hoverCursor glyphicon glyphicon-remove-circle"></span></p>
             <form ng-submit="open()">
                 <input type="password" id="passwordField" ng-model="$parent.$parent.pass">
                 <input type="submit" value="Unlock" class="openFileButton">

@@ -554,7 +554,7 @@ _serializeFields: function() {
         modifyTime: 0x0c, URL: 0x0d, autotype: 0x0e, passphraseHistory: 0x0f, passphrasePolicy: 0x10, emailAddress: 0x14, ownPassphraseSymbols: 0x16 };
     for (i in this.records) {
         for (k in this.records[i]) {
-            if (k !== "$$hashKey") { //AngularJS creates a $$hashKey property, ignore it
+            if (k !== "$$hashKey") { //AngularJS creates a $$hashKey property, ignore it (DECO3801)
                 if (!(k in types)) {
                     throw new Error('unknown field property ' + k + " || " + this.records[i].k);
                 }

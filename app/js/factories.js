@@ -4,11 +4,17 @@
 **/
 
 primate.factory("Database", ["$q", function($q) {
-	var file, db, pass,
-		name = "No database loaded";
+	var file, //Database File object
+		db, //Decrypted PWSafeDB() view of the database
+		pass, //Database password
+		name = "No database loaded"; //Filename of the database
 
 	var service = {};
 
+	/*
+	 * Set the database to File f and decrypt it with password p
+	 * Returns a promise object
+	 */
 	service.setFile = function(f, p) {
 		var deferred = $q.defer();
 		var reader = new FileReader();
@@ -31,15 +37,18 @@ primate.factory("Database", ["$q", function($q) {
 		return deferred.promise;
 	};
 
+	// Getter for the decrypted database
 	service.getDb = function() {
 		return db;
 	};
 
+	// Save the database using the File-saver library
 	service.save = function() {
 		var blob = db.getBlob(pass);
 		saveAs(blob, name);
 	};
 
+	// Close the database and reset all variables
 	service.close = function() {
 		db = undefined;
 		file = undefined;

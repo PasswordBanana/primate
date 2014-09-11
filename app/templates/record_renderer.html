@@ -19,7 +19,7 @@
         </div>
         <div ng-switch-when="Settings">
             <p>Password Settings</p>
-            <p ng-repeat="field in headers">{{Object.keys(headers)}}: {{getHeaders(record.uuid)}}</p>
+            <p>{{record.passphrasePolicy}}</p>
         </div>
         <div ng-switch-default>
             <ul>
