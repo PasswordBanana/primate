@@ -42,12 +42,12 @@
         </div>
         <div ng-switch-default>
             <ul>
-                <li><label>ID:</label>{{record.uuid}}</li>
-                <li><label>Group:</label>{{record.group}}</li>
-                <li><label>Title:</label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
-                <li><label>Username:</label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
-                <li><label>Password:</label><input type="password" value="{{record.password}}" ng-model="record.password"></li>
-                <li><label>Notes:</label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
+                <li><label>ID: </label>{{record.uuid}}</li>
+                <li><label>Group: </label>{{record.group}}</li>
+                <li><label>Title: </label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
+                <li><label>Username: </label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
+                <li><label>Password: </label><input type="password" value="{{record.password}}" ng-model="record.password"></li>
+                <li><label>Notes: </label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
                 <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
             </ul>
         </div>

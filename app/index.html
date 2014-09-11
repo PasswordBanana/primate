@@ -27,7 +27,7 @@
 <body ng-controller="StateController">
     <!-- Open file -->
     <div ng-if="state === 'unloaded' || state === 'loaded'" id="openFileWrapper">
-        <h1>Primate Password Manager</h1>
+        <h1>Primate</h1>
         <input type="file" id="fileInput" onchange="angular.element(this).scope().fileChanged(this)">
         <div onclick="document.getElementById('fileInput').click()" id="openFileArea">
             <span class="glyphicon glyphicon-folder-open"></span>
