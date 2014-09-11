@@ -109,4 +109,22 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 			window.open(url, '_blank').focus();
   		}
 	};
+
+	/*
+	 * Enable a custom password policy for the record with the given UUID
+	 * Overrides the default policy for the database
+	 */
+	$scope.enableCustomPolicy = function(uuid) {
+		var r = getRecord(uuid);
+		r.passphrasePolicy = {
+			flags: "",
+			length: 12,
+			minLowercase: 0,
+			minUppercase: 0,
+			minDigit: 0,
+			minSymbol: 0
+		};
+
+		r.ownPassphraseSymbols = "";
+	};
 }]);

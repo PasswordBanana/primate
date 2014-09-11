@@ -16,10 +16,29 @@
         <input type="button" class="recordModalTab" value="Settings" ng-click="currentTab = 'Settings'">
         <div ng-switch-when="History">
             <p>Password History</p>
+            <input type="button" ng-if="!record.history.isEnabled" value="Enable History" ng-click="record.history.isEnabled = true">
+            <ul ng-if="record.history.isEnabled">
+                <li ng-repeat="pastPassphrase in record.passphraseHistory.passphrases">
+                    <span>{{pastPassphrase.timestamp}}</span>
+                    <span>{{pastPassphrase.passphrase}}</span>
+                </li>
+                <li ng-if="!!record.history.currentSize === false">No history available for this record</li>
+            </ul>
+            <p ng-if="!record.history.isEnabled">History is not enabled for this account.</p>
         </div>
         <div ng-switch-when="Settings">
             <p>Password Settings</p>
-            <p>{{record.passphrasePolicy}}</p>
+
+            <input type="button" ng-if="record.passphrasePolicy === undefined" value="Override Default Password Policy" ng-click="enableCustomPolicy(record.uuid)">
+            <ul ng-if="record.passphrasePolicy !== undefined">
+                <li>Flags: <input type="text" ng-model="record.passphrasePolicy.flags"></li>
+                <li>Length: <input type="number" ng-model="record.passphrasePolicy.length"></li>
+                <li>Min. Lowercase: <input type="number" ng-model="record.passphrasePolicy.minLowercase"></li>
+                <li>Min. Uppercase: <input type="number" ng-model="record.passphrasePolicy.minUppercase"></li>
+                <li>Min. Digits: <input type="number" ng-model="record.passphrasePolicy.minDigit"></li>
+                <li>Min. Symbols: <input type="number" ng-model="record.passphrasePolicy.minSymbol"></li>
+                <li>Own Passphrase Symbols: <input type="text" ng-model="record.ownPassphraseSymbols"></li>
+            </ul>
         </div>
         <div ng-switch-default>
             <ul>
