@@ -46,7 +46,11 @@
                 <li><label>Group: </label>{{record.group}}</li>
                 <li><label>Title: </label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
                 <li><label>Username: </label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
-                <li><label>Password: </label><input type="password" value="{{record.password}}" ng-model="record.password"></li>
+                <li ng-init="passwordShown = false"><label>Password: </label><input type="{{(passwordShown) ? 'text' : 'password'}}" value="{{record.password}}" ng-model="record.password">
+                    <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
+                    <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span>
+                </li>
+                <li><label>Password Strength: {{record.password | passwordStrengthScore}} out of 4</li>
                 <li><label>Notes: </label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
                 <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
             </ul>
