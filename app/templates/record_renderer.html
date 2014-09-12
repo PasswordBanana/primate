@@ -1,3 +1,4 @@
+<!-- Start record tree display -->
 <span class="record">
     <span class="recordHandle">&nbsp;</span>
     <a ng-click="editAccount(record.uuid); recordShown = !recordShown" >{{record.title}}</a>
@@ -9,11 +10,15 @@
         <span ng-click="editAccount(record.uuid); recordShown = !recordShown" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
     </span>
 </span>
+<!-- End record tree display -->
+
+<!-- Start Per-record edit modal -->
 <div class="recordModalWrapper" ng-show="recordShown" ng-init="recordShown = false" ng-click="recordShown = !recordShown" data-record-uuid="{{record.uuid}}">
     <div class="recordModal" ng-click="$event.stopPropagation()" ng-switch="currentTab">
         <input type="button" class="recordModalTab" value="Edit" ng-click="currentTab = 'Edit'">
         <input type="button" class="recordModalTab" value="History" ng-click="currentTab = 'History'">
         <input type="button" class="recordModalTab" value="Settings" ng-click="currentTab = 'Settings'">
+        <!-- Start history tab -->
         <div ng-switch-when="History">
             <p>Password History</p>
             <input type="button" ng-if="!record.history.isEnabled" value="Enable History" ng-click="record.history.isEnabled = true">
@@ -26,6 +31,7 @@
             </ul>
             <p ng-if="!record.history.isEnabled">History is not enabled for this account.</p>
         </div>
+        <!-- Start settings tab -->
         <div ng-switch-when="Settings">
             <p>Password Settings</p>
 
@@ -40,6 +46,7 @@
                 <li>Own Passphrase Symbols: <input type="text" ng-model="record.ownPassphraseSymbols"></li>
             </ul>
         </div>
+        <!-- Start main edit tab -->
         <div ng-switch-default>
             <ul>
                 <li><label>ID: </label>{{record.uuid}}</li>
