@@ -563,7 +563,6 @@ _serializeFields: function() {
 
                 switch(k) {
                 case 'uuid':
-                    console.log("Writing uuid: " + this.records[i][k]);
                     writeUuid(this.records[i][k], types[k]);
                     break;
                 case 'group': case 'title': case 'username': case 'notes': case 'password': case 'URL': case 'autotype':
