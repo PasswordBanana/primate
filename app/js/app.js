@@ -1,12 +1,14 @@
 var primate = angular.module("primate", ['ngAnimate']);
 
-var Group = function(groupName, nestingLevel) {
+var Group = function(groupName, fullGroup, nestingLevel) {
     var name = groupName || "No name";
     var level = nestingLevel;
+    var fullGroup = fullGroup;
     var expanded = true;
     return {
         name: name,
         level: level,
+        fullGroup: fullGroup,
         expanded: expanded,
         subgroups: [],
         records: []
@@ -24,7 +26,7 @@ var groupIndex = function(arr, groupName) {
 
 var generateRecordTree = (function(records) {
     var tree = [], currentNode;
-    tree.push(new Group("", 0));
+    tree.push(new Group("", "", 0));
     for (var r = 0, rl = records.length; r < rl; r++) {
         var rGroups = (records[r].group) ? records[r].group.split(".") || [] : [];
 
@@ -36,7 +38,8 @@ var generateRecordTree = (function(records) {
             if (idx >= 0) {
                 currentNode = currentNode.subgroups[idx];
             } else {
-                currentNode.subgroups.push(new Group(rGroups[g], g + 1));
+                var fullGroup = rGroups.slice(0, g + 1).join(".");
+                currentNode.subgroups.push(new Group(rGroups[g], fullGroup, g + 1));
                 currentNode = currentNode.subgroups[currentNode.subgroups.length - 1];
             }
         }

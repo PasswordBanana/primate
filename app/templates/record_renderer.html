@@ -9,7 +9,7 @@
         <span ng-click="editAccount(record.uuid); recordShown = !recordShown" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
     </span>
 </span>
-<div class="recordModalWrapper" ng-show="recordShown" ng-init="recordShown = false" ng-click="recordShown = !recordShown">
+<div class="recordModalWrapper" ng-show="recordShown" ng-init="recordShown = false" ng-click="recordShown = !recordShown" data-record-uuid="{{record.uuid}}">
     <div class="recordModal" ng-click="$event.stopPropagation()" ng-switch="currentTab">
         <input type="button" class="recordModalTab" value="Edit" ng-click="currentTab = 'Edit'">
         <input type="button" class="recordModalTab" value="History" ng-click="currentTab = 'History'">

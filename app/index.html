@@ -62,6 +62,7 @@
         </header>
 
         <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
+        <a class="addRecord" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><span class="glyphicon glyphicon-plus"></span>Add Record</a>
     </div>
 </body>
 </html>

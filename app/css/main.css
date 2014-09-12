@@ -323,3 +323,12 @@ header {
 .recordModal > div {
 	padding: 20px;
 }
+
+.addRecord {
+	font-size: 0.7em;
+	margin-left: 0.5em;
+}
+
+.addRecord:hover {
+	cursor: pointer;
+}

@@ -64,13 +64,20 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	};
 
 	/*
+	 * Update the Records tree view
+	 */
+	var updateRecordTree = function() {
+		$scope.recordTree = generateRecordTree.call(this, $scope.records);
+	};
+
+	/*
 	 * Update records with current list from the database
 	 * and re-generate recordTree.
 	 */
 	$scope.setRecords = function(db) {
 		$scope.records = db.records;
 		$scope.headers = db.headers;
-		$scope.recordTree = generateRecordTree.call(this, $scope.records);
+		updateRecordTree();
 	};
 
 	/*
@@ -126,5 +133,46 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		};
 
 		r.ownPassphraseSymbols = "";
+	};
+
+	/*
+	 * Add a new record to the given group
+	 */
+	$scope.addRecord = function(group) {
+		/*
+		 * RFC4122 Compliant UUID generator
+		 * Created by user 'broofa' on StackOverflow
+		 * http://stackoverflow.com/a/2117523
+		 * Removed dashes as libpwsafejs/Password Gorilla don't support them (invalid implementation?)
+		 */
+		var group = group,
+			uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			    return v.toString(16);
+			});
+
+		var Record = function() {
+			return {
+				uuid: uuid,
+				group: group,
+				title: "",
+				password: "",
+				username: "",
+				passphraseModifyTime: new Date(),
+				modifyTime: new Date()
+			};
+		};
+		var newRecord = new Record();
+		$scope.records.push(newRecord);
+		updateRecordTree();
+
+		//Show the edit modal for the new record
+		//TODO: update this to use promises rather than timeout
+		setTimeout(function() {
+			var newRecordElement = document.querySelector("[data-record-uuid='" + newRecord.uuid + "']");
+			var newRecordScope = angular.element(newRecordElement).scope();
+			newRecordScope.recordShown = true;
+			newRecordScope.$apply();
+		}, 200);
 	};
 }]);
