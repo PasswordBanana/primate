@@ -13,23 +13,23 @@
 }
 
 html, body {
-	font-family: 'Roboto';
-	font-weight: lighter;
+    font-family: 'Roboto';
+    font-weight: lighter;
     text-align: center;
-	margin: 0;
+    margin: 0;
 }
 
 table {
-	width: 100%;
+    width: 100%;
 }
 
 td {
-	border: 1px solid black;
-	border-collapse: collapse;
+    border: 1px solid black;
+    border-collapse: collapse;
 }
 
 h1 {
-	font-weight: lighter;
+    font-weight: lighter;
 }
 
 .animate-if.ng-enter, .animate-if.ng-leave, .groupChevronOpen.ng-enter {
@@ -38,8 +38,8 @@ h1 {
 }
 
 .groupChevronOpen.ng-leave {
-	-webkit-transition: 0;
-	transition: 0;
+    -webkit-transition: 0;
+    transition: 0;
 }
 
 .animate-if.ng-enter,
@@ -53,10 +53,10 @@ h1 {
 }
 
 .groupChevronContainer {
-	width: 1em;
-	height: 1em;
-	margin-left: 1em;
-	overflow: hidden;
+    width: 1em;
+    height: 1em;
+    margin-left: 1em;
+    overflow: hidden;
 }
 
 .groupChevronOpen.ng-leave.ng-leave-active,
@@ -69,266 +69,266 @@ h1 {
 }
 
 #viewBox {
-	position: absolute;
-	background-color: #CCC;
-	width: 100%;
-	margin: 0 auto;
-	min-height: 50%;
+    position: absolute;
+    background-color: #CCC;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 50%;
 }
 
 #fileInput {
-	visibility: hidden;
-	display: none;
+    visibility: hidden;
+    display: none;
 }
 
 #openFileArea {
-	box-sizing: border-box;
-	font-size: 10em;
-	margin: 2cm auto;
-	border-radius: 20px;
-	border: 2px dashed white;
+    box-sizing: border-box;
+    font-size: 10em;
+    margin: 2cm auto;
+    border-radius: 20px;
+    border: 2px dashed white;
 }
 
 #openFileArea:hover, #openFileArea:active {
-	cursor: pointer;
-	background-color: #f8f8f8;
-	border: 2px dashed #00BFFF;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    border: 2px dashed #00BFFF;
 }
 
 #openFileArea p {
-	position: relative;
-	font-size: 0.3em;
-	top: -1em;
+    position: relative;
+    font-size: 0.3em;
+    top: -1em;
 }
 
 #openFileWrapper {
-	width: 40%;
-	min-width: 600px;
-	margin: 0 auto;
+    width: 40%;
+    min-width: 600px;
+    margin: 0 auto;
 }
 
 .openFileButton {
-	width: 100%;
-	height: 3em;
-	border: 0;
-	color: #AAA;
-	font-size: 1.5em;
-	background-color: white;
+    width: 100%;
+    height: 3em;
+    border: 0;
+    color: #AAA;
+    font-size: 1.5em;
+    background-color: white;
 }
 
 .openFileButton:hover {
-	cursor: pointer;
-	color: black;
-	text-shadow: 0 0 2px white;
+    cursor: pointer;
+    color: black;
+    text-shadow: 0 0 2px white;
 }
 
 header {
-	font-weight: lighter;
-	text-shadow: 0 0 1px white;
-	font-family: 'Roboto';
-	box-sizing: border-box;
-	width: 100%;
-	border-bottom: 1px solid black;
-	padding: 10px 10px 0 10px;
-	font-size: xx-large;
-	background-color: #f8f8f8;
-	color: black;
+    font-weight: lighter;
+    text-shadow: 0 0 1px white;
+    font-family: 'Roboto';
+    box-sizing: border-box;
+    width: 100%;
+    border-bottom: 1px solid black;
+    padding: 10px 10px 0 10px;
+    font-size: xx-large;
+    background-color: #f8f8f8;
+    color: black;
 }
 
 #heading {
-	float: left;
-	margin-left: 1em;
-	font-weight: lighter;
+    float: left;
+    margin-left: 1em;
+    font-weight: lighter;
 }
 
 .filename {
-	margin-top: 5px;
-	float: right;
+    margin-top: 5px;
+    float: right;
 }
 
 .hoverCursor:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .menuButtonContainer {
-	display: inline-block;
-	color: #00BFFF;
-	border: 2px solid #00BFFF;
-	border-radius: 4px;
-	padding: 0;
-	margin: 0;
+    display: inline-block;
+    color: #00BFFF;
+    border: 2px solid #00BFFF;
+    border-radius: 4px;
+    padding: 0;
+    margin: 0;
 }
 
 .menuButtonContainer span {
-	display: inline-block;
-	padding: 5px 3em;
-	margin: 0;
-	margin-top: -1px;
-	line-height: 1.2;
+    display: inline-block;
+    padding: 5px 3em;
+    margin: 0;
+    margin-top: -1px;
+    line-height: 1.2;
 }
 
 .menuButtonContainer span:hover, .menuButtonContainer span:active {
-	background-color: #00bfff;
-	color: white;
-	cursor: pointer;
+    background-color: #00bfff;
+    color: white;
+    cursor: pointer;
 }
 
 .filename {
-	font-size: large;
+    font-size: large;
 }
 
 .openFilename {
-	font-size: large;
-	text-align: center;
+    font-size: large;
+    text-align: center;
 }
 
 .recordContainer {
-	display: block;
-	font-size: large;
-	text-align: left;
-	margin: 0;
+    display: block;
+    font-size: large;
+    text-align: left;
+    margin: 0;
 }
 
 .record {
-	display: block;
-	background-color: #f8f8f8;
-	border-bottom: 1px solid #CCC;
-	border-right: 1px solid #CCC;
-	box-shadow: 2px 2px 2px #AAA;
-	line-height: 2em;
+    display: block;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    box-shadow: 2px 2px 2px #AAA;
+    line-height: 2em;
 }
 
 .recordButtonContainer {
-	float: right;
-	margin: 0 10px;
+    float: right;
+    margin: 0 10px;
 }
 
 .recordHandle {
-	display: inline-block;
-	margin: 0.5em 5px;
-	width: 2pt;
-	height: 2em;
-	background-color: #CCC;
-	box-shadow: -1px -1px 1px #777;
+    display: inline-block;
+    margin: 0.5em 5px;
+    width: 2pt;
+    height: 2em;
+    background-color: #CCC;
+    box-shadow: -1px -1px 1px #777;
 }
 
 .recordHandle:hover, .recordHandle:active {
-	color: #00BFFF;
+    color: #00BFFF;
 }
 
 .recordHandle:hover {
-	cursor: grabbing;
-	cursor: grab;
-	background-color: deepskyblue;
-	box-shadow: inset 1px 1px 1px skyblue;
+    cursor: grabbing;
+    cursor: grab;
+    background-color: deepskyblue;
+    box-shadow: inset 1px 1px 1px skyblue;
 }
 
 .recordHandle:active {
-	cursor: grabbing;
+    cursor: grabbing;
 }
 
 .groupContainer {
-	display: block;
-	font-size: large;
-	text-align: left;
-	margin: 0;
+    display: block;
+    font-size: large;
+    text-align: left;
+    margin: 0;
 }
 
 .group {
-	display: block;
-	background-color: #f8f8f8;
-	border-bottom: 1px solid #CCC;
-	border-right: 1px solid #CCC;
-	box-shadow: 2px 2px 2px #AAA;
-	line-height: 3em;
+    display: block;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    box-shadow: 2px 2px 2px #AAA;
+    line-height: 3em;
 }
 
 .group:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .lightText {
-	color: #AAA;
+    color: #AAA;
 }
 
 .record a {
-	display: inline-block;
-	list-style-type: none;
-	color: black;
+    display: inline-block;
+    list-style-type: none;
+    color: black;
 }
 
 .record a:hover, .record a:active {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .group a {
-	display: inline-block;
-	list-style-type: none;
-	color: #00BFFF;
+    display: inline-block;
+    list-style-type: none;
+    color: #00BFFF;
 }
 
 .group a:hover, .group a:active {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .menuButton:hover, .menuButton:active {
-	cursor: pointer;
-	background-color: #DDD;
-	color: red;
+    cursor: pointer;
+    background-color: #DDD;
+    color: red;
 }
 
 .recordModalWrapper {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0,0,0,0.7);
-	z-index: 999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 999;
 }
 .recordModal {
-	position: relative;
-	width: 80%;
-	top: 10%;
-	background-color: #DDD;
-	margin: 0 auto;
-	text-align: justify;
-	box-shadow: 0 0 8px #222;
+    position: relative;
+    width: 80%;
+    top: 10%;
+    background-color: #DDD;
+    margin: 0 auto;
+    text-align: justify;
+    box-shadow: 0 0 8px #222;
 }
 
 .recordModal input[type=button] {
-	box-sizing: border-box;
-	padding: 20px;
-	border: 0;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 0;
 }
 
 .recordModal input[type=button]:hover {
-	background-color: #00BFFF;
-	cursor: pointer;
-	color: black;
-	text-shadow: 0 0 2px white;
+    background-color: #00BFFF;
+    cursor: pointer;
+    color: black;
+    text-shadow: 0 0 2px white;
 }
 
 .recordModalClose {
-	width: 100%;
+    width: 100%;
 }
 
 .recordModalTab {
-	display: inline-block;
-	width: 33%;
-	margin: 0 auto;
-	border-bottom: 1px solid black;
+    display: inline-block;
+    width: 33%;
+    margin: 0 auto;
+    border-bottom: 1px solid black;
 }
 
 .recordModal > div {
-	padding: 20px;
+    padding: 20px;
 }
 
 .addRecord {
-	font-size: 0.7em;
-	margin-left: 0.5em;
+    font-size: 0.7em;
+    margin-left: 0.5em;
 }
 
 .addRecord:hover {
-	cursor: pointer;
+    cursor: pointer;
 }

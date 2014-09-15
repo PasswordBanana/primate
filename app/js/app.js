@@ -156,9 +156,9 @@ var generatePassword = function(policy) {
     do {
         pass = randomPassword(policy.length, validChars);
     } while (countOccurrences(lowercase, pass) < policy.minLowercase &&
-           countOccurrences(uppercase, pass) < policy.minUppercase &&
-           countOccurrences(digits, pass) < policy.minDigit &&
-           countOccurrences(symbols, pass) < policy.minSymbol);
+             countOccurrences(uppercase, pass) < policy.minUppercase &&
+             countOccurrences(digits, pass) < policy.minDigit &&
+             countOccurrences(symbols, pass) < policy.minSymbol);
 
     return pass;
 };
