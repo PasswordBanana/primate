@@ -67,5 +67,14 @@ primate.factory("Database", ["$q", function($q) {
 		name = "No database loaded";
 	};
 
+	// Set a new master database password
+	service.setPass = function(newPass) {
+		pass = newPass;
+	};
+
+	service.setName = function(newName) {
+		name = newName;
+	};
+
 	return service;
 }]);

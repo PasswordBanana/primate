@@ -42,11 +42,26 @@
                 <input type="submit" value="Unlock" class="openFileButton">
             </form>
         </div>
-        <input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton">
+        <input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton" ng-click="$parent.$parent.state = 'new';">
         <p ng-show="invalidFile"><font color="red">Invalid Password Database, Try again</font></p>
         
     </div>
     <!-- End open file -->
+
+    <!-- Start new database -->
+    <div ng-if="state === 'new'">
+        <h1>Primate</h1>
+        <h2>Create new database</h2>
+        <form ng-submit="newDb(newpass, newname)">
+        <ul>
+            <li>Filename: <input type="text" placeholder="example.psafe3" ng-model="newname"></li>
+            <li>Master Password: <input type="password" ng-model="newpass"></li>
+            <li>Confirm: <input type="password" ng-model="newpass2"></li>
+        </ul>
+        <input type="submit" ng-if="newpass != null &amp;&amp; newpass === newpass2" value="Create">
+        </form>
+    </div>
+    <!-- End new database -->
 
     <!-- Main application -->
     <div ng-if="state === 'unlocked'">
@@ -64,6 +79,7 @@
 
         <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
         <a class="addRecord" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><span class="glyphicon glyphicon-plus"></span>Add Record</a>
+        <a class="addRecord" ng-click="addGroup(); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></span>Add Group</a>
     </div>
 </body>
 </html>

@@ -7,7 +7,7 @@
  * StateController handles all the primary application controls
  * including the application state (unloaded, loaded, unlocked)
  */
-primate.controller("StateController", ["$scope", "Database", function($scope, db) {
+primate.controller("StateController", ["$scope", "Database", "$http", function($scope, db, $http) {
 	var databaseFile;
 	$scope.state = "unloaded"; //State of the main database ["unloaded", "loaded", "unlocked"]
 	$scope.databaseFilename;
@@ -25,6 +25,10 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		useSymbols: false
 	};
 
+	/*
+	 * Return the index for the record with the given UUID
+	 * If it doesn't exist, return -1
+	 */
 	var getRecordIndex = function(uuid) {
 		for (var i = 0, il = $scope.records.length; i < il; i++) {
 			if ($scope.records[i].uuid === uuid) {
@@ -74,6 +78,28 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 
 	$scope.setState = function(state) {
 		$scope.state = state;
+	};
+
+	/*
+	 * Create and open a new database with the given master password
+	 */
+	$scope.newDb = function(master, filename) {
+		$http({
+			method: 'GET', 
+			url: 'empty.psafe3',
+			responseType: 'arraybuffer'
+		}).
+	    success(function(data, status, headers, config) {
+	    	db.setFile(new Blob([new Uint8Array(data)], {type: "application/octet-stream"}));
+	    	db.setName(filename);
+	    	$scope.databaseFilename = filename;
+	    	$scope.pass = "";
+	    	$scope.open();
+	    	db.setPass(master);
+	    }).
+	    error(function(data, status, headers, config) {
+	    	throw new Error("Failed to create new database. Could not access file empty.psafe3");
+	    });	
 	};
 
 	/*
@@ -202,8 +228,10 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	 * Add a group to the tree view.
 	 */
 	$scope.addGroup = function(group) {
-		if (group !== null) {
-			var name = window.prompt("Group Name:");
+		var name = window.prompt("Group Name:");
+		if (group == null) {
+			this.recordTree[0].subgroups.push(new Group(name, name, 1));
+		} else {
 			group.subgroups.push(new Group(name, group.fullGroup + "." + name, group.level + 1));
 		}
 	};
@@ -237,5 +265,12 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 			useDigits: checkFlag(flags, 'useDigits'),
 			useSymbols: checkFlag(flags, 'useSymbols')
 		};
+	};
+
+	/*
+	 * Pass new password through to the database factory
+	 */
+	$scope.changeMasterPassword = function(master) {
+		db.setPass(master);
 	};
 }]);
