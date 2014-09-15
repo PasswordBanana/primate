@@ -4,12 +4,35 @@ var primate = angular.module("primate", ['ngAnimate']);
  * The default application password policy
  */
 var defaultPolicy = {
-    flags: "0x8000",
+    flags: 0xF000,
     length: 12,
     minLowercase: 1,
     minUppercase: 1,
     minDigit: 1,
     minSymbol: 1
+};
+
+var policyFlags = {
+    "useLowercase": 0x8000,
+    "useUppercase": 0x4000,
+    "useDigits": 0x2000,
+    "useSymbols": 0x1000,
+    "useHexDigits": 0x0800,
+    "useEasyVision": 0x0400,
+    "makePronounceable": 0x0200
+    //unused: 0x01ff
+};
+
+var checkFlag = function(flags, flagName) {
+    return !!(flags & policyFlags[flagName]);
+};
+
+var setFlag = function(flags, flagName) {
+    return flags |= policyFlags[flagName];
+};
+
+var clearFlag = function(flags, flagName) {
+    return flags &= ~policyFlags[flagName];
 };
 
 var Group = function(groupName, fullGroup, nestingLevel) {
@@ -61,29 +84,6 @@ var generateRecordTree = (function(records) {
     return tree;
 });
 
-var parseFlags = function(flagString) {
-    var flags = {
-        useLowercase: true,
-        useUppercase: true,
-        useDigits: true,
-        useSymbols: true,
-        useHexDigits: false,
-        unused: false 
-    };
-
-    /* Spec, to implement */
-    // UseLowercase 0x8000
-    // UseUppercase 0x4000
-    // UseDigits 0x2000
-    // UseSymbols 0x1000
-    // UseHexDigits 0x0800 (if set, then no other flags can be set)
-    // UseEasyVision 0x0400
-    // MakePronounceable 0x0200
-    // Unused 0x01ff 
-
-    return flags;
-};
-
 /*
  * Return a random string of characters in validChars of length len
  */
@@ -121,20 +121,19 @@ var generatePassword = function(policy) {
     }
 
     var validChars = "";
-    var flags = parseFlags(policy.flags);
     var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lowercase = "abcdefghijklmnopqrstuvwxyz";
     var digits = "0123456789";
     var symbols = "+-=_@#$%^&<>/~\\?!|()";
     var hexDigits = "0123456789ABCDEF";
 
-    if (flags.useHexDigits) {
+    if (checkFlag(policy.flags, "useHexDigits")) {
         validChars += hexDigits;
     } else {
-        if (flags.useLowercase) validChars += lowercase;
-        if (flags.useUppercase) validChars += uppercase;
-        if (flags.useDigits) validChars += digits;
-        if (flags.useSymbols) validChars += symbols;
+        if (checkFlag(policy.flags, "useLowercase")) validChars += lowercase;
+        if (checkFlag(policy.flags, "useUppercase")) validChars += uppercase;
+        if (checkFlag(policy.flags, "useDigits")) validChars += digits;
+        if (checkFlag(policy.flags, "useSymbols")) validChars += symbols;
     }
 
     var pass = "";
@@ -151,5 +150,4 @@ var generatePassword = function(policy) {
            countOccurrences(symbols, pass) < policy.minSymbol);
 
     return pass;
-
 };

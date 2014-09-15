@@ -17,7 +17,7 @@
     <div class="recordModal" ng-click="$event.stopPropagation()" ng-switch="currentTab">
         <input type="button" class="recordModalTab" value="Edit" ng-click="currentTab = 'Edit'">
         <input type="button" class="recordModalTab" value="History" ng-click="currentTab = 'History'">
-        <input type="button" class="recordModalTab" value="Settings" ng-click="currentTab = 'Settings'">
+        <input type="button" class="recordModalTab" value="Settings" ng-click="currentTab = 'Settings'; updateFlags(record);" ng-init="updateFlags(record)">
         <!-- Start history tab -->
         <div ng-switch-when="History">
             <p>Password History</p>
@@ -37,7 +37,14 @@
 
             <input type="button" ng-if="record.passphrasePolicy === undefined" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
             <ul ng-if="record.passphrasePolicy !== undefined">
-                <li>Flags: <input type="text" ng-model="record.passphrasePolicy.flags"></li>
+                <li>Flags: 
+                    <ul>
+                        <li>Use Lowercase <input type="checkbox" ng-click="toggleFlag(record, 'useLowercase');" ng-model="currentFlags.useLowercase"></li>
+                        <li>Use Uppercase <input type="checkbox" ng-click="toggleFlag(record, 'useUppercase');" ng-model="currentFlags.useUppercase"></li>
+                        <li>Use Digits <input type="checkbox" ng-click="toggleFlag(record, 'useDigits');" ng-model="currentFlags.useDigits"></li>
+                        <li>Use Symbols <input type="checkbox" ng-click="toggleFlag(record, 'useSymbols');" ng-model="currentFlags.useSymbols"></li>
+                    </ul>
+                </li>
                 <li>Length: <input type="number" ng-model="record.passphrasePolicy.length"></li>
                 <li>Min. Lowercase: <input type="number" ng-model="record.passphrasePolicy.minLowercase"></li>
                 <li>Min. Uppercase: <input type="number" ng-model="record.passphrasePolicy.minUppercase"></li>

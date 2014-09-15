@@ -18,6 +18,12 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	$scope.invalidFile = false; //Should the invalid file message be displayed
 	$scope.pass; //Master password field contents
 	$scope.filePicker; //File input object
+	$scope.currentFlags = {
+		useLowercase: false,
+		useUppercase: false,
+		useDigits: false,
+		useSymbols: false
+	};
 
 	var getRecordIndex = function(uuid) {
 		for (var i = 0, il = $scope.records.length; i < il; i++) {
@@ -128,15 +134,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	 * Overrides the default policy for the database
 	 */
 	$scope.enableCustomPolicy = function(record) {
-		record.passphrasePolicy = {
-			flags: "",
-			length: 12,
-			minLowercase: 0,
-			minUppercase: 0,
-			minDigit: 0,
-			minSymbol: 0
-		};
-
+		record.passphrasePolicy = defaultPolicy;
 		record.ownPassphraseSymbols = "";
 	};
 
@@ -204,7 +202,34 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		}
 	};
 
+	/*
+	 * Generate a password for a given record
+	 */
 	$scope.genPw = function(record) {
 		record.password = generatePassword(record.passphrasePolicy);
+	};
+
+	/*
+	 * Toggle policy flags for a given record
+	 */
+	$scope.toggleFlag = function(record, flagName) {
+		if (checkFlag(record.passphrasePolicy.flags, flagName)) {
+			record.passphrasePolicy.flags = clearFlag(record.passphrasePolicy.flags, flagName);
+		} else {
+			record.passphrasePolicy.flags = setFlag(record.passphrasePolicy.flags, flagName);
+		}
+	};
+
+	/*
+	 * Maintain the state of the flag checkbox models
+	 */
+	$scope.updateFlags = function(record) {
+		var flags = (record.passphrasePolicy) ? record.passphrasePolicy.flags : defaultPolicy.flags;
+		$scope.currentFlags = {
+			useLowercase: checkFlag(flags, 'useLowercase'),
+			useUppercase: checkFlag(flags, 'useUppercase'),
+			useDigits: checkFlag(flags, 'useDigits'),
+			useSymbols: checkFlag(flags, 'useSymbols')
+		};
 	};
 }]);
