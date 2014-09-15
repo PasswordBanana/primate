@@ -1,5 +1,17 @@
 var primate = angular.module("primate", ['ngAnimate']);
 
+/*
+ * The default application password policy
+ */
+var defaultPolicy = {
+    flags: "0x8000",
+    length: 12,
+    minLowercase: 1,
+    minUppercase: 1,
+    minDigit: 1,
+    minSymbol: 1
+};
+
 var Group = function(groupName, fullGroup, nestingLevel) {
     var name = groupName || "No name";
     var level = nestingLevel;
@@ -48,3 +60,96 @@ var generateRecordTree = (function(records) {
 
     return tree;
 });
+
+var parseFlags = function(flagString) {
+    var flags = {
+        useLowercase: true,
+        useUppercase: true,
+        useDigits: true,
+        useSymbols: true,
+        useHexDigits: false,
+        unused: false 
+    };
+
+    /* Spec, to implement */
+    // UseLowercase 0x8000
+    // UseUppercase 0x4000
+    // UseDigits 0x2000
+    // UseSymbols 0x1000
+    // UseHexDigits 0x0800 (if set, then no other flags can be set)
+    // UseEasyVision 0x0400
+    // MakePronounceable 0x0200
+    // Unused 0x01ff 
+
+    return flags;
+};
+
+/*
+ * Return a random string of characters in validChars of length len
+ */
+var randomPassword = function(len, validChars){
+    var str = "",
+        charLen = validChars.length;
+
+    for (var i = 0; i < len; i++) {
+        str += validChars.charAt(Math.floor(Math.random() * charLen));
+    }
+    return str;
+};
+
+/*
+ * Count occurrences of characters from charset in pass
+ */
+var countOccurrences = function(charset, pass) {
+    var count = 0;
+    for (var i = 0, il = pass.length; i < il; i++) {
+        if (charset.indexOf(pass[i]) > -1) {
+            count++;
+        }
+    }
+    return count;
+};
+
+/*
+ * Generate a password from the given password policy
+ * or the default policy if one is not provided/undefined
+ */
+var generatePassword = function(policy) {
+
+    if (policy === undefined) {
+        policy = defaultPolicy;
+    }
+
+    var validChars = "";
+    var flags = parseFlags(policy.flags);
+    var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var lowercase = "abcdefghijklmnopqrstuvwxyz";
+    var digits = "0123456789";
+    var symbols = "+-=_@#$%^&<>/~\\?!|()";
+    var hexDigits = "0123456789ABCDEF";
+
+    if (flags.useHexDigits) {
+        validChars += hexDigits;
+    } else {
+        if (flags.useLowercase) validChars += lowercase;
+        if (flags.useUppercase) validChars += uppercase;
+        if (flags.useDigits) validChars += digits;
+        if (flags.useSymbols) validChars += symbols;
+    }
+
+    var pass = "";
+
+    if (policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol > policy.length) {
+        throw new Error("Policy invalid, impossible conditions");
+    }
+
+    do {
+        pass = randomPassword(policy.length, validChars);
+    } while (countOccurrences(lowercase, pass) < policy.minLowercase &&
+           countOccurrences(uppercase, pass) < policy.minUppercase &&
+           countOccurrences(digits, pass) < policy.minDigit &&
+           countOccurrences(symbols, pass) < policy.minSymbol);
+
+    return pass;
+
+};

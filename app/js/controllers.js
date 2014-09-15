@@ -33,7 +33,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	 */
 	var getRecord = function(uuid) {
 		var idx = getRecordIndex(uuid);
-		return (idx > -1) ? idx : null;
+		return (idx > -1) ? $scope.records[idx] : null;
 	};
 
 	/*
@@ -124,12 +124,11 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	};
 
 	/*
-	 * Enable a custom password policy for the record with the given UUID
+	 * Enable a custom password policy for the given record
 	 * Overrides the default policy for the database
 	 */
-	$scope.enableCustomPolicy = function(uuid) {
-		var r = getRecord(uuid);
-		r.passphrasePolicy = {
+	$scope.enableCustomPolicy = function(record) {
+		record.passphrasePolicy = {
 			flags: "",
 			length: 12,
 			minLowercase: 0,
@@ -138,7 +137,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 			minSymbol: 0
 		};
 
-		r.ownPassphraseSymbols = "";
+		record.ownPassphraseSymbols = "";
 	};
 
 	/*
@@ -203,5 +202,9 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 			var name = window.prompt("Group Name:");
 			group.subgroups.push(new Group(name, group.fullGroup + "." + name, group.level + 1));
 		}
+	};
+
+	$scope.genPw = function(record) {
+		record.password = generatePassword(record.passphrasePolicy);
 	};
 }]);

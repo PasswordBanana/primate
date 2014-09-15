@@ -35,7 +35,7 @@
         <div ng-switch-when="Settings">
             <p>Password Settings</p>
 
-            <input type="button" ng-if="record.passphrasePolicy === undefined" value="Override Default Password Policy" ng-click="enableCustomPolicy(record.uuid)">
+            <input type="button" ng-if="record.passphrasePolicy === undefined" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
             <ul ng-if="record.passphrasePolicy !== undefined">
                 <li>Flags: <input type="text" ng-model="record.passphrasePolicy.flags"></li>
                 <li>Length: <input type="number" ng-model="record.passphrasePolicy.length"></li>
@@ -58,6 +58,7 @@
                     <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
                     <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span>
                 </li>
+                <input type="button" value="Generate Password" ng-click="genPw(record)">
                 <li><label>Password Strength: {{record.password | passwordStrengthScore}} out of 4</li>
                 <li><label>Notes: </label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
                 <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
