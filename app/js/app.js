@@ -12,6 +12,17 @@ var defaultPolicy = {
     minSymbol: 1
 };
 
+var DefaultPolicy = function() {
+    return {
+        flags: 0xF000,
+        length: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minDigit: 1,
+        minSymbol: 1
+    };
+};
+
 var policyFlags = {
     "useLowercase": 0x8000,
     "useUppercase": 0x4000,
@@ -117,7 +128,7 @@ var countOccurrences = function(charset, pass) {
 var generatePassword = function(policy) {
 
     if (policy === undefined) {
-        policy = defaultPolicy;
+        policy = new DefaultPolicy();
     }
 
     var validChars = "";

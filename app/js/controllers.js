@@ -47,8 +47,9 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	 */
 	$scope.fileChanged = function(newFile) {
 		$scope.filePicker = newFile;
-		databaseFile = newFile.files[0];
-		$scope.databaseFilename = databaseFile.name;
+		db.setFile(newFile.files[0]);
+		$scope.databaseFilename = newFile.files[0].name;
+
 		$scope.setState("loaded");
 		$scope.$apply();
 
@@ -59,7 +60,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	 * Open the database file
 	 */
 	$scope.open = function() {
-		var promise = db.setFile(databaseFile, $scope.pass);
+		var promise = db.unlock($scope.pass);
 
 		promise.then(function(success) {
 			$scope.setRecords(db.getDb());
@@ -92,14 +93,18 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		updateRecordTree();
 	};
 
+	var clearVars = function() {
+		$scope.records = undefined;
+		$scope.recordTree = undefined;
+		$scope.headers = undefined;
+	};
+
 	/*
 	 * Lock the database and clear variables
 	 */
 	$scope.lockDb = function() {
-		db.close();
-		$scope.records = undefined;
-		$scope.recordTree = undefined;
-		$scope.headers = undefined;
+		db.lock();
+		clearVars();
 		$scope.setState("loaded");
 	};
 
@@ -114,7 +119,8 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	 * Close the database and clear inputs, resetting whole application state
 	 */
 	$scope.closeDb = function() {
-		$scope.lockDb();
+		db.close();
+		clearVars();
 		$scope.filePicker.value = "";
 		$scope.setState("unloaded");
 	};
@@ -134,7 +140,7 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	 * Overrides the default policy for the database
 	 */
 	$scope.enableCustomPolicy = function(record) {
-		record.passphrasePolicy = defaultPolicy;
+		record.passphrasePolicy = new DefaultPolicy();
 		record.ownPassphraseSymbols = "";
 	};
 

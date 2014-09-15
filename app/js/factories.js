@@ -15,7 +15,13 @@ primate.factory("Database", ["$q", function($q) {
 	 * Set the database to File f and decrypt it with password p
 	 * Returns a promise object
 	 */
-	service.setFile = function(f, p) {
+	service.setFile = function(f) {
+		file = f;
+		name = f.name;
+	};
+
+	//Unlock the loaded database file
+	service.unlock = function(p) {
 		var deferred = $q.defer();
 		var reader = new FileReader();
 
@@ -24,15 +30,13 @@ primate.factory("Database", ["$q", function($q) {
 		    	if (pdb instanceof Error) {
 		    		deferred.reject(Error.message);
 		    	} else {
-		    		file = f;
 		    		db = pdb;
 		    		pass = p;
-		    		name = f.name;
 		    		deferred.resolve(true);
 		    	}
 		 	});
 		};
-		reader.readAsArrayBuffer(f);
+		reader.readAsArrayBuffer(file);
 
 		return deferred.promise;
 	};
@@ -46,6 +50,13 @@ primate.factory("Database", ["$q", function($q) {
 	service.save = function() {
 		var blob = db.getBlob(pass);
 		saveAs(blob, name);
+	};
+
+	// Lock the database, maintain state by switchig the file for a blob
+	service.lock = function() {
+		file = db.getBlob(pass);
+		db = undefined;
+		pass = undefined;
 	};
 
 	// Close the database and reset all variables
