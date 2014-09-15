@@ -182,6 +182,9 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 		}, 200);
 	};
 
+	/*
+	 * Delete a record from the database
+	 */
 	$scope.deleteRecord = function(uuid) {
 		if (window.confirm("Are you sure you want to delete this record?")) {
 			var idx = getRecordIndex(uuid);
@@ -189,6 +192,16 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 				$scope.records.splice(idx, 1);
 				updateRecordTree();
 			}
+		}
+	};
+
+	/*
+	 * Add a group to the tree view.
+	 */
+	$scope.addGroup = function(group) {
+		if (group !== null) {
+			var name = window.prompt("Group Name:");
+			group.subgroups.push(new Group(name, group.fullGroup + "." + name, group.level + 1));
 		}
 	};
 }]);

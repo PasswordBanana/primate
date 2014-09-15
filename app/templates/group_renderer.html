@@ -6,6 +6,7 @@
     <span class="groupArrow">&nbsp;</span>
     <a>{{data.name}}</a>
     <a class="addRecord" ng-click="addRecord(data.fullGroup); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></span>Add Record</a>
+    <a class="addRecord" ng-click="addGroup(data); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></span>Add Subgroup</a>
 </span>
 <div class="animate-if" ng-if="data.expanded">
 	<div ng-repeat="data in data.subgroups" class="groupContainer" ng-style="{'margin-left': '{{data | groupIndent}}px'}" ng-include="'templates/group_renderer.html'"></div>
