@@ -45,6 +45,7 @@
                 <li>Min. Symbols: <input type="number" ng-model="record.passphrasePolicy.minSymbol"></li>
                 <li>Own Passphrase Symbols: <input type="text" ng-model="record.ownPassphraseSymbols"></li>
             </ul>
+            <input type="button" value="Delete Record" ng-click="deleteRecord(record.uuid)">
         </div>
         <!-- Start main edit tab -->
         <div ng-switch-default>

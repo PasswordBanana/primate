@@ -19,15 +19,21 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 	$scope.pass; //Master password field contents
 	$scope.filePicker; //File input object
 
+	var getRecordIndex = function(uuid) {
+		for (var i = 0, il = $scope.records.length; i < il; i++) {
+			if ($scope.records[i].uuid === uuid) {
+				return i;
+			}
+		}
+		return -1;
+	};
+
 	/*
 	 * Return the record with the given UUID
 	 */
 	var getRecord = function(uuid) {
-		for (var i = 0, il = $scope.records.length; i < il; i++) {
-			if ($scope.records[i].uuid === uuid) {
-				return $scope.records[i];
-			}
-		}
+		var idx = getRecordIndex(uuid);
+		return (idx > -1) ? idx : null;
 	};
 
 	/*
@@ -174,5 +180,15 @@ primate.controller("StateController", ["$scope", "Database", function($scope, db
 			newRecordScope.recordShown = true;
 			newRecordScope.$apply();
 		}, 200);
+	};
+
+	$scope.deleteRecord = function(uuid) {
+		if (window.confirm("Are you sure you want to delete this record?")) {
+			var idx = getRecordIndex(uuid);
+			if (idx > -1) {
+				$scope.records.splice(idx, 1);
+				updateRecordTree();
+			}
+		}
 	};
 }]);
