@@ -31,7 +31,7 @@
         <h1>Primate</h1>
         <input type="file" id="fileInput" onchange="angular.element(this).scope().fileChanged(this)">
         <div onclick="document.getElementById('fileInput').click()" id="openFileArea">
-            <span class="glyphicon glyphicon-folder-open"></span>
+            <i class="fa fa-folder-open-o"></i>
             <p>Open</p>
         </div>
 
@@ -54,7 +54,8 @@
         <h2>Create new database</h2>
         <form ng-submit="newDb(newpass, newname)">
         <ul>
-            <li>Filename: <input type="text" placeholder="example.psafe3" ng-model="newname"></li>
+            <li>Filename:     
+                 <input type="text" placeholder="example.psafe3" ng-model="newname"></li>
             <li>Master Password: <input type="password" ng-model="newpass"></li>
             <li>Confirm: <input type="password" ng-model="newpass2"></li>
         </ul>
