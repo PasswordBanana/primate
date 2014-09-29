@@ -1,0 +1,76 @@
+<!-- Modal -->
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-title" id="editModalLabel">Edit - {{record.title}} [{{record.username}}]</h4>
+    </div>
+    <div class="modal-body">
+      <!-- Tab buttons -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#editEditTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editEditTab">Details</a></li>
+        <li><a href="#editHistoryTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editHistoryTab">History</a></li>
+        <li><a href="#editSettingsTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editSettingsTab">Settings</a></li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- Start Main Tab -->
+        <div class="tab-pane active editEditTab" id="editEditTab">
+          <ul>
+                <li><label>ID: </label>{{record.uuid}}</li>
+                <li><label>Group: </label>{{record.group}}</li>
+                <li><label>Title: </label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
+                <li><label>Username: </label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
+                <li ng-init="passwordShown = false"><label>Password: </label><input type="{{(passwordShown) ? 'text' : 'password'}}" value="{{record.password}}" ng-model="record.password">
+                    <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
+                    <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span>
+                </li>
+                <input type="button" value="Generate Password" ng-click="genPw(record)">
+                <li><label>Password Strength: {{record.password | passwordStrengthScore}} out of 4</li>
+                <li><label>Notes: </label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
+                <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
+            </ul>
+        </div>
+
+        <!-- Start History Tab -->
+        <div class="tab-pane editHistoryTab" id="editHistoryTab">
+            <input type="button" ng-if="!record.history.isEnabled" value="Enable History" ng-click="record.history.isEnabled = true">
+            <ul ng-if="record.history.isEnabled">
+                <li ng-repeat="pastPassphrase in record.passphraseHistory.passphrases">
+                    <span>{{pastPassphrase.timestamp}}</span>
+                    <span>{{pastPassphrase.passphrase}}</span>
+                </li>
+                <li ng-if="!!record.history.currentSize === false">No history available for this record</li>
+            </ul>
+            <p ng-if="!record.history.isEnabled">History is not enabled for this account.</p>
+        </div>
+
+        <!-- Start Settings Tab -->
+        <div class="tab-pane editSettingsTab" id="editSettingsTab">
+          <input type="button" ng-if="record.passphrasePolicy === undefined" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
+            <ul ng-if="record.passphrasePolicy !== undefined">
+                <li>Flags: 
+                    <ul>
+                        <li>Use Lowercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useLowercase');"  ng-checked="checkFlag(record.passphrasePolicy.flags, 'useLowercase')"></li>
+                        <li>Use Uppercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useUppercase');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useUppercase')"></li>
+                        <li>Use Digits <input type="checkbox" ng-click="toggleRecordFlag(record, 'useDigits');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useDigits')"></li>
+                        <li>Use Symbols <input type="checkbox" ng-click="toggleRecordFlag(record, 'useSymbols');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useSymbols')"></li>
+                    </ul>
+                </li>
+                <li>Length: <input type="number" ng-model="record.passphrasePolicy.length"></li>
+                <li>Min. Lowercase: <input type="number" ng-model="record.passphrasePolicy.minLowercase"></li>
+                <li>Min. Uppercase: <input type="number" ng-model="record.passphrasePolicy.minUppercase"></li>
+                <li>Min. Digits: <input type="number" ng-model="record.passphrasePolicy.minDigit"></li>
+                <li>Min. Symbols: <input type="number" ng-model="record.passphrasePolicy.minSymbol"></li>
+                <li>Own Passphrase Symbols: <input type="text" ng-model="record.ownPassphraseSymbols"></li>
+            </ul>
+            <input type="button" value="Delete Record" data-dismiss="modal" ng-click="deleteRecord(record.uuid);">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

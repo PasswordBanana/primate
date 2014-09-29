@@ -34,3 +34,9 @@ primate.filter("groupIndent", function() {
 		return 20 * level;
 	}
 });
+
+primate.filter("flagValue", function() {
+	return function(tuple) {
+		return checkFlag(tuple[0], tuple[1]);
+	}
+});

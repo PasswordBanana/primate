@@ -12,14 +12,16 @@ var defaultPolicy = {
     minSymbol: 1
 };
 
+var defaultSymbols = "+-=_@#$%^&<>/~\\?!|()";
+
 var DefaultPolicy = function() {
     return {
-        flags: 0xF000,
-        length: 12,
-        minLowercase: 1,
-        minUppercase: 1,
-        minDigit: 1,
-        minSymbol: 1
+        flags: defaultPolicy.flags,
+        length: defaultPolicy.length,
+        minLowercase: defaultPolicy.minLowercase,
+        minUppercase: defaultPolicy.minUppercase,
+        minDigit: defaultPolicy.minDigit,
+        minSymbol: defaultPolicy.minSymbol
     };
 };
 
@@ -44,6 +46,10 @@ var setFlag = function(flags, flagName) {
 
 var clearFlag = function(flags, flagName) {
     return flags &= ~policyFlags[flagName];
+};
+
+var toggleFlag = function(policy, flagName) {
+    return policy.flags ^= policyFlags[flagName];
 };
 
 var Group = function(groupName, fullGroup, nestingLevel) {
@@ -135,7 +141,7 @@ var generatePassword = function(policy) {
     var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lowercase = "abcdefghijklmnopqrstuvwxyz";
     var digits = "0123456789";
-    var symbols = "+-=_@#$%^&<>/~\\?!|()";
+    var symbols = defaultSymbols;
     var hexDigits = "0123456789ABCDEF";
 
     if (checkFlag(policy.flags, "useHexDigits")) {

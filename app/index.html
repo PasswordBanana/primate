@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
 
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
     <script src="js/libpwsafejs/jDataView/src/jdataview.js"></script>
@@ -24,6 +25,7 @@
     <script src="js/controllers.js"></script>
     <script src="bower_components/file-saver/FileSaver.js"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body ng-controller="StateController">
     <!-- Open file -->
@@ -42,27 +44,11 @@
                 <input type="submit" value="Unlock" class="openFileButton">
             </form>
         </div>
-        <input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton" ng-click="$parent.$parent.state = 'new';">
+        <input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton" data-toggle="modal" data-target="#newDBModal">
         <p ng-show="invalidFile"><font color="red">Invalid Password Database, Try again</font></p>
         
     </div>
     <!-- End open file -->
-
-    <!-- Start new database -->
-    <div ng-if="state === 'new'">
-        <h1>Primate</h1>
-        <h2>Create new database</h2>
-        <form ng-submit="newDb(newpass, newname)">
-        <ul>
-            <li>Filename:     
-                 <input type="text" placeholder="example.psafe3" ng-model="newname"></li>
-            <li>Master Password: <input type="password" ng-model="newpass"></li>
-            <li>Confirm: <input type="password" ng-model="newpass2"></li>
-        </ul>
-        <input type="submit" ng-if="newpass != null &amp;&amp; newpass === newpass2" value="Create">
-        </form>
-    </div>
-    <!-- End new database -->
 
     <!-- Main application -->
     <div ng-if="state === 'unlocked'">
@@ -71,7 +57,7 @@
                 <span id="heading">Primate</span>
                 <span class="menuButtonContainer">
                     <span ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></span>
-                    <span ng-click="dbSettings()" class="hoverCursor glyphicon glyphicon-cog"></span>
+                    <span data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></span>
                     <span ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></span>
                 </span>
                 <span class="filename">{{databaseFilename}}</span>
@@ -81,6 +67,10 @@
         <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
         <a class="addRecord" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><span class="glyphicon glyphicon-plus"></span>Add Record</a>
         <a class="addRecord" ng-click="addGroup(); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></span>Add Group</a>
+
+        <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true" ng-include="'settingsModal.html'"></div>
     </div>
+
+    <div class="modal fade" id="newDBModal" tabindex="-1" role="dialog" aria-labelledby="newDBModalLabel" aria-hidden="true" ng-include="'newDBModal.html'"></div>
 </body>
 </html>

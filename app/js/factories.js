@@ -68,8 +68,13 @@ primate.factory("Database", ["$q", function($q) {
     };
 
     // Set a new master database password
-    service.setPass = function(newPass) {
-        pass = newPass;
+    service.setPass = function(oldPass, newPass) {
+        if (oldPass === pass) {
+            pass = newPass;
+        } else {
+            return false;
+        }
+        return true;
     };
 
     service.setName = function(newName) {

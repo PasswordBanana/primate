@@ -1,0 +1,21 @@
+<!-- Modal -->
+<div class="modal-dialog">
+  	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title" id="newDBModalLabel">Create New Database</h4>
+		</div>
+		<div class="modal-body form-group">
+			<label for="newDBFilename">Filename</label>
+			<input type="text" id="newDBFilename" class="form-control" placeholder="example.psafe3" ng-model="newname">
+			<label for="newDBPass1">Master Password</label>
+			<input type="password" id="newDBPass1" class="form-control" ng-model="newpass">
+			<label for="newDBPass2">Confirm Master Password</label>
+			<input type="password" id="newDBPass2" class="form-control" ng-model="newpass2">
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			<button type="button" ng-click="newDb(newpass, newname)" class="btn btn-primary" data-dismiss="modal" ng-disabled="newpass == null || newpass !== newpass2">Create New</button>
+		</div>
+	</div>
+</div>

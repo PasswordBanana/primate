@@ -1,76 +1,15 @@
 <!-- Start record tree display -->
 <span class="record">
     <span class="recordHandle">&nbsp;</span>
-    <a ng-click="editAccount(record.uuid); recordShown = !recordShown" >{{record.title}}</a>
+    <a data-toggle="modal" data-target="[data-record-uuid={{record.uuid}}]">{{record.title}}</a>
     <span class="recordButtonContainer clearfix">
         <span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
         <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
         <span ng-click="copyPassword(record.uuid)" class="hoverCursor glyphicon glyphicon-asterisk" alt="Copy Password"></span>
         <span ng-click="gotoUrl(record.uuid)" class="hoverCursor glyphicon glyphicon-globe" alt="Copy URL"></span>
-        <span ng-click="editAccount(record.uuid); recordShown = !recordShown" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
+        <span data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
     </span>
 </span>
 <!-- End record tree display -->
 
-<!-- Start Per-record edit modal -->
-<div class="recordModalWrapper" ng-show="recordShown" ng-init="recordShown = false" ng-click="recordShown = !recordShown" data-record-uuid="{{record.uuid}}">
-    <div class="recordModal" ng-click="$event.stopPropagation()" ng-switch="currentTab">
-        <input type="button" class="recordModalTab" value="Edit" ng-click="currentTab = 'Edit'">
-        <input type="button" class="recordModalTab" value="History" ng-click="currentTab = 'History'">
-        <input type="button" class="recordModalTab" value="Settings" ng-click="currentTab = 'Settings'; updateFlags(record);" ng-init="updateFlags(record)">
-        <!-- Start history tab -->
-        <div ng-switch-when="History">
-            <p>Password History</p>
-            <input type="button" ng-if="!record.history.isEnabled" value="Enable History" ng-click="record.history.isEnabled = true">
-            <ul ng-if="record.history.isEnabled">
-                <li ng-repeat="pastPassphrase in record.passphraseHistory.passphrases">
-                    <span>{{pastPassphrase.timestamp}}</span>
-                    <span>{{pastPassphrase.passphrase}}</span>
-                </li>
-                <li ng-if="!!record.history.currentSize === false">No history available for this record</li>
-            </ul>
-            <p ng-if="!record.history.isEnabled">History is not enabled for this account.</p>
-        </div>
-        <!-- Start settings tab -->
-        <div ng-switch-when="Settings">
-            <p>Password Settings</p>
-
-            <input type="button" ng-if="record.passphrasePolicy === undefined" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
-            <ul ng-if="record.passphrasePolicy !== undefined">
-                <li>Flags: 
-                    <ul>
-                        <li>Use Lowercase <input type="checkbox" ng-click="toggleFlag(record, 'useLowercase');" ng-model="currentFlags.useLowercase"></li>
-                        <li>Use Uppercase <input type="checkbox" ng-click="toggleFlag(record, 'useUppercase');" ng-model="currentFlags.useUppercase"></li>
-                        <li>Use Digits <input type="checkbox" ng-click="toggleFlag(record, 'useDigits');" ng-model="currentFlags.useDigits"></li>
-                        <li>Use Symbols <input type="checkbox" ng-click="toggleFlag(record, 'useSymbols');" ng-model="currentFlags.useSymbols"></li>
-                    </ul>
-                </li>
-                <li>Length: <input type="number" ng-model="record.passphrasePolicy.length"></li>
-                <li>Min. Lowercase: <input type="number" ng-model="record.passphrasePolicy.minLowercase"></li>
-                <li>Min. Uppercase: <input type="number" ng-model="record.passphrasePolicy.minUppercase"></li>
-                <li>Min. Digits: <input type="number" ng-model="record.passphrasePolicy.minDigit"></li>
-                <li>Min. Symbols: <input type="number" ng-model="record.passphrasePolicy.minSymbol"></li>
-                <li>Own Passphrase Symbols: <input type="text" ng-model="record.ownPassphraseSymbols"></li>
-            </ul>
-            <input type="button" value="Delete Record" ng-click="deleteRecord(record.uuid)">
-        </div>
-        <!-- Start main edit tab -->
-        <div ng-switch-default>
-            <ul>
-                <li><label>ID: </label>{{record.uuid}}</li>
-                <li><label>Group: </label>{{record.group}}</li>
-                <li><label>Title: </label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
-                <li><label>Username: </label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
-                <li ng-init="passwordShown = false"><label>Password: </label><input type="{{(passwordShown) ? 'text' : 'password'}}" value="{{record.password}}" ng-model="record.password">
-                    <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
-                    <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span>
-                </li>
-                <input type="button" value="Generate Password" ng-click="genPw(record)">
-                <li><label>Password Strength: {{record.password | passwordStrengthScore}} out of 4</li>
-                <li><label>Notes: </label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
-                <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
-            </ul>
-        </div>
-        <input type="button" value="Close" class="recordModalClose" ng-click="recordShown = false">
-    </div>
-</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" ng-include="'editModal.html'" data-record-modal-uuid="{{record.uuid}}"></div>

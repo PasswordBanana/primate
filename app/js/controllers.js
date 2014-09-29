@@ -24,6 +24,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         useDigits: false,
         useSymbols: false
     };
+    $scope.defaultPolicy = defaultPolicy;
 
     /*
      * Return the index for the record with the given UUID
@@ -204,10 +205,10 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         //Show the edit modal for the new record
         //TODO: update this to use promises rather than timeout
         setTimeout(function() {
-            var newRecordElement = document.querySelector("[data-record-uuid='" + newRecord.uuid + "']");
+            var newRecordElement = document.querySelector("[data-record-modal-uuid='" + newRecord.uuid + "']");
             var newRecordScope = angular.element(newRecordElement).scope();
-            newRecordScope.recordShown = true;
             newRecordScope.$apply();
+            $("*[data-record-modal-uuid=" + newRecord.uuid + "]").modal('show');
         }, 200);
     };
 
@@ -221,6 +222,9 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
                 $scope.records.splice(idx, 1);
                 updateRecordTree();
             }
+
+            $('body').removeClass('modal-open'); 
+            $('.modal-backdrop').remove(); 
         }
     };
 
@@ -246,7 +250,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     /*
      * Toggle policy flags for a given record
      */
-    $scope.toggleFlag = function(record, flagName) {
+    $scope.toggleRecordFlag = function(record, flagName) {
         if (checkFlag(record.passphrasePolicy.flags, flagName)) {
             record.passphrasePolicy.flags = clearFlag(record.passphrasePolicy.flags, flagName);
         } else {
@@ -257,20 +261,13 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     /*
      * Maintain the state of the flag checkbox models
      */
-    $scope.updateFlags = function(record) {
-        var flags = (record.passphrasePolicy) ? record.passphrasePolicy.flags : defaultPolicy.flags;
-        $scope.currentFlags = {
-            useLowercase: checkFlag(flags, 'useLowercase'),
-            useUppercase: checkFlag(flags, 'useUppercase'),
-            useDigits: checkFlag(flags, 'useDigits'),
-            useSymbols: checkFlag(flags, 'useSymbols')
-        };
-    };
+    $scope.toggleFlag = toggleFlag;
+    $scope.checkFlag = checkFlag;
 
     /*
      * Pass new password through to the database factory
      */
-    $scope.changeMasterPassword = function(master) {
-        db.setPass(master);
+    $scope.changeMasterPassword = function(oldPass, givenPass) {
+        return db.setPass(oldPass, givenPass);
     };
 }]);
