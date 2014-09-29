@@ -270,4 +270,21 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     $scope.changeMasterPassword = function(oldPass, givenPass) {
         return db.setPass(oldPass, givenPass);
     };
+
+    var idleTimer;
+    var idleTimeout = function() {
+        if ($scope.state === "unlocked") {
+            $scope.lockDb();
+            $scope.$apply();
+            alert("Page inactive, database automatically locked!");
+        }
+    };
+
+    document.addEventListener('blur', function() {
+        idleTimer = setTimeout(idleTimeout, 30000);
+    });
+
+    document.addEventListener('focus', function() {
+        clearTimeout(idleTimer);
+    });
 }]);
