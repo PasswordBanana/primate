@@ -172,3 +172,9 @@ var generatePassword = function(policy) {
 $(document).ready(function() {
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });
+
+var toggleNewDB = function(e) {
+    var e = e || window.event;
+    e.stopPropagation();
+    $("#newDBModal").modal('show');
+};
