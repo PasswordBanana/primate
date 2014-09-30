@@ -296,9 +296,9 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     var idleTimer;
     var idleTimeout = function() {
         if ($scope.state === "unlocked") {
+            $scope.alerts.autoLocked = true;
             $scope.lockDb();
             $scope.$apply();
-            $scope.alerts.autoLocked = true;
         }
     };
 
