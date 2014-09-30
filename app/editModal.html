@@ -71,9 +71,9 @@
                 <input type="number" id="recordPolicyMinSymbols" class="form-control" ng-model="record.passphrasePolicy.minSymbol">
                 <label for="recordPolicyOwnSymbols">Own Passphrase Symbols</label>
                 <input type="text" id="recordPolicyOwnSymbols" class="form-control" ng-model="record.ownPassphraseSymbols">
-                <input type="button" value="Delete Record" class="btn btn-default" data-dismiss="modal" ng-click="deleteRecord(record.uuid);">
                 <input type="button" value="Remove Custom Policy" class="btn btn-default" ng-click="removePolicy(record)">
             </div>
+            <input type="button" value="Delete Record" class="btn btn-default" data-dismiss="modal" ng-click="deleteRecord(record.uuid);">
         </div>
       </div>
     </div>
