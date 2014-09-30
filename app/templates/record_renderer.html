@@ -2,13 +2,17 @@
 <span class="record">
     <span class="recordHandle">&nbsp;</span>
     <a data-toggle="modal" data-target="[data-record-uuid={{record.uuid}}]">{{record.title}}</a>
-    <span class="recordButtonContainer clearfix">
+    <div class="recordButtonContainer clearfix">
         <span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
-        <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span>
-        <span ng-click="copyPassword(record.uuid)" class="hoverCursor glyphicon glyphicon-asterisk" alt="Copy Password"></span>
-        <span ng-click="gotoUrl(record.uuid)" class="hoverCursor glyphicon glyphicon-globe" alt="Copy URL"></span>
-        <span data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span>
-    </span>
+        <!-- <span ng-click="copyUsername(record.uuid)" class="hoverCursor glyphicon glyphicon-user" alt="Copy Username"></span> -->
+        <div class="recordButtonWrapper" data-toggle="tooltip" title="Copy Username"><i ng-click="copyUsername(record.uuid)" class="fa fa-user" alt="Copy Username"></i></div>
+        <!-- <span ng-click="copyPassword(record.uuid)" class="hoverCursor glyphicon glyphicon-asterisk" alt="Copy Password"></span> -->
+        <div class="recordButtonWrapper" data-toggle="tooltip" title="Copy Password"><i class="fa fa-key" ng-click="copyPassword(record.uuid)" alt="Copy Password"></i></div>
+        <!-- <span ng-click="gotoUrl(record.uuid)" class="hoverCursor glyphicon glyphicon-globe" alt="Copy URL"></span> -->
+        <div class="recordButtonWrapper" data-toggle="tooltip" title="Go To URL"><i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i></div>
+        <!-- <span data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" class="hoverCursor glyphicon glyphicon-pencil" alt="Edit Account"></span> -->
+        <div class="recordButtonWrapper" data-toggle="tooltip" title="Edit Record"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i></div>
+    </div>
 </span>
 <!-- End record tree display -->
 

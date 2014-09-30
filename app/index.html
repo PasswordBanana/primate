@@ -46,8 +46,9 @@
             </form>
         </div>
         <input ng-if="state !== 'loaded'" type="button" value="New Database" class="openFileButton" data-toggle="modal" data-target="#newDBModal">
-        <p ng-show="invalidFile"><font color="red">Invalid Password Database, Try again</font></p>
-        
+        <div class="alert alert-danger" ng-if="alerts.invalidPassword" role="alert">Invalid password, try again.</div>
+        <div class="alert alert-danger" ng-if="alerts.notSaved" role="alert">Password database has unsaved changes.</div>
+        <div class="alert alert-warning" ng-if="alerts.autoLocked" role="alert">Database automatically locked due to inactivity.</div>
     </div>
     <!-- End open file -->
 

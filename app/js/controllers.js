@@ -15,7 +15,6 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     $scope.headers; //Object containing the database headers
     $scope.recordTree; //$scope.records organised in a tree, nested by groups
     $scope.viewing = false; //Is the edit modal visible
-    $scope.invalidFile = false; //Should the invalid file message be displayed
     $scope.pass; //Master password field contents
     $scope.filePicker; //File input object
     $scope.currentFlags = {
@@ -25,6 +24,13 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         useSymbols: false
     };
     $scope.defaultPolicy = defaultPolicy;
+    $scope.defaultSymbols = defaultSymbols;
+
+    $scope.alerts = {
+        invalidPassword: false,
+        notSaved: false,
+        autoLocked: false
+    };
 
     /*
      * Return the index for the record with the given UUID
@@ -71,10 +77,19 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
             $scope.setRecords(db.getDb());
             $scope.setState("unlocked");
         }, function(failure) {
-            $scope.invalidFile = true;
+            $scope.alerts.invalidPassword = true;
         });
 
         $scope.pass = "";
+        $scope.resetAlerts();
+    };
+
+    $scope.resetAlerts = function() {
+        for (var i in $scope.alerts) {
+            if ($scope.alerts.hasOwnProperty(i)) {
+                $scope.alerts[i] = false;
+            }
+        }
     };
 
     $scope.setState = function(state) {
@@ -271,12 +286,19 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         return db.setPass(oldPass, givenPass);
     };
 
+    /*
+     * Remove the passphrase policy from the given record
+     */
+    $scope.removePolicy = function(record) {
+        record.passphrasePolicy = undefined;
+    };
+
     var idleTimer;
     var idleTimeout = function() {
         if ($scope.state === "unlocked") {
             $scope.lockDb();
             $scope.$apply();
-            alert("Page inactive, database automatically locked!");
+            $scope.alerts.autoLocked = true;
         }
     };
 

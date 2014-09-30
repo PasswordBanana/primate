@@ -168,3 +168,7 @@ var generatePassword = function(policy) {
 
     return pass;
 };
+
+$(document).ready(function() {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+});

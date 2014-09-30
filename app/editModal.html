@@ -48,29 +48,35 @@
 
         <!-- Start Settings Tab -->
         <div class="tab-pane editSettingsTab" id="editSettingsTab">
-          <input type="button" ng-if="record.passphrasePolicy === undefined" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
-            <ul ng-if="record.passphrasePolicy !== undefined">
-                <li>Flags: 
-                    <ul>
-                        <li>Use Lowercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useLowercase');"  ng-checked="checkFlag(record.passphrasePolicy.flags, 'useLowercase')"></li>
-                        <li>Use Uppercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useUppercase');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useUppercase')"></li>
-                        <li>Use Digits <input type="checkbox" ng-click="toggleRecordFlag(record, 'useDigits');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useDigits')"></li>
-                        <li>Use Symbols <input type="checkbox" ng-click="toggleRecordFlag(record, 'useSymbols');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useSymbols')"></li>
-                    </ul>
-                </li>
-                <li>Length: <input type="number" ng-model="record.passphrasePolicy.length"></li>
-                <li>Min. Lowercase: <input type="number" ng-model="record.passphrasePolicy.minLowercase"></li>
-                <li>Min. Uppercase: <input type="number" ng-model="record.passphrasePolicy.minUppercase"></li>
-                <li>Min. Digits: <input type="number" ng-model="record.passphrasePolicy.minDigit"></li>
-                <li>Min. Symbols: <input type="number" ng-model="record.passphrasePolicy.minSymbol"></li>
-                <li>Own Passphrase Symbols: <input type="text" ng-model="record.ownPassphraseSymbols"></li>
-            </ul>
-            <input type="button" value="Delete Record" data-dismiss="modal" ng-click="deleteRecord(record.uuid);">
+            <input type="button" ng-if="record.passphrasePolicy === undefined" class="btn btn-default" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
+            <div ng-if="record.passphrasePolicy !== undefined">
+                <label for="recordPolicyFlags">Flags</label>
+                <ul id="recordPolicyFlags">
+                    <li>Use Lowercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useLowercase');"  ng-checked="checkFlag(record.passphrasePolicy.flags, 'useLowercase')"></li>
+                    <li>Use Uppercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useUppercase');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useUppercase')"></li>
+                    <li>Use Digits <input type="checkbox" ng-click="toggleRecordFlag(record, 'useDigits');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useDigits')"></li>
+                    <li>Use Symbols <input type="checkbox" ng-click="toggleRecordFlag(record, 'useSymbols');" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useSymbols')"></li>
+                </ul>
+                <label for="recordPolicyLength">Length</label>
+                <input type="number" id="recordPolicyLength" class="form-control" ng-model="record.passphrasePolicy.length">
+                <label for="recordPolicyMinLowercase">Minimum Lowercase</label>
+                <input type="number" id="recordPolicyMinLowercase" class="form-control" ng-model="record.passphrasePolicy.minLowercase">
+                <label for="recordPolicyMinUppercase">Minimum Uppercase</label>
+                <input type="number" id="recordPolicyMinUppercase" class="form-control" ng-model="record.passphrasePolicy.minUppercase">
+                <label for="recordPolicyMinDigits">Minimum Digits</label>
+                <input type="number" id="recordPolicyMinDigits" class="form-control" ng-model="record.passphrasePolicy.minDigit">
+                <label for="recordPolicyMinSymbols">Minimum Symbols</label>
+                <input type="number" id="recordPolicyMinSymbols" class="form-control" ng-model="record.passphrasePolicy.minSymbol">
+                <label for="recordPolicyOwnSymbols">Own Passphrase Symbols</label>
+                <input type="text" id="recordPolicyOwnSymbols" class="form-control" ng-model="record.ownPassphraseSymbols">
+                <input type="button" value="Delete Record" class="btn btn-default" data-dismiss="modal" ng-click="deleteRecord(record.uuid);">
+                <input type="button" value="Remove Custom Policy" class="btn btn-default" ng-click="removePolicy(record)">
+            </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
     </div>
   </div>
 </div>
