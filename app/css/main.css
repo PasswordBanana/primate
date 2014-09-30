@@ -341,3 +341,16 @@ header {
 .addRecord:hover {
     cursor: pointer;
 }
+
+.recordDetails {
+    margin: 10px;
+    list-style-type: none;
+}
+
+.recordDetails label {
+    margin-right: 5px;
+}
+
+.tab-pane {
+    padding: 10px;
+}

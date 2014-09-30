@@ -17,7 +17,8 @@
       <div class="tab-content">
         <!-- Start Main Tab -->
         <div class="tab-pane active editEditTab" id="editEditTab">
-          <ul>
+
+          <ul class="recordDetails">
                 <li><label>ID: </label>{{record.uuid}}</li>
                 <li><label>Group: </label>{{record.group}}</li>
                 <li><label>Title: </label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
@@ -26,7 +27,7 @@
                     <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
                     <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span>
                 </li>
-                <input type="button" value="Generate Password" ng-click="genPw(record)">
+                <input type="button" class="btn btn-default" value="Generate Password" ng-click="genPw(record)">
                 <li><label>Password Strength: {{record.password | passwordStrengthScore}} out of 4</li>
                 <li><label>Notes: </label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
                 <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
@@ -35,7 +36,7 @@
 
         <!-- Start History Tab -->
         <div class="tab-pane editHistoryTab" id="editHistoryTab">
-            <input type="button" ng-if="!record.history.isEnabled" value="Enable History" ng-click="record.history.isEnabled = true">
+            <input type="button" class="btn btn-default" ng-if="!record.history.isEnabled" value="Enable History" ng-click="record.history.isEnabled = true">
             <ul ng-if="record.history.isEnabled">
                 <li ng-repeat="pastPassphrase in record.passphraseHistory.passphrases">
                     <span>{{pastPassphrase.timestamp}}</span>
