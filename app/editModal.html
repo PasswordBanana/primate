@@ -22,6 +22,7 @@
                 <li><label>ID: </label>{{record.uuid}}</li>
                 <li><label>Group: </label>{{record.group}}</li>
                 <li><label>Title: </label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
+                <li><label>URL: </label><input type="text" value="{{record.URL}}" ng-model="record.URL"></li>
                 <li><label>Username: </label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
                 <li ng-init="passwordShown = false"><label>Password: </label><input type="{{(passwordShown) ? 'text' : 'password'}}" value="{{record.password}}" ng-model="record.password">
                     <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
