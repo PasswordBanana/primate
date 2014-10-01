@@ -27,7 +27,7 @@
     <script src="bower_components/zxcvbn/zxcvbn.js"></script>
     <script src="bower_components/file-saver/FileSaver.js"></script>
 </head>
-<body ng-controller="StateController">
+<body ng-controller="StateController" ondragenter="document.getElementById('fileInput').style.display = 'block';">
     <!-- Open file, no file selected -->
     <div ng-if="state === 'unloaded'" id="openFileWrapper">
         <h1>Drag &amp; drop password database here</h1>
