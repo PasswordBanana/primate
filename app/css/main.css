@@ -78,6 +78,18 @@ h3 {
     height: 100%;
 }
 
+#follow {
+    display: none;
+    background-color: #f8f8f8;
+    opacity: 0.3;
+    font-size: xx-large;
+    text-align: center;
+    border: 2px solid red;
+    width: 50vmin;
+    height: 50vmin;
+    border-radius: 25%;
+}
+
 #passwordGroup {
     max-width: 400px;
 }

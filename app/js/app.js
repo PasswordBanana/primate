@@ -176,6 +176,38 @@ var toggleNewDB = function(e) {
     $("#newDBModal").modal('show');
 };
 
+document.addEventListener('dragenter', function() {
+    var input = document.getElementById("fileInput");
+    if (input) {
+        document.body.style.backgroundColor = "#f8f8f8";
+        input.style.display = "block";
+    }
+}, false);
+
+document.addEventListener('dragover', function(event) {
+        var clamp = function(num, min, max) {
+            return Math.min(Math.max(num, min), max);
+        };
+        var follow = $('#follow'),
+        top = clamp(event.pageY - (follow.height() / 2), 10, window.innerHeight - follow.height() - 10),
+        left = clamp(event.pageX - (follow.width() / 2), 10, window.innerWidth - follow.width() - 10);
+        follow.css({
+            position: 'absolute', 
+            display: 'block', 
+            top: top,
+            left: left,
+        });
+}, false);
+
+var resetDrag = function() {
+    document.body.style.backgroundColor = "white";
+    $('#follow').css('display', 'none');
+};
+
+document.addEventListener('dragend', resetDrag, false);
+document.addEventListener('dragleave', resetDrag, false);
+document.addEventListener('drop', resetDrag, false);
+
 $(document).ready(function() {
     $("#openFileButton").focus();
     // $("body").tooltip({ selector: '[data-toggle=tooltip]' });
