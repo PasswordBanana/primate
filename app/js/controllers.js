@@ -56,10 +56,10 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     /*
      * Handle file input object in open screen changing state
      */
-    $scope.fileChanged = function(newFile) {
-        $scope.filePicker = newFile;
-        db.setFile(newFile.files[0]);
-        $scope.databaseFilename = newFile.files[0].name;
+    $scope.fileChanged = function(picker) {
+        $scope.filePicker = picker;
+        db.setFile($scope.filePicker.files[0]);
+        $scope.databaseFilename = $scope.filePicker.files[0].name;
 
         $scope.setState("loaded");
         $scope.$apply();
@@ -163,7 +163,8 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     $scope.closeDb = function() {
         db.close();
         clearVars();
-        $scope.filePicker.value = "";
+        if ($scope.filePicker)
+            $scope.filePicker.value = "";
         $scope.setState("unloaded");
     };
 
