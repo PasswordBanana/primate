@@ -169,12 +169,23 @@ var generatePassword = function(policy) {
     return pass;
 };
 
-$(document).ready(function() {
-    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-});
-
 var toggleNewDB = function(e) {
     var e = e || window.event;
     e.stopPropagation();
     $("#newDBModal").modal('show');
 };
+
+$(document).ready(function() {
+    $("#openFileButton").focus();
+    // $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+});
+
+$(window).resize(function() {
+    if ($(window).width() < 400) {
+        $('#dbSelectButtons').removeClass('btn-group');
+        $('#dbSelectButtons').addClass('btn-group-vertical');
+    } else {
+        $('#dbSelectButtons').addClass('btn-group');
+        $('#dbSelectButtons').removeClass('btn-group-vertical');
+    }
+});
