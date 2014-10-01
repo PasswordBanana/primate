@@ -43,6 +43,14 @@ body {
     text-align: center;
 }
 
+#dbSelectButtons {
+    margin-top: 10px !important;
+}
+
+h3 {
+    margin-top: 10px;
+}
+
 #main {
     align-items: stretch;
 }
