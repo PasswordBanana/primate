@@ -66,5 +66,6 @@ h3 {
 .absoluteAlert {
     position: absolute;
     left: 50%;
+    bottom: 10px;
     transform: translate(-50%, 0);
 }
