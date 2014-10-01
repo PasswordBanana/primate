@@ -263,8 +263,12 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
      * Get a reference to the given group in the recordTree
      */
     var getGroup = function(fullGroup) {
-        var groupArray = fullGroup.split(".");
 
+        if (fullGroup === "") {
+            return $scope.recordTree[0];
+        }
+
+        var groupArray = fullGroup.split(".");
         var currentNode = $scope.recordTree[0];
 
         for (var g = 0, gl = groupArray.length; g < gl; g++) {
