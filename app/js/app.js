@@ -56,7 +56,7 @@ var Group = function(groupName, fullGroup, nestingLevel) {
     var name = groupName || "No name";
     var level = nestingLevel;
     var fullGroup = fullGroup;
-    var expanded = true;
+    var expanded = false; //TODO: Maintain expanded state
     return {
         name: name,
         level: level,
@@ -79,6 +79,7 @@ var groupIndex = function(arr, groupName) {
 var generateRecordTree = (function(records) {
     var tree = [], currentNode;
     tree.push(new Group("", "", 0));
+    tree[0].expanded = true;
     for (var r = 0, rl = records.length; r < rl; r++) {
         var rGroups = (records[r].group) ? records[r].group.split(".") || [] : [];
 

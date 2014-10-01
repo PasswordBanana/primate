@@ -1,56 +1,56 @@
 <!-- Modal -->
 <div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <h4 class="modal-title" id="settingsModalLabel">Settings</h4>
-    </div>
-    <div class="modal-body">
-      <!-- Tab buttons -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="#defaultPolicyTab" role="tab" data-toggle="tab">Default Password Policy</a></li>
-        <li><a href="#masterPasswordTab" role="tab" data-toggle="tab">Master Password</a></li>
-      </ul>
-
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <div class="tab-pane active" id="defaultPolicyTab">
-            <label for="defaultPolicyFlags">Flags</label>
-            <ul id="defaultPolicyFlags">
-                <li>Use Lowercase <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useLowercase');"  ng-checked="checkFlag(defaultPolicy.flags, 'useLowercase')"></li>
-                <li>Use Uppercase <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useUppercase');" ng-checked="checkFlag(defaultPolicy.flags, 'useUppercase')"></li>
-                <li>Use Digits <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useDigits');" ng-checked="checkFlag(defaultPolicy.flags, 'useDigits')"></li>
-                <li>Use Symbols <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useSymbols');" ng-checked="checkFlag(defaultPolicy.flags, 'useSymbols')"></li>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="settingsModalLabel">Settings</h4>
+        </div>
+        <div class="modal-body">
+            <!-- Tab buttons -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#defaultPolicyTab" role="tab" data-toggle="tab">Default Password Policy</a></li>
+                <li><a href="#masterPasswordTab" role="tab" data-toggle="tab">Master Password</a></li>
             </ul>
-            <label for="defaultPolicyLength">Length</label>
-            <input type="number" id="defaultPolicyLength" class="form-control" ng-model="defaultPolicy.length">
-            <label for="defaultPolicyMinLowercase">Minimum Lowercase</label>
-            <input type="number" id="defaultPolicyMinLowercase" class="form-control" ng-model="defaultPolicy.minLowercase">
-            <label for="defaultPolicyMinUppercase">Minimum Uppercase</label>
-            <input type="number" id="defaultPolicyMinUppercase" class="form-control" ng-model="defaultPolicy.minUppercase">
-            <label for="defaultPolicyMinDigits">Minimum Digits</label>
-            <input type="number" id="defaultPolicyMinDigits" class="form-control" ng-model="defaultPolicy.minDigit">
-            <label for="defaultPolicyMinSymbols">Minimum Symbols</label>
-            <input type="number" id="defaultPolicyMinSymbols" class="form-control" ng-model="defaultPolicy.minSymbol">
-            <label for="defaultPolicyOwnSymbols">Default Passphrase Symbols</label>
-            <input type="text" id="defaultPolicyOwnSymbols" class="form-control" ng-model="defaultSymbols">
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="defaultPolicyTab">
+                    <label for="defaultPolicyFlags">Flags</label>
+                    <ul id="defaultPolicyFlags">
+                        <li>Use Lowercase <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useLowercase');"  ng-checked="checkFlag(defaultPolicy.flags, 'useLowercase')"></li>
+                        <li>Use Uppercase <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useUppercase');" ng-checked="checkFlag(defaultPolicy.flags, 'useUppercase')"></li>
+                        <li>Use Digits <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useDigits');" ng-checked="checkFlag(defaultPolicy.flags, 'useDigits')"></li>
+                        <li>Use Symbols <input type="checkbox" ng-click="toggleRecordFlag(defaultPolicy, 'useSymbols');" ng-checked="checkFlag(defaultPolicy.flags, 'useSymbols')"></li>
+                    </ul>
+                    <label for="defaultPolicyLength">Length</label>
+                    <input type="number" id="defaultPolicyLength" class="form-control" ng-model="defaultPolicy.length">
+                    <label for="defaultPolicyMinLowercase">Minimum Lowercase</label>
+                    <input type="number" id="defaultPolicyMinLowercase" class="form-control" ng-model="defaultPolicy.minLowercase">
+                    <label for="defaultPolicyMinUppercase">Minimum Uppercase</label>
+                    <input type="number" id="defaultPolicyMinUppercase" class="form-control" ng-model="defaultPolicy.minUppercase">
+                    <label for="defaultPolicyMinDigits">Minimum Digits</label>
+                    <input type="number" id="defaultPolicyMinDigits" class="form-control" ng-model="defaultPolicy.minDigit">
+                    <label for="defaultPolicyMinSymbols">Minimum Symbols</label>
+                    <input type="number" id="defaultPolicyMinSymbols" class="form-control" ng-model="defaultPolicy.minSymbol">
+                    <label for="defaultPolicyOwnSymbols">Default Passphrase Symbols</label>
+                    <input type="text" id="defaultPolicyOwnSymbols" class="form-control" ng-model="defaultSymbols">
+                </div>
+                <div class="tab-pane" id="masterPasswordTab">
+                    <label for="oldPassword">Old Password</label>
+                    <input type="password" id="oldPassword" class="form-control" ng-model="oldPassword">
+                    <label for="newPassword1">New Password</label>
+                    <input type="password" id="newDBPass1" class="form-control" ng-model="newPassword1">
+                    <label for="newPassword2">Confirm New Password</label>
+                    <input type="password" id="newDBPass2" class="form-control" ng-model="newPassword2">
+                    <button type="button" ng-click="changePassSuccess = changeMasterPassword(oldPassword, newPassword1)" class="btn btn-primary" ng-disabled="!newPassword1 || newPassword1 !== newPassword2">Change Password</button>
+                    <div class="alert alert-success" ng-if="changePassSuccess === true" role="alert">Password Successfully Changed! Please save the database to maintain the changes.</div>
+                    <div class="alert alert-danger" ng-if="changePassSuccess === false" role="alert">Old password is incorrect, try again.</div>
+                </div>
+            </div>
         </div>
-        <div class="tab-pane" id="masterPasswordTab">
-            <label for="oldPassword">Old Password</label>
-            <input type="password" id="oldPassword" class="form-control" ng-model="oldPassword">
-            <label for="newPassword1">New Password</label>
-            <input type="password" id="newDBPass1" class="form-control" ng-model="newPassword1">
-            <label for="newPassword2">Confirm New Password</label>
-            <input type="password" id="newDBPass2" class="form-control" ng-model="newPassword2">
-            <button type="button" ng-click="changePassSuccess = changeMasterPassword(oldPassword, newPassword1)" class="btn btn-primary" ng-disabled="!newPassword1 || newPassword1 !== newPassword2">Change Password</button>
-            <div class="alert alert-success" ng-if="changePassSuccess === true" role="alert">Password Successfully Changed! Please save the database to maintain the changes.</div>
-            <div class="alert alert-danger" ng-if="changePassSuccess === false" role="alert">Old password is incorrect, try again.</div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
         </div>
-      </div>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary">Save changes</button>
-    </div>
-  </div>
 </div>

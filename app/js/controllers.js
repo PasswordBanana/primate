@@ -217,6 +217,9 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         var newRecord = new Record();
         $scope.records.push(newRecord);
         updateRecordTree();
+        
+        //Expand the group so the modal exists
+        getGroup(newRecord.group).expanded = true;
 
         //Show the edit modal for the new record
         //TODO: update this to use promises rather than timeout
@@ -254,6 +257,26 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         } else {
             group.subgroups.push(new Group(name, group.fullGroup + "." + name, group.level + 1));
         }
+    };
+
+    /*
+     * Get a reference to the given group in the recordTree
+     */
+    var getGroup = function(fullGroup) {
+        var groupArray = fullGroup.split(".");
+
+        var currentNode = $scope.recordTree[0];
+
+        for (var g = 0, gl = groupArray.length; g < gl; g++) {
+            var idx = groupIndex(currentNode.subgroups, groupArray[g]);
+
+            if (idx >= 0) {
+                currentNode = currentNode.subgroups[idx];
+            } else {
+                return null;
+            }
+        }
+        return currentNode;
     };
 
     /*

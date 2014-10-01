@@ -1,15 +1,16 @@
 <!-- Start record tree display -->
-<span class="record">
-    <span class="recordHandle">&nbsp;</span>
-    <a data-toggle="modal" data-target="[data-record-uuid={{record.uuid}}]">{{record.title}}</a>
-    <div class="recordButtonContainer clearfix">
-        <span class="lightText">{{record.passphraseModifyTime | date : 'medium'}}</span>
-        <div class="recordButtonWrapper" data-toggle="tooltip" title="Copy Username"><i ng-click="copyUsername(record.uuid)" class="fa fa-user" alt="Copy Username"></i></div>
-        <div class="recordButtonWrapper" data-toggle="tooltip" title="Copy Password"><i class="fa fa-key" ng-click="copyPassword(record.uuid)" alt="Copy Password"></i></div>
-        <div class="recordButtonWrapper" data-toggle="tooltip" title="Go To URL: {{record.URL}}"><i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i></div>
-        <div class="recordButtonWrapper" data-toggle="tooltip" title="Edit Record"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i></div>
+<div class="record">
+    <div>
+        <a data-toggle="modal" data-target="[data-record-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
     </div>
-</span>
+    <span class="lightText">{{record.passphraseModifyTime | date : 'shortDate'}}</span>
+    <div class="recordButtonContainer">
+        <i ng-click="copyUsername(record.uuid)" class="fa fa-user" alt="Copy Username"></i>
+        <i class="fa fa-key" ng-click="copyPassword(record.uuid)" alt="Copy Password"></i>
+        <i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i>
+        <i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i>
+    </div>
+</div>
 <!-- End record tree display -->
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" ng-include="'editModal.html'" data-record-modal-uuid="{{record.uuid}}"></div>
