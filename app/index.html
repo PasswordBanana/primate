@@ -47,7 +47,7 @@
         <h1>Enter Password</h1>
         <h3>{{databaseFilename}}</h3>
         <form role="form" ng-submit="open()" class="form-horizontal">
-            <div class="form-group input-group">
+            <div class="form-group input-group" id="passwordGroup">
                 <input type="password" class="form-control" id="passwordField" ng-model="$parent.pass">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-primary">
