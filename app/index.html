@@ -30,8 +30,8 @@
 <body ng-controller="StateController">
     <!-- Open file, no file selected -->
     <div ng-if="state === 'unloaded'" id="openFileWrapper">
-        <h1>Drag &amp; drop password database here</h1>
-        <h3>or</h3>
+        <h1>Drag &amp; Drop Password Database Here</h1>
+        <h3 class="h1">or</h3>
         <div class="btn-group" id="dbSelectButtons" ng-if="state !== 'loaded'" ng-init="$('openFileButton').focus()">
             <button type="button" class="btn btn-primary btn-lg" onclick="document.getElementById('fileInput').click()" id="openFileButton">
                  <i class="fa fa-folder-o"></i> Open Database
