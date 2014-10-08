@@ -17,20 +17,22 @@
             <div class="tab-content">
                 <!-- Start Main Tab -->
                 <div class="tab-pane active editEditTab" id="editEditTab">
-                    <ul class="recordDetails">
-                        <li><label>ID: </label>{{record.uuid}}</li>
-                        <li><label>Group: </label>{{record.group}}</li>
-                        <li><label>Title: </label><input type="text" value="{{record.title}}" ng-model="record.title"></li>
-                        <li><label>URL: </label><input type="text" value="{{record.URL}}" ng-model="record.URL"></li>
-                        <li><label>Username: </label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
-                        <li ng-init="passwordShown = false"><label>Password: </label><input type="{{(passwordShown) ? 'text' : 'password'}}" value="{{record.password}}" ng-model="record.password">
+                    <ul class="list-group">
+                        <li class="list-group-item"> <label>Group: &nbsp;</label>{{record.group}}</li>
+                        <li class="list-group-item"><label>Title: &nbsp;</label><input type="text" value="{{record.title}}" ng-model="record.title"</li>                                                                  
+                        <li class="list-group-item"><label>URL: &nbsp;</label><input type="text" value="{{record.URL}}" ng-model="record.URL"></li>                                        
+                        <li class="list-group-item"><label>Username: &nbsp;</label><input type="text" value="{{record.username}}" ng-model="record.username"></li>
+                        <li class="list-group-item"><ng-init="passwordShown = false"><label>Password: &nbsp;</label><input type="{{(passwordShown) ? 'text' : 'password'}}" 			value="{{record.password}}" ng-model="record.password">
                             <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
-                            <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span>
+                            <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span>                   		<br>	
+                        <label>Generate Password: &nbsp;</label>
+                        <input type="button" class="btn btn-default" value="Generate" ng-click="genPw(record)">
+                        <br>
+                        <label>Password Strength: {{record.password | passwordStrengthScore}} out of 4
+                        <br>
                         </li>
-                        <input type="button" class="btn btn-default" value="Generate Password" ng-click="genPw(record)">
-                        <li><label>Password Strength: {{record.password | passwordStrengthScore}} out of 4</li>
-                        <li><label>Notes: </label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
-                        <li><label>History: {{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
+                        <li class="list-group-item"><label>Notes: &nbsp;</label><input type="text" value="{{record.notes}}" ng-model="record.notes"></li>
+                        <li class="list-group-item"><label>History: &nbsp;{{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
                     </ul>
                 </div>
 
