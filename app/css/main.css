@@ -12,6 +12,11 @@
     font-style: normal;
 }
 
+h1, h2, h3, h4, h5, h6, p, div, label, .btn {
+    font-family: 'Roboto';
+    font-weight: lighter;
+}
+
 html, body {
     display: -webkit-flex;
     display: flex;
@@ -27,7 +32,6 @@ html, body {
 
 body {
     font-family: 'Roboto';
-    font-weight: lighter;
     -webkit-flex: 1;
     flex: 1;
 }
@@ -51,6 +55,7 @@ body {
     align-items: center;
     margin: auto;
     text-align: center;
+
 }
 
 #dbSelectButtons {
