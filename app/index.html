@@ -44,7 +44,7 @@ font-size:20px;
 text-decoration:none;
 position:absolute;
 border-radius:6px;
-left:-80px;
+left:-55px;
 }
 	
 </style>
@@ -91,9 +91,9 @@ left:-80px;
     <!-- Main application -->
     <div ng-if="state === 'unlocked'" id="main">
         <header>
-            <div class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>open file</span></div>
-            <div class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>setting here</span></div>
-            <div class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Unlock file</span></div>
+            <span class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>Save file</span></span>
+            <span class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>Setting here</span></span>
+            <span class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Unlock file</span></span>
         </header>
 
         <div id="treeView">
