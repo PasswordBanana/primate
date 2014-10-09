@@ -5,10 +5,10 @@
     </div>
     <span class="lightText">{{record.passphraseModifyTime | date : 'shortDate'}}</span>
     <div class="recordButtonContainer">
-        <i ng-click="copyToClipboard(record.username)" class="fa fa-user" alt="Copy Username"></i>
-        <i class="fa fa-key" ng-click="copyToClipboard(record.password)" alt="Copy Password"></i>
-        <i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i>
-        <div class="toolhint"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> edit here</span></div>
+        <p class="toolhint"><i ng-click="copyToClipboard(record.username)" class="fa fa-user" alt="Copy Username"></i><span> Copy Username</span></p>
+		<p class="toolhint"><i class="fa fa-key" ng-click="copyToClipboard(record.password)" alt="Copy Password"></i><span> Copy Password</span></p>
+        <p class="toolhint"><i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i><span>goToUrl</span></p>
+        <p class="toolhint"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> edit here</span></p>
     </div>
 </div>
 <!-- End record tree display -->
