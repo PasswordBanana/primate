@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
-
-    <script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
+	<script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
     <script src="js/libpwsafejs/jDataView/src/jdataview.js"></script>
     <script src="js/libpwsafejs/jDataView/src/jdataview-jquery-converter.js"></script>
     <script src="js/libpwsafejs/crypto-sha256-hmac.js"></script>
@@ -26,6 +25,28 @@
     <script src="js/controllers.js"></script>
     <script src="bower_components/zxcvbn/zxcvbn.js"></script>
     <script src="bower_components/file-saver/FileSaver.js"></script>
+<style type="text/css">
+
+p{ margin-right:10px;}
+
+.toolhint{position:relative; z-index:20;}
+.toolhint span{display: none;}
+.toolhint:hover {z-index:21;}
+.toolhint:hover span {
+display:block;
+width:150px;
+text-align:center;
+padding:5px;
+color:#FFF;
+background:#535663;
+font-size:20px;
+text-decoration:none;
+position:absolute;
+border-radius:6px;
+left:10px;
+}
+	
+</style>
 </head>
 <body ng-controller="StateController">
     <!-- Open file, no file selected -->
@@ -34,7 +55,7 @@
         <h3>or</h3>
         <div class="btn-group" id="dbSelectButtons" ng-if="state !== 'loaded'" ng-init="$('openFileButton').focus()">
             <button type="button" class="btn btn-primary btn-lg" onclick="document.getElementById('fileInput').click()" id="openFileButton">
-                 <i class="fa fa-folder-o"></i> Open Database
+                 <i class="fa fa-folder-o"></i>Open Database
             </button>
             <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#newDBModal">
                 <i class="fa fa-plus"></i> New Database
@@ -69,9 +90,9 @@
     <!-- Main application -->
     <div ng-if="state === 'unlocked'" id="main">
         <header>
-            <span ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></span>
-            <span data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></span>
-            <span ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></span>
+            <a class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>open file</span></a>
+            <a class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>setting here</span></a>
+            <a class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Unlock file</span></a>
         </header>
 
         <div id="treeView">
