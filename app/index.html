@@ -27,7 +27,7 @@
     <script src="bower_components/file-saver/FileSaver.js"></script>
 <style type="text/css">
 
-p{ margin-right:10px;}
+p{ margin-right:15px;}
 
 .toolhint{position:relative; z-index:20;}
 .toolhint span{display: none;}
@@ -43,7 +43,6 @@ font-size:20px;
 text-decoration:none;
 position:absolute;
 border-radius:6px;
-left:10px;
 }
 	
 </style>
@@ -90,9 +89,9 @@ left:10px;
     <!-- Main application -->
     <div ng-if="state === 'unlocked'" id="main">
         <header>
-            <a class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>open file</span></a>
-            <a class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>setting here</span></a>
-            <a class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Unlock file</span></a>
+            <div class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>open file</span></div>
+            <div class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>setting here</span></div>
+            <div class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Unlock file</span></div>
         </header>
 
         <div id="treeView">
