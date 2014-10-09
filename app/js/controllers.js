@@ -337,4 +337,11 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     document.addEventListener('focus', function() {
         clearTimeout(idleTimer);
     });
+	
+	$scope.copyToClipboard = function(text) {
+		if (isNW) {
+			var gui = require('nw.gui');
+			gui.Clipboard.get().set(text, 'text');	
+		}
+	};
 }]);

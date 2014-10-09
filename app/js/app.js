@@ -1,3 +1,12 @@
+var isNW;
+
+try {
+    isNW = (typeof require('nw.gui') !== "undefined");
+} catch(e) {
+    isNW = false;
+}
+
+
 var primate = angular.module("primate", ['ngAnimate']);
 
 /*

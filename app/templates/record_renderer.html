@@ -5,8 +5,8 @@
     </div>
     <span class="lightText">{{record.passphraseModifyTime | date : 'shortDate'}}</span>
     <div class="recordButtonContainer">
-        <i ng-click="copyUsername(record.uuid)" class="fa fa-user" alt="Copy Username"></i>
-        <i class="fa fa-key" ng-click="copyPassword(record.uuid)" alt="Copy Password"></i>
+        <i ng-click="copyToClipboard(record.username)" class="fa fa-user" alt="Copy Username"></i>
+        <i class="fa fa-key" ng-click="copyToClipboard(record.password)" alt="Copy Password"></i>
         <i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i>
         <i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i>
     </div>
