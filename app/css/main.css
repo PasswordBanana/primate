@@ -160,7 +160,7 @@ header > span:hover, header > span:active {
 .rootGroup > a, .group > a {
     display: none;
     cursor: pointer;
-    color: deepskyblue;
+    color: #00CBEB;
 }
 
 .rootGroup:hover a, .group:hover a, .group > a:first-of-type, .record a {
