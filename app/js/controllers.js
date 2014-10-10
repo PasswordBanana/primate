@@ -167,6 +167,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
      */
     $scope.saveDb = function() {
         db.save();
+        $scope.alerts.notSaved = false;
     };
 
     /*
@@ -374,5 +375,12 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         score += record.passphraseModifyTime.getSeconds();
         score *= zxcvbn(record.password).score;
         return score;
+    };
+
+    /* 
+     * Called when any part of the database has been changed
+     */
+    $scope.changed = function() {
+        $scope.alerts.notSaved = true;
     };
 }]);
