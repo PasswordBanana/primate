@@ -20,6 +20,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
             keys: ['title', 'username', 'notes']
         };
     $scope.state = "unloaded"; //State of the main database ["unloaded", "loaded", "unlocked"]
+    $scope.auditMode = false;
     $scope.databaseFilename;
     $scope.records; //Array of all records in the database
     $scope.headers; //Object containing the database headers
@@ -386,5 +387,13 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         if (record) {
             record.passphraseModifyTime = new Date();
         }
+    };
+
+    $scope.startAudit = function() {
+        $scope.auditMode = true;
+    };
+
+    $scope.stopAudit = function() {
+        $scope.auditMode = false;
     };
 }]);

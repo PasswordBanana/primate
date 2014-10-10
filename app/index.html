@@ -73,14 +73,15 @@
             <span class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>Save file</span></span>
             <span class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>Settings</span></span>
             <span class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Lock file</span></span>
-            <input type="checkbox" ng-model="auditMode" ng-init="auditMode = false">
         </header>
 
         <div id="treeView">
             <div class="rootGroup">
                 <span>{{databaseFilename}} {{(auditMode) ? " - Audit Mode" : "" }}</span>
-                <a class="addRecord" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="fa fa-plus-square-o"></i>Add Record</a>
-                <a class="addRecord" ng-click="addGroup(); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Group</a>
+                <a class="addRecord" ng-if="!auditMode" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="fa fa-plus-square-o"></i>Add Record</a>
+                <a class="addRecord" ng-if="!auditMode" ng-click="addGroup(); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Group</a>
+                <a class="addRecord" ng-if="!auditMode" ng-click="startAudit(); $event.stopPropagation();"><i class="fa fa-wrench"></i>Audit</a>
+                <p class="hoverCursor" id="auditClose" ng-if="auditMode" ng-click="stopAudit(); $event.stopPropagation();"><i class="fa fa-close"></i></p>
                 <div>
                     <input type="text" maxlength="32" class="form-control" placeholder="search" id="searchField" ng-model="searchValue" ng-change="search(searchValue)">
                 </div>

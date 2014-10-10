@@ -143,6 +143,10 @@ header > span:hover, header > span:active {
     color: #444;
 }
 
+#auditClose {
+    color: #00CBEB;
+}
+
 
 /* Tree View */
 #treeView {
