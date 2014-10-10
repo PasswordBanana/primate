@@ -152,6 +152,8 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         $scope.records = undefined;
         $scope.recordTree = undefined;
         $scope.headers = undefined;
+        $scope.auditMode = false;
+        $scope.recordFuse = undefined;
     };
 
     /*
