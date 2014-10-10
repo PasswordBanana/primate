@@ -143,6 +143,8 @@ header > span:hover, header > span:active {
     color: #444;
 }
 
+
+/* Tree View */
 #treeView {
     -webkit-flex: 1;
     flex: 1;
@@ -155,16 +157,22 @@ header > span:hover, header > span:active {
     font-size: large;
 }
 
+#searchField {
+    display: inline-block;
+    margin-left: 20px;
+    max-width: 300px;
+}
 
-/* Tree View */
 .rootGroup > a, .group > a {
-    display: none;
+    /*display: none;*/
+    visibility: hidden;
     cursor: pointer;
     color: #00CBEB;
 }
 
 .rootGroup:hover a, .group:hover a, .group > a:first-of-type, .record a {
-    display: inline;
+    /*display: inline;*/
+    visibility: visible;
 }
 
 .rootGroupIndent {
@@ -182,6 +190,12 @@ header > span:hover, header > span:active {
     background-color: #f8f8f8;
     border-bottom: 1px solid black;
 }
+
+.rootGroup > div {
+    flex: 1;
+    text-align: right;
+}
+
 
 .group:hover, .record:hover {
     cursor: grab;

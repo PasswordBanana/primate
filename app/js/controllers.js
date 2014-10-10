@@ -8,7 +8,17 @@
  * including the application state (unloaded, loaded, unlocked)
  */
 primate.controller("StateController", ["$scope", "Database", "$http", function($scope, db, $http) {
-    var databaseFile;
+    var databaseFile, recordFuse,
+        searchOptions = {
+            caseSensitive: false,
+            includeScore: false,
+            shouldSort: false,
+            threshold: 0.4,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            keys: ['title', 'username', 'notes']
+        };
     $scope.state = "unloaded"; //State of the main database ["unloaded", "loaded", "unlocked"]
     $scope.databaseFilename;
     $scope.records; //Array of all records in the database
@@ -121,8 +131,8 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     /*
      * Update the Records tree view
      */
-    var updateRecordTree = function() {
-        $scope.recordTree = generateRecordTree.call(this, $scope.records);
+    var updateRecordTree = function(recordList) {
+        $scope.recordTree = generateRecordTree.call(this, (recordList || $scope.records));
     };
 
     /*
@@ -133,6 +143,8 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         $scope.records = db.records;
         $scope.headers = db.headers;
         updateRecordTree();
+
+        recordFuse = new Fuse(db.records, searchOptions);
     };
 
     var clearVars = function() {
@@ -344,4 +356,16 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
 			gui.Clipboard.get().set(text, 'text');	
 		}
 	};
+
+    /*
+     * Perform a fuzzy search on the list of records and show the results
+     */
+    $scope.search = function(val) {
+        if (val) {
+            var res = recordFuse.search(val);
+            updateRecordTree(res);
+        } else {
+            updateRecordTree();
+        }
+    };
 }]);

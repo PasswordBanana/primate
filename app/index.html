@@ -25,6 +25,7 @@
     <script src="js/filters.js"></script>
     <script src="js/controllers.js"></script>
     <script src="bower_components/zxcvbn/zxcvbn.js"></script>
+    <script src="bower_components/fuse.js/src/fuse.js"></script>
     <script src="bower_components/file-saver/FileSaver.js"></script>
 <style type="text/css">
 
@@ -101,6 +102,9 @@ left:-55px;
                 <span>{{databaseFilename}}</span>
                 <a class="addRecord" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="fa fa-plus-square-o"></i>Add Record</a>
                 <a class="addRecord" ng-click="addGroup(); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Group</a>
+                <div>
+                    <input type="text" class="form-control" placeholder="search" id="searchField" ng-model="searchValue" ng-change="search(searchValue)">
+                </div>
             </div>
             <div class="rootGroupIndent">
                 <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
