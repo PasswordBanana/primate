@@ -1,4 +1,4 @@
-<div ng-click="data.expanded = !data.expanded" class="group" ng-if="data.level !== 0">
+<div ng-click="data.expanded = !data.expanded" class="group" ng-if="data.level !== 0" ng-show="!auditMode">
     <span ng-switch="data.expanded" class="groupChevronContainer hoverCursor">
         <i ng-switch-when="true" class="fa fa-angle-down groupChevronClose"></i>
         <i ng-switch-when="false" class="fa fa-angle-right groupChevronOpen"></i>
@@ -7,7 +7,7 @@
     <a class="addRecord" ng-click="addRecord(data.fullGroup); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Record</a>
     <a class="addRecord" ng-click="addGroup(data); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Subgroup</a>
 </div>
-<div class="animate-if" ng-if="data.expanded">
+<div class="animate-if" ng-if="data.expanded || auditMode">
     <div ng-repeat="data in data.subgroups" class="groupContainer" ng-style="{'margin-left': '{{data | groupIndent}}px'}" ng-include="'templates/group_renderer.html'"></div>
     <div ng-repeat="record in data.records" class="recordContainer" ng-style="{'margin-left': '{{record | recordIndent}}px'}" ng-include="'templates/record_renderer.html'"></div>
 </div>

@@ -368,4 +368,11 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
             updateRecordTree();
         }
     };
+
+    $scope.auditValue = function(record) {
+        var score = 0;
+        score += record.passphraseModifyTime.getSeconds();
+        score *= zxcvbn(record.password).score;
+        return score;
+    };
 }]);

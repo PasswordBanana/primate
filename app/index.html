@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
-	
-	<script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
+    
+    <script src="js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js"></script>
     <script src="js/libpwsafejs/jDataView/src/jdataview.js"></script>
     <script src="js/libpwsafejs/jDataView/src/jdataview-jquery-converter.js"></script>
     <script src="js/libpwsafejs/crypto-sha256-hmac.js"></script>
@@ -73,11 +73,12 @@
             <span class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>Save file</span></span>
             <span class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>Settings</span></span>
             <span class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Lock file</span></span>
+            <input type="checkbox" ng-model="auditMode" ng-init="auditMode = false">
         </header>
 
         <div id="treeView">
             <div class="rootGroup">
-                <span>{{databaseFilename}}</span>
+                <span>{{databaseFilename}} {{(auditMode) ? " - Audit Mode" : "" }}</span>
                 <a class="addRecord" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="fa fa-plus-square-o"></i>Add Record</a>
                 <a class="addRecord" ng-click="addGroup(); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Group</a>
                 <div>
@@ -86,6 +87,15 @@
             </div>
             <div class="rootGroupIndent">
                 <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
+                <div id="auditView" ng-if="auditMode">
+                    <div ng-repeat="record in records | orderBy:auditValue" class="record">
+                        <div>
+                            <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
+                        </div>
+                        <span>Strength: {{record.password | passwordStrengthScore}} | Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</span>
+                        <span class="toolhint"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> Edit</span></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
