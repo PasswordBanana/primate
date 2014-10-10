@@ -22,14 +22,14 @@
                         <li class="list-group-item"><label>Title: &nbsp;</label><input type="text" class="form-control" value="{{record.title}}" ng-model="record.title" ng-change="changed()"></li>                                                                  
                         <li class="list-group-item"><label>URL: &nbsp;</label><input type="text" class="form-control" value="{{record.URL}}" ng-model="record.URL" ng-change="changed()"></li>                                        
                         <li class="list-group-item"><label>Username: &nbsp;</label><input type="text" class="form-control" value="{{record.username}}" ng-model="record.username" ng-change="changed()"></li>
-                        <li class="list-group-item"><ng-init="passwordShown = false"><label>Password: &nbsp;</label><input type="{{(passwordShown) ? 'text' : 'password'}}" class="form-control" value="{{record.password}}" ng-model="record.password" ng-change="changed()">
+                        <li class="list-group-item"><ng-init="passwordShown = false"><label>Password: &nbsp;</label><input type="{{(passwordShown) ? 'text' : 'password'}}" class="form-control" value="{{record.password}}" ng-model="record.password" ng-change="changed(record)">
                             <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
                             <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span><br>
                         <input type="button" class="btn btn-default" value="Generate New Password" ng-click="genPw(record)">
                         <p>Password Strength: {{record.password | passwordStrengthScore}} out of 4</p>
                         <p>Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</p>
                         </li>
-                        <li class="list-group-item"><label>Notes: &nbsp;</label><input type="text" value="{{record.notes}}" ng-model="record.notes" ng-change="changed()"></li>
+                        <li class="list-group-item"><label>Notes: &nbsp;</label><input type="text" class="form-control" value="{{record.notes}}" ng-model="record.notes" ng-change="changed()"></li>
                         <li class="list-group-item"><label>History: &nbsp;{{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
                     </ul>
                 </div>

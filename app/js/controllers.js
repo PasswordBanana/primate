@@ -380,7 +380,11 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
     /* 
      * Called when any part of the database has been changed
      */
-    $scope.changed = function() {
+    $scope.changed = function(record) {
         $scope.alerts.notSaved = true;
+
+        if (record) {
+            record.passphraseModifyTime = new Date();
+        }
     };
 }]);

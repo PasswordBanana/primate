@@ -82,7 +82,7 @@
                 <a class="addRecord" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="fa fa-plus-square-o"></i>Add Record</a>
                 <a class="addRecord" ng-click="addGroup(); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Group</a>
                 <div>
-                    <input type="text" class="form-control" placeholder="search" id="searchField" ng-model="searchValue" ng-change="search(searchValue)">
+                    <input type="text" maxlength="32" class="form-control" placeholder="search" id="searchField" ng-model="searchValue" ng-change="search(searchValue)">
                 </div>
             </div>
             <div class="rootGroupIndent">
