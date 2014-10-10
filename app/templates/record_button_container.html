@@ -1,4 +1,4 @@
 <span class="toolhint"><i ng-click="copyToClipboard(record.username)" class="fa fa-user" alt="Copy Username"></i><span> Copy Username</span></span>
 <span class="toolhint"><i class="fa fa-key" ng-click="copyToClipboard(record.password)" alt="Copy Password"></i><span> Copy Password</span></span>
-<span class="toolhint"><i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i><span>goToUrl</span></span>
+<span class="toolhint"><i ng-click="gotoUrl(record.uuid)" class="fa fa-globe" alt="Copy URL"></i><span>{{(record.URL) ? "Go To " + record.URL : "No URL"}}</span></span>
 <span class="toolhint"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> Edit</span></span>
