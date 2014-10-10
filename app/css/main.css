@@ -237,3 +237,24 @@ header > span:hover, header > span:active {
 .record i:hover {
     color: #444;
 }
+
+/* Tooltips */
+p { margin-right: 15px;}
+
+.toolhint { position: relative; z-index: 20;}
+.toolhint span { display: none;}
+.toolhint:hover { z-index: 21;}
+.toolhint:hover span {
+    display: block;
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+    color: #FFF;
+    background: #535663;
+    font-size: 20px;
+    text-decoration: none;
+    position: absolute;
+    border-radius: 6px;
+    left: -55px;
+    text-shadow: none;
+}
