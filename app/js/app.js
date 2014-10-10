@@ -219,7 +219,6 @@ document.addEventListener('drop', resetDrag, false);
 
 $(document).ready(function() {
     $("#openFileButton").focus();
-    // $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });
 
 $(window).resize(function() {
