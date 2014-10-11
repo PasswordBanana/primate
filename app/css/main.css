@@ -193,6 +193,8 @@ header > span:hover, header > span:active {
     padding: 10px;
     background-color: #f8f8f8;
     border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+    align-items: center;
 }
 
 .rootGroup > div {
