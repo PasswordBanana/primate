@@ -25,7 +25,7 @@
                         <li class="list-group-item"><ng-init="passwordShown = false"><label>Password: &nbsp;</label><input type="{{(passwordShown) ? 'text' : 'password'}}" class="form-control" value="{{record.password}}" ng-model="record.password" ng-change="changed(record)">
                             <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor glyphicon glyphicon-eye-close"></span>
                             <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor glyphicon glyphicon-eye-open"></span><br>
-                        <input type="button" class="btn btn-default" value="Generate New Password" ng-click="genPw(record)">
+                      <label>Generate New Password: &nbsp;</label>  <input type="button" class="btn btn-default" value="Generate" ng-click="genPw(record)">
                         <p>Password Strength: {{record.password | passwordStrengthScore}} out of 4</p>
                         <p>Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</p>
                         </li>
