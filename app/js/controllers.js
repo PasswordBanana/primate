@@ -190,7 +190,11 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
      */
     $scope.gotoUrl = function(uuid) {
         var url = getRecord(uuid).URL;
-        if (url != null) {
+        if (url == null) return;
+        if (isNW) {
+            var gui = require('nw.gui');
+            gui.Shell.openExternal(url);
+        } else {
             window.open(url, '_blank').focus();
         }
     };
