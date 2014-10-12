@@ -1,11 +1,11 @@
 <div ng-click="data.expanded = !data.expanded" class="group" ng-if="data.level !== 0" ng-show="!auditMode">
     <span ng-switch="data.expanded" class="groupChevronContainer hoverCursor">
-        <i ng-switch-when="true" class="fa fa-angle-down groupChevronClose"></i>
-        <i ng-switch-when="false" class="fa fa-angle-right groupChevronOpen"></i>
+        <i ng-switch-when="true" class="icon-angle-down groupChevronClose"></i>
+        <i ng-switch-when="false" class="icon-angle-right groupChevronOpen"></i>
     </span>
     <a>{{data.name}}</a>
-    <a class="addRecord" ng-click="addRecord(data.fullGroup); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Record</a>
-    <a class="addRecord" ng-click="addGroup(data); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Subgroup</a>
+    <a class="addRecord" ng-click="addRecord(data.fullGroup); $event.stopPropagation();"><i class="icon-plus"></i>Add Record</a>
+    <a class="addRecord" ng-click="addGroup(data); $event.stopPropagation();"><i class="icon-plus"></i>Add Subgroup</a>
 </div>
 <div class="animate-if" ng-if="data.expanded || auditMode">
     <div ng-repeat="data in data.subgroups" class="groupContainer" ng-style="{'margin-left': '{{data | groupIndent}}px'}" ng-include="'templates/group_renderer.html'"></div>

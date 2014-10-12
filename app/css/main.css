@@ -1,13 +1,13 @@
 @font-face {
     font-family: 'Roboto';
-    src: url('fonts/Roboto-Regular.ttf'), url('../fonts/Roboto-Regular.ttf');
+    src: url('fonts/Roboto-Regular.ttf');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url('fonts/Roboto-Thin.ttf'), url('../fonts/Roboto-Thin.ttf');
+    src: url('fonts/Roboto-Thin.ttf');
     font-weight: lighter;
     font-style: normal;
 }
@@ -34,6 +34,10 @@ body {
     font-family: 'Roboto';
     -webkit-flex: 1;
     flex: 1;
+}
+
+.passwordShown {
+    color: red;
 }
 
 .hoverCursor:hover, .hoverCursor:active {
@@ -267,4 +271,205 @@ p { margin-right: 15px;}
     border-radius: 6px;
     left: -55px;
     text-shadow: none;
+}
+
+/* IcoMoon Generated Font */
+@font-face {
+    font-family: 'primate';
+    src:url('fonts/primate.eot?20djg6');
+    src:url('fonts/primate.eot?#iefix20djg6') format('embedded-opentype'),
+        url('fonts/primate.woff?20djg6') format('woff'),
+        url('fonts/primate.ttf?20djg6') format('truetype'),
+        url('fonts/primate.svg?20djg6#primate') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'primate';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-eye:before {
+    content: "\e000";
+}
+.icon-clipboard:before {
+    content: "\e013";
+}
+.icon-clock:before {
+    content: "\e014";
+}
+.icon-watch:before {
+    content: "\e015";
+}
+.icon-cog:before {
+    content: "\e023";
+}
+.icon-search:before {
+    content: "\e036";
+}
+.icon-square-plus:before {
+    content: "\e044";
+}
+.icon-square-minus:before {
+    content: "\e045";
+}
+.icon-square-check:before {
+    content: "\e046";
+}
+.icon-square-cross:before {
+    content: "\e047";
+}
+.icon-shuffle:before {
+    content: "\e057";
+}
+.icon-folder:before {
+    content: "\e059";
+}
+.icon-cloud-download:before {
+    content: "\e067";
+}
+.icon-download:before {
+    content: "\e069";
+}
+.icon-head:before {
+    content: "\e074";
+}
+.icon-arrow-right:before {
+    content: "\e095";
+}
+.icon-ban:before {
+    content: "\e107";
+}
+.icon-trash:before {
+    content: "\e109";
+}
+.icon-plus:before {
+    content: "\e114";
+}
+.icon-check:before {
+    content: "\e116";
+}
+.icon-cross:before {
+    content: "\e117";
+}
+.icon-inbox:before {
+    content: "\e122";
+}
+.icon-file-add:before {
+    content: "\e125";
+}
+.icon-ellipsis:before {
+    content: "\e129";
+}
+.icon-edit2:before {
+    content: "\f044";
+}
+.icon-angle-left:before {
+    content: "\f104";
+}
+.icon-angle-right:before {
+    content: "\f105";
+}
+.icon-angle-up:before {
+    content: "\f106";
+}
+.icon-angle-down:before {
+    content: "\f107";
+}
+.icon-smile-o:before {
+    content: "\f118";
+}
+.icon-frown-o:before {
+    content: "\f119";
+}
+.icon-meh-o:before {
+    content: "\f11a";
+}
+.icon-keyboard-o:before {
+    content: "\f11c";
+}
+.icon-copy2:before {
+    content: "\e600";
+}
+.icon-paste:before {
+    content: "\e603";
+}
+.icon-paste2:before {
+    content: "\e604";
+}
+.icon-user:before {
+    content: "\e606";
+}
+.icon-globe:before {
+    content: "\e608";
+}
+.icon-earth:before {
+    content: "\e609";
+}
+.icon-notification:before {
+    content: "\e60a";
+}
+.icon-question:before {
+    content: "\e60b";
+}
+.icon-info:before {
+    content: "\e60c";
+}
+.icon-copy4:before {
+    content: "\e602";
+}
+.icon-trash2:before {
+    content: "\e60d";
+}
+.icon-user2:before {
+    content: "\e60e";
+}
+.icon-key2:before {
+    content: "\e60f";
+}
+.icon-search2:before {
+    content: "\e610";
+}
+.icon-settings:before {
+    content: "\e611";
+}
+.icon-lock:before {
+    content: "\e612";
+}
+.icon-bulb:before {
+    content: "\e601";
+}
+.icon-pen:before {
+    content: "\e613";
+}
+.icon-diamond:before {
+    content: "\e605";
+}
+.icon-eye2:before {
+    content: "\e614";
+}
+.icon-clock2:before {
+    content: "\e615";
+}
+.icon-lab:before {
+    content: "\e607";
+}
+.icon-fire:before {
+    content: "\e618";
+}
+.icon-calendar:before {
+    content: "\e616";
+}
+.icon-world:before {
+    content: "\e617";
 }

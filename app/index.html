@@ -35,10 +35,10 @@
         <h3>or</h3>
         <div class="btn-group" id="dbSelectButtons" ng-if="state !== 'loaded'" ng-init="$('openFileButton').focus()">
             <button type="button" class="btn btn-primary btn-lg" onclick="document.getElementById('fileInput').click()" id="openFileButton">
-                 <i class="fa fa-folder-o"></i>Open Database
+                 <i class="icon-folder"></i>&nbsp;Open Database
             </button>
             <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#newDBModal">
-                <i class="fa fa-plus"></i> New Database
+                <i class="icon-plus"></i>&nbsp;New Database
             </button>
         </div>
         <div id="follow">Drop</div>
@@ -53,7 +53,7 @@
                 <input type="password" class="form-control" id="passwordField" ng-model="$parent.pass">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-arrow-right"></i>
+                        <i class="icon-arrow-right"></i>
                     </button>
                 </span>
             </div>
@@ -70,18 +70,18 @@
     <!-- Main application -->
     <div ng-if="state === 'unlocked'" id="main">
         <header>
-            <span class="toolhint"><p ng-click="saveDb()" class="hoverCursor glyphicon glyphicon-download-alt"></p><span>Save file</span></span>
-            <span class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor glyphicon glyphicon-cog"></p><span>Settings</span></span>
-            <span class="toolhint"><p ng-click="lockDb()" class="hoverCursor glyphicon glyphicon-log-out"></p><span>Lock file</span></span>
+            <span class="toolhint"><p ng-click="saveDb()" class="hoverCursor icon-inbox"></p><span>Save file</span></span>
+            <span class="toolhint"><p data-toggle="modal" data-target="#settingsModal" class="hoverCursor icon-settings"></p><span>Settings</span></span>
+            <span class="toolhint"><p ng-click="lockDb()" class="hoverCursor icon-lock"></p><span>Lock file</span></span>
         </header>
 
         <div id="treeView">
             <div class="rootGroup">
                 <span>{{databaseFilename}} {{(auditMode) ? " - Audit Mode" : "" }}</span>
-                <a class="addRecord" ng-if="!auditMode" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="fa fa-plus-square-o"></i>Add Record</a>
-                <a class="addRecord" ng-if="!auditMode" ng-click="addGroup(); $event.stopPropagation();"><i class="fa fa-plus-square-o"></i>Add Group</a>
-                <a class="addRecord" ng-if="!auditMode" ng-click="startAudit(); $event.stopPropagation();"><i class="fa fa-wrench"></i>Audit</a>
-                <p class="hoverCursor" id="auditClose" ng-if="auditMode" ng-click="stopAudit(); $event.stopPropagation();"><i class="fa fa-close"></i></p>
+                <a class="addRecord" ng-if="!auditMode" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="icon-plus"></i>Add Record</a>
+                <a class="addRecord" ng-if="!auditMode" ng-click="addGroup(); $event.stopPropagation();"><i class="icon-plus"></i>Add Group</a>
+                <a class="addRecord" ng-if="!auditMode" ng-click="startAudit(); $event.stopPropagation();"><i class="icon-lab"></i>Audit</a>
+                <p class="hoverCursor" id="auditClose" ng-if="auditMode" ng-click="stopAudit(); $event.stopPropagation();"><i class="icon-cross"></i></p>
                 <div>
                     <input type="text" maxlength="32" class="form-control" placeholder="search" id="searchField" ng-model="searchValue" ng-change="search(searchValue)">
                 </div>
