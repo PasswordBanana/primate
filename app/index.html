@@ -77,11 +77,10 @@
 
         <div id="treeView">
             <div class="rootGroup">
-                <span>{{databaseFilename}} {{(auditMode) ? " - Audit Mode" : "" }}</span>
+                <span>{{databaseFilename}} {{(auditMode) ? " - Audit Mode" : "" }}<span class="hoverCursor" id="auditClose" ng-if="auditMode" ng-click="stopAudit(); $event.stopPropagation();"><i class="icon-cross"></i></span></span>
                 <a class="addRecord" ng-if="!auditMode" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="icon-plus"></i>Add Record</a>
                 <a class="addRecord" ng-if="!auditMode" ng-click="addGroup(); $event.stopPropagation();"><i class="icon-plus"></i>Add Group</a>
                 <a class="addRecord" ng-if="!auditMode" ng-click="startAudit(); $event.stopPropagation();"><i class="icon-lab"></i>Audit</a>
-                <p class="hoverCursor" id="auditClose" ng-if="auditMode" ng-click="stopAudit(); $event.stopPropagation();"><i class="icon-cross"></i></p>
                 <div>
                     <input type="text" maxlength="32" class="form-control" placeholder="search" id="searchField" ng-model="searchValue" ng-change="search(searchValue)">
                 </div>
