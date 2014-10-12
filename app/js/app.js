@@ -241,12 +241,20 @@ var windowMenu = (function() {
     var menu, gui, win,
     debug = true,
 
+    clearMenu = function() {
+        while (menu.items.length) {
+            menu.removeAt(0);
+        }
+    },
+
     setState = function(state) {
         if (!isNW) return;
 		
 		if (process.platform === "darwin") {
 			menu.removeAt(1);
-		}
+		} else {
+            clearMenu();
+        }
 		
 		var submenu;
         switch(state) {
