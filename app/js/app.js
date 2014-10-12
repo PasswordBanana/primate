@@ -230,3 +230,136 @@ $(window).resize(function() {
         $('#dbSelectButtons').removeClass('btn-group-vertical');
     }
 });
+
+
+
+/*
+ * System Window Menu
+ */
+
+var windowMenu = (function() {
+    var menu, gui, win,
+    debug = true,
+
+    clearMenu = function() {
+        while (menu.items.length > 0) {
+            menu.removeAt(0);
+        }
+    },
+
+    setState = function(state) {
+        if (!isNW) return;
+
+        clearMenu();
+
+        switch(state) {
+            case "locked":
+
+                break;
+            case "unlocked":
+                menu.append(new gui.MenuItem({ 
+                    label: "File",
+                    submenu: (function() {
+                        var submenu = new gui.Menu();
+                        submenu.append(new gui.MenuItem({
+                            label: "Lock Database",
+                            click: function() {
+                                //TODO
+                            }
+                        }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Close Database",
+                            click: function() {
+                                //TODO
+                            }
+                        }));
+                        submenu.append(new gui.MenuItem({ type: 'separator' }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Database Settings",
+                            click: function() {
+                                $('#settingsModal').modal('show');
+                            }
+                        }));
+
+                        if (debug) {
+                            submenu.append(new gui.MenuItem({
+                                label: "Dev Tools",
+                                click: function() {
+                                    win.showDevTools();
+                                }
+                            }));
+                        }
+
+                        submenu.append(new gui.MenuItem({ type: 'separator' }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Exit",
+                            click: function() {
+                                win.close();
+                            }
+                        }));
+                        return submenu;
+                    }())
+                }));
+                break;
+            case "unloaded":
+            default:
+                menu.append(new gui.MenuItem({ 
+                    label: "File",
+                    submenu: (function() {
+                        var submenu = new gui.Menu();
+                        submenu.append(new gui.MenuItem({
+                            label: "Open Database",
+                            click: function() {
+                                document.getElementById('fileInput').click();
+                            }
+                        }));
+                        submenu.append(new gui.MenuItem({
+                            label: "New Database",
+                            click: function() {
+                                $('#newDBModal').modal('show');
+                            }
+                        }));
+
+                        if (debug) {
+                            submenu.append(new gui.MenuItem({
+                                label: "Dev Tools",
+                                click: function() {
+                                    win.showDevTools();
+                                }
+                            }));
+                        }
+                        submenu.append(new gui.MenuItem({ type: 'separator' }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Exit",
+                            click: function() {
+                                win.close();
+                            }
+                        }));
+                        return submenu;
+                    }())
+                }));
+                break;
+        }
+
+        if (process.platform === "darwin") {
+            menu.createMacBuiltin("Primate");
+        }
+
+        gui.Window.get().menu = menu;
+    },
+    
+    init = function() {
+        if (!isNW) return;
+
+        gui = require('nw.gui');
+        win = gui.Window.get();
+
+        menu = new gui.Menu({ type: 'menubar' });
+
+        setState("unloaded");
+    }();
+
+    return {
+        setState: setState
+    };
+}());
