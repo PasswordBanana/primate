@@ -87,7 +87,6 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
         promise.then(function(success) {
             $scope.setRecords(db.getDb());
             $scope.setState("unlocked");
-            windowMenu.setState("unlocked");
         }, function(failure) {
             $scope.alerts.invalidPassword = true;
         });
@@ -106,6 +105,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
 
     $scope.setState = function(state) {
         $scope.state = state;
+		windowMenu.setState(state);
     };
 
     /*
