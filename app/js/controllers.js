@@ -122,7 +122,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
             $scope.databaseFilename = filename;
             $scope.pass = "";
             $scope.open();
-            db.setPass(master);
+            db.setPass(undefined, master);
         }).
         error(function(data, status, headers, config) {
             throw new Error("Failed to create new database. Could not access file empty.psafe3");

@@ -4,7 +4,8 @@
 **/
 
 primate.factory("Database", ["$q", function($q) {
-    var file, //Database File object
+    var vm = this,
+        file, //Database File object
         db, //Decrypted PWSafeDB() view of the database
         pass, //Database password
         name = "No database loaded"; //Filename of the database
@@ -48,29 +49,29 @@ primate.factory("Database", ["$q", function($q) {
 
     // Save the database using the File-saver library
     service.save = function() {
-        var blob = db.getBlob(pass);
+        var blob = db.getBlob(vm.pass);
         saveAs(blob, name);
     };
 
     // Lock the database, maintain state by switchig the file for a blob
     service.lock = function() {
-        file = db.getBlob(pass);
+        file = db.getBlob(vm.pass);
         db = undefined;
-        pass = undefined;
+        vm.pass = undefined;
     };
 
     // Close the database and reset all variables
     service.close = function() {
         db = undefined;
         file = undefined;
-        pass = undefined;
+        vm.pass = undefined;
         name = "No database loaded";
     };
 
     // Set a new master database password
     service.setPass = function(oldPass, newPass) {
-        if (oldPass === pass) {
-            pass = newPass;
+        if (oldPass === vm.pass) {
+            vm.pass = newPass;
         } else {
             return false;
         }
