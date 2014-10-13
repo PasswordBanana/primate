@@ -237,7 +237,7 @@ $(window).resize(function() {
  * System Window Menu
  */
 
-var windowMenu = (function() {
+var windowMenu = (function($scope) {
     var menu, gui, win,
     debug = true,
 
@@ -264,14 +264,15 @@ var windowMenu = (function() {
 					submenu.append(new gui.MenuItem({
 						label: "Open Database",
 						click: function() {
-							//TODO
+                            $('.openCancelButton').click();
+							$('#fileInput').click();
 						}
 					}));
 					
 					submenu.append(new gui.MenuItem({
 						label: "Close Database",
 						click: function() {
-							//TODO
+							$('.openCancelButton').click();
 						}
 					}));
 
@@ -301,13 +302,14 @@ var windowMenu = (function() {
 					submenu.append(new gui.MenuItem({
 						label: "Lock Database",
 						click: function() {
-							//TODO
+                            $('#lockButton').click();
 						}
 					}));
 					submenu.append(new gui.MenuItem({
 						label: "Close Database",
 						click: function() {
-							//TODO
+                            $('#lockButton').click();
+                            $('.openCancelButton').click();
 						}
 					}));
 					submenu.append(new gui.MenuItem({ type: 'separator' }));
@@ -344,7 +346,7 @@ var windowMenu = (function() {
 					submenu.append(new gui.MenuItem({
 						label: "Open Database",
 						click: function() {
-							document.getElementById('fileInput').click();
+							$('#fileInput').click();
 						}
 					}));
 					submenu.append(new gui.MenuItem({
