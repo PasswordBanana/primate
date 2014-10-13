@@ -7,7 +7,7 @@
  * StateController handles all the primary application controls
  * including the application state (unloaded, loaded, unlocked)
  */
-primate.controller("StateController", ["$scope", "Database", "$http", function($scope, db, $http) {
+primate.controller("StateController", ["$scope", "Database", "$http", "$q", function($scope, db, $http, $q) {
     var databaseFile, recordFuse,
         searchOptions = {
             caseSensitive: false,
@@ -82,17 +82,21 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
      * Open the database file
      */
     $scope.open = function() {
+        var deferred = $q.defer();
         var promise = db.unlock($scope.pass);
 
         promise.then(function(success) {
             $scope.setRecords(db.getDb());
             $scope.setState("unlocked");
+            deferred.resolve(true);
         }, function(failure) {
             $scope.alerts.invalidPassword = true;
+            deferred.reject();
         });
 
         $scope.pass = "";
         $scope.resetAlerts();
+        return deferred.promise;
     };
 
     $scope.resetAlerts = function() {
@@ -121,8 +125,9 @@ primate.controller("StateController", ["$scope", "Database", "$http", function($
             db.setName(filename);
             $scope.databaseFilename = filename;
             $scope.pass = "";
-            $scope.open();
-            db.setPass(undefined, master);
+            $scope.open().then(function(success) {
+                db.setPass("", master);
+            });
         }).
         error(function(data, status, headers, config) {
             throw new Error("Failed to create new database. Could not access file empty.psafe3");
