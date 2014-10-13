@@ -239,7 +239,7 @@ $(window).resize(function() {
 
 var windowMenu = (function($scope) {
     var menu, gui, win,
-    debug = true,
+    debug = false,
 
     clearMenu = function() {
         while (menu.items.length) {
