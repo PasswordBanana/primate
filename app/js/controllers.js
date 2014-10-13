@@ -109,6 +109,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
 
     $scope.setState = function(state) {
         $scope.state = state;
+		windowMenu.setState(state);
     };
 
     /*
