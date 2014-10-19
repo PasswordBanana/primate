@@ -9,7 +9,8 @@
             <!-- Tab buttons -->
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active"><a href="#editEditTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editEditTab">Details</a></li>
-                <li><a href="#editHistoryTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editHistoryTab">History</a></li>
+         <!--     <li><a href="#editHistoryTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editHistoryTab">History</a></li>
+         --> 
                 <li><a href="#editSettingsTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editSettingsTab">Settings</a></li>
             </ul>
 
@@ -30,7 +31,7 @@
                         <p>Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</p>
                         </li>
                         <li class="list-group-item"><label>Notes: &nbsp;</label><input type="text" class="form-control" value="{{record.notes}}" ng-model="record.notes" ng-change="changed()"></li>
-                        <li class="list-group-item"><label>History: &nbsp;{{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li>
+                       <!-- <li class="list-group-item"><label>History: &nbsp;{{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li> -->
                     </ul>
                 </div>
 
