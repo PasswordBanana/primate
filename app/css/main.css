@@ -40,6 +40,10 @@ body {
     color: red;
 }
 
+i:hover, i:active {
+    cursor: pointer;
+}
+
 .hoverCursor:hover, .hoverCursor:active {
     cursor: pointer;
 }
@@ -59,7 +63,6 @@ body {
     align-items: center;
     margin: auto;
     text-align: center;
-
 }
 
 #dbSelectButtons {
@@ -172,14 +175,12 @@ header > span:hover, header > span:active {
 }
 
 .rootGroup > a, .group > a {
-    /*display: none;*/
     visibility: hidden;
     cursor: pointer;
     color: #00CBEB;
 }
 
 .rootGroup:hover a, .group:hover a, .group > a:first-of-type, .record a {
-    /*display: inline;*/
     visibility: visible;
 }
 
@@ -208,11 +209,11 @@ header > span:hover, header > span:active {
 
 
 .group:hover, .record:hover {
-    cursor: grab;
+    /*cursor: grab;*/
 }
 
 .group:active, .record:active {
-    cursor: grabbing;
+    /*cursor: grabbing;*/
 }
 
 .record > :first-child {
@@ -244,8 +245,9 @@ header > span:hover, header > span:active {
     color: #726f72;
 }
 
-.record i:hover {
+.record i:hover, .record i:active {
     color: #444;
+    cursor: pointer;
 }
 
 .urlDisabled {
@@ -271,6 +273,31 @@ p { margin-right: 15px;}
     border-radius: 6px;
     left: -55px;
     text-shadow: none;
+}
+
+/* Strength meter */
+[class^="strengthMeterBox"], [class*=' strengthMeterBox'] {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background-color: #CCC;
+    margin: 2.5px;
+}
+
+.strengthMeterBox1 {
+    background-color: red;
+}
+
+.strengthMeterBox2 {
+    background-color: orange;
+}
+
+.strengthMeterBox3 {
+    background-color: yellow;
+}
+
+.strengthMeterBox4 {
+    background-color: green;
 }
 
 /* IcoMoon Generated Font */

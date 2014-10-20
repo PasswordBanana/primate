@@ -9,8 +9,6 @@
             <!-- Tab buttons -->
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active"><a href="#editEditTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editEditTab">Details</a></li>
-         <!--     <li><a href="#editHistoryTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editHistoryTab">History</a></li>
-         --> 
                 <li><a href="#editSettingsTab" role="tab" data-toggle="tab" data-target="[data-record-modal-uuid={{record.uuid}}] .editSettingsTab">Settings</a></li>
             </ul>
 
@@ -19,60 +17,99 @@
                 <!-- Start Main Tab -->
                 <div class="tab-pane active editEditTab" id="editEditTab">
                     <ul class="list-group form-inline">
-                        <li class="list-group-item"><label>Group: &nbsp;</label>{{record.group}}</li>
-                        <li class="list-group-item"><label>Title: &nbsp;</label><input type="text" class="form-control" value="{{record.title}}" ng-model="record.title" ng-change="changed()"></li>                                                                  
-                        <li class="list-group-item"><label>URL: &nbsp;</label><input type="text" class="form-control" value="{{record.URL}}" ng-model="record.URL" ng-change="changed()"></li>                                        
-                        <li class="list-group-item"><label>Username: &nbsp;</label><input type="text" class="form-control" value="{{record.username}}" ng-model="record.username" ng-change="changed()"></li>
-                        <li class="list-group-item"><ng-init="passwordShown = false"><label>Password: &nbsp;</label><input type="{{(passwordShown) ? 'text' : 'password'}}" class="form-control" value="{{record.password}}" ng-model="record.password" ng-change="changed(record)">
-                            <span ng-click="passwordShown = !passwordShown" ng-show="passwordShown" class="hoverCursor icon-eye passwordShown"></span>
-                            <span ng-click="passwordShown = !passwordShown" ng-show="!passwordShown" class="hoverCursor icon-eye"></span><br>
-                       <input type="button" class="btn btn-default" value="Generate New Password" ng-click="genPw(record)">
-                        <p>Password Strength: {{record.password | passwordStrengthScore}} out of 4</p>
-                        <p>Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</p>
+                        <li class="list-group-item">
+                            <label>Group: &nbsp;</label>{{record.group}}
                         </li>
-                        <li class="list-group-item"><label>Notes: &nbsp;</label><input type="text" class="form-control" value="{{record.notes}}" ng-model="record.notes" ng-change="changed()"></li>
-                       <!-- <li class="list-group-item"><label>History: &nbsp;{{(record.history.isEnabled) ? "Enabled" : "Disabled"}}</label></li> -->
-                    </ul>
-                </div>
-
-                <!-- Start History Tab -->
-                <div class="tab-pane editHistoryTab" id="editHistoryTab">
-                    <input type="button" class="btn btn-default" ng-if="!record.history.isEnabled" value="Enable History" ng-click="record.history.isEnabled = true">
-                    <ul ng-if="record.history.isEnabled">
-                        <li ng-repeat="pastPassphrase in record.passphraseHistory.passphrases">
-                            <span>{{pastPassphrase.timestamp}}</span>
-                            <span>{{pastPassphrase.passphrase}}</span>
+                        <li class="list-group-item">
+                            <label>Title: &nbsp;</label><input type="text" class="form-control" value="{{record.title}}" ng-model="record.title" ng-change="changed()">
                         </li>
-                        <li ng-if="!!record.history.currentSize === false">No history available for this record</li>
+                        <li class="list-group-item">
+                            <label>URL: &nbsp;</label><input type="text" class="form-control" value="{{record.URL}}" ng-model="record.URL" ng-change="changed()">
+                        </li>
+                        <li class="list-group-item">
+                            <label>Username: &nbsp;</label><input type="text" class="form-control" value="{{record.username}}" ng-model="record.username" ng-change="changed()">
+                        </li>
+                        <li class="list-group-item" ng-init="passwordShown = false">
+                            <label>Password: &nbsp;</label><input type="{{(passwordShown) ? 'text' : 'password'}}" class="form-control" value="{{record.password}}" ng-model="record.password" ng-change="changed(record)">
+                            <span ng-click="passwordShown = !passwordShown" ng-class="{'passwordShown': passwordShown}" class="hoverCursor icon-eye"></span><br>
+                            <label>Generate New Password: &nbsp;</label><input type="button" class="btn btn-default" value="Generate" ng-click="genPw(record)">
+                            <p>Password Strength: {{record.password | passwordStrengthScore}} out of 4</p>
+                            <!-- <div ng-bind-html="record.password | strengthMeter"></div> -->
+                            <strength-meter value="record.password | passwordStrengthScore"></strength-meter>
+                            <p>Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</p>
+                        </li>
+                        <li class="list-group-item">
+                            <label>Notes: &nbsp;</label><input type="text" class="form-control" value="{{record.notes}}" ng-model="record.notes" ng-change="changed()">
+                        </li>
                     </ul>
-                    <p ng-if="!record.history.isEnabled">History is not enabled for this account.</p>
                 </div>
         
                 <!-- Start Settings Tab -->
                 <div class="tab-pane editSettingsTab" id="editSettingsTab">
                     <input type="button" ng-if="record.passphrasePolicy === undefined" class="btn btn-default" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
-                    <div ng-if="record.passphrasePolicy !== undefined">
-                        <label for="recordPolicyFlags">Flags</label>
-                        <ul id="recordPolicyFlags">
-                            <li>Use Lowercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useLowercase'); changed()"  ng-checked="checkFlag(record.passphrasePolicy.flags, 'useLowercase')"></li>
-                            <li>Use Uppercase <input type="checkbox" ng-click="toggleRecordFlag(record, 'useUppercase'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useUppercase')"></li>
-                            <li>Use Digits <input type="checkbox" ng-click="toggleRecordFlag(record, 'useDigits'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useDigits')"></li>
-                            <li>Use Symbols <input type="checkbox" ng-click="toggleRecordFlag(record, 'useSymbols'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useSymbols')"></li>
-                        </ul>
-                        <label for="recordPolicyLength">Length</label>
-                        <input type="number" id="recordPolicyLength" class="form-control" ng-model="record.passphrasePolicy.length" ng-change="changed()">
-                        <label for="recordPolicyMinLowercase">Minimum Lowercase</label>
-                        <input type="number" id="recordPolicyMinLowercase" class="form-control" ng-model="record.passphrasePolicy.minLowercase" ng-change="changed()">
-                        <label for="recordPolicyMinUppercase">Minimum Uppercase</label>
-                        <input type="number" id="recordPolicyMinUppercase" class="form-control" ng-model="record.passphrasePolicy.minUppercase" ng-change="changed()">
-                        <label for="recordPolicyMinDigits">Minimum Digits</label>
-                        <input type="number" id="recordPolicyMinDigits" class="form-control" ng-model="record.passphrasePolicy.minDigit" ng-change="changed()">
-                        <label for="recordPolicyMinSymbols">Minimum Symbols</label>
-                        <input type="number" id="recordPolicyMinSymbols" class="form-control" ng-model="record.passphrasePolicy.minSymbol" ng-change="changed()">
-                        <label for="recordPolicyOwnSymbols">Own Passphrase Symbols</label>
-                        <input type="text" id="recordPolicyOwnSymbols" class="form-control" ng-model="record.ownPassphraseSymbols" ng-change="changed()">
-                        <input type="button" value="Remove Custom Policy" class="btn btn-default" ng-click="removePolicy(record)">
-                    </div>
+                    <ul class="list-group" ng-if="record.passphrasePolicy !== undefined">
+                        <li class="list-group-item">
+                            <label for="recordPolicyLength">Length</label>
+                            <input type="number" id="recordPolicyLength" class="form-control" ng-model="record.passphrasePolicy.length" ng-change="changed()">
+                        </li>
+                        <li class="list-group-item">
+                            <label for="recordPolicyMinLowercase">Lowercase</label>
+                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useLowercase'); changed()"  ng-checked="checkFlag(record.passphrasePolicy.flags, 'useLowercase')">
+                            <div class="form-group input-group">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">
+                                        Minimum
+                                    </button>
+                                </span>
+                                <input type="number" id="recordPolicyMinLowercase" class="form-control" ng-model="record.passphrasePolicy.minLowercase" ng-change="changed()">
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <label for="recordPolicyMinUppercase">Uppercase</label>
+                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useUppercase'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useUppercase')">
+                            <div class="form-group input-group">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">
+                                        Minimum
+                                    </button>
+                                </span>
+                                <input type="number" id="recordPolicyMinUppercase" class="form-control" ng-model="record.passphrasePolicy.minUppercase" ng-change="changed()">
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <label for="recordPolicyMinDigits">Digits</label>
+                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useDigits'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useDigits')">
+                            <div class="form-group input-group">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">
+                                        Minimum
+                                    </button>
+                                </span>
+                                <input type="number" id="recordPolicyMinDigits" class="form-control" ng-model="record.passphrasePolicy.minDigit" ng-change="changed()">
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <label for="recordPolicyMinSymbols">Symbols</label>
+                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useSymbols'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useSymbols')"><br>
+                            <div class="form-group input-group">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">
+                                        Minimum
+                                    </button>
+                                </span>
+                                <input type="number" id="recordPolicyMinSymbols" class="form-control" ng-model="record.passphrasePolicy.minSymbol" ng-change="changed()">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">
+                                        Symbols
+                                    </button>
+                                </span>
+                                <input type="text" id="recordPolicyOwnSymbols" class="form-control" ng-model="record.ownPassphraseSymbols" ng-change="changed()">
+                            </div>
+                        </li>
+                    </ul>
+                    <input type="button" value="Remove Custom Policy" class="btn btn-default" ng-if="record.passphrasePolicy !== undefined" ng-click="removePolicy(record)">
                     <input type="button" value="Delete Record" class="btn btn-default" data-dismiss="modal" ng-click="deleteRecord(record.uuid);">
                 </div>
             </div>

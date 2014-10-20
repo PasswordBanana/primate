@@ -9,6 +9,48 @@ try {
 
 var primate = angular.module("primate", ['ngAnimate']);
 
+primate.directive('strengthMeter', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            value: '='
+        },
+        link: {
+            pre: function(scope, element, attrs) {
+                console.log(scope.value);
+                var temp = ['<div class="strengthMeterWrapper">',
+                    '<div ng-class="{\'strengthMeterBox1\': value >= 1, \'strengthMeterBox\': value < 1',
+                        '"></div>',
+                    '<div ng-class="{\'strengthMeterBox2\': value >= 2, \'strengthMeterBox\': value < 2',
+                        '"></div>',
+                    '<div ng-class="{\'strengthMeterBox3\': value >= 3, \'strengthMeterBox\': value < 3',
+                        '"></div>',
+                    '<div ng-class="{\'strengthMeterBox4\': value >= 4, \'strengthMeterBox\': value < 4',
+                        '"></div>',
+                '</div>'].join('');
+
+
+                temp = ['<div class="strengthMeterWrapper">',
+                    '<div class="',
+                        (scope.value < 1) ? 'strengthMeterBox' : 'strengthMeterBox1',
+                        '"></div>',
+                    '<div class="',
+                        (scope.value < 2) ? 'strengthMeterBox' : 'strengthMeterBox2',
+                        '"></div>',
+                    '<div class="',
+                        (scope.value < 3) ? 'strengthMeterBox' : 'strengthMeterBox3',
+                        '"></div>',
+                    '<div class="',
+                        (scope.value < 4) ? 'strengthMeterBox' : 'strengthMeterBox4',
+                        '"></div>',
+                '</div>'].join('');
+                
+                element.context.innerHTML = temp;
+            }
+        }
+    };
+});
+
 /*
  * The default application password policy
  */
