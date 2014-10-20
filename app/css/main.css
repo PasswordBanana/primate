@@ -275,6 +275,31 @@ p { margin-right: 15px;}
     text-shadow: none;
 }
 
+/* Strength meter */
+[class^="strengthMeterBox"], [class*=' strengthMeterBox'] {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background-color: #CCC;
+    margin: 2.5px;
+}
+
+.strengthMeterBox1 {
+    background-color: red;
+}
+
+.strengthMeterBox2 {
+    background-color: orange;
+}
+
+.strengthMeterBox3 {
+    background-color: yellow;
+}
+
+.strengthMeterBox4 {
+    background-color: green;
+}
+
 /* IcoMoon Generated Font */
 @font-face {
     font-family: 'primate';

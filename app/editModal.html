@@ -34,6 +34,8 @@
                             <span ng-click="passwordShown = !passwordShown" ng-class="{'passwordShown': passwordShown}" class="hoverCursor icon-eye"></span><br>
                             <label>Generate New Password: &nbsp;</label><input type="button" class="btn btn-default" value="Generate" ng-click="genPw(record)">
                             <p>Password Strength: {{record.password | passwordStrengthScore}} out of 4</p>
+                            <!-- <div ng-bind-html="record.password | strengthMeter"></div> -->
+                            <strength-meter value="record.password | passwordStrengthScore"></strength-meter>
                             <p>Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</p>
                         </li>
                         <li class="list-group-item">

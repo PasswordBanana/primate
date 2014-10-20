@@ -40,3 +40,22 @@ primate.filter("flagValue", function() {
         return checkFlag(tuple[0], tuple[1]);
     }
 });
+
+primate.filter("satrengthMeter", function() {
+    return function(strength) {
+        return ['<div class="strengthMeterWrapper">',
+                    '<div class="strengthMeterBox1',
+                        (strength >= 1) ? 'active' : '',
+                        '"></div>',
+                    '<div class="strengthMeterBox2',
+                        (strength >= 2) ? 'active' : '',
+                        '"></div>',
+                    '<div class="strengthMeterBox3',
+                        (strength >= 3) ? 'active' : '',
+                        '"></div>',
+                    '<div class="strengthMeterBox4',
+                        (strength >= 4) ? 'active' : '',
+                        '"></div>',
+                '</div>'].join('');
+    }
+});
