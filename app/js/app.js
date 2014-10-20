@@ -85,6 +85,10 @@ var groupIndex = function(arr, groupName) {
     return -1;
 };
 
+/*
+ * Generate a tree object containing the records
+ * Organised by groups/subgroups
+ */
 var generateRecordTree = (function(records) {
     var tree = [], currentNode;
     tree.push(new Group("", "", 0));
@@ -179,6 +183,9 @@ var generatePassword = function(policy) {
     return pass;
 };
 
+/*
+ * Toggle the new database modal
+ */
 var toggleNewDB = function(e) {
     var e = e || window.event;
     e.stopPropagation();
@@ -241,12 +248,18 @@ var windowMenu = (function($scope) {
     var menu, gui, win,
     debug = false,
 
+    /*
+     * Remove all menu items from the window menu
+     */
     clearMenu = function() {
         while (menu.items.length) {
             menu.removeAt(0);
         }
     },
 
+    /*
+     * Load one of the configured states for the menubar
+     */
     setState = function(state) {
         if (!isNW) return;
 		
@@ -390,6 +403,9 @@ var windowMenu = (function($scope) {
 		}
     },
     
+    /*
+     * Create the initial menubar object and link it to the window
+     */
     init = function() {
         if (!isNW) return;
 
