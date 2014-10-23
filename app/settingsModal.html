@@ -15,34 +15,115 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane active" id="defaultPolicyTab">
-                    <label for="defaultPolicyFlags">Flags</label>
-                    <ul id="defaultPolicyFlags">
-                        <li>Use Lowercase <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useLowercase'); changed()"  ng-checked="checkFlag(defaultPolicy.flags, 'useLowercase')"></li>
-                        <li>Use Uppercase <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useUppercase'); changed()" ng-checked="checkFlag(defaultPolicy.flags, 'useUppercase')"></li>
-                        <li>Use Digits <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useDigits'); changed()" ng-checked="checkFlag(defaultPolicy.flags, 'useDigits')"></li>
-                        <li>Use Symbols <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useSymbols'); changed()" ng-checked="checkFlag(defaultPolicy.flags, 'useSymbols')"></li>
+                    <ul class="list-group">
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="defaultRecordPolicyLength">Length</label>
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="number" id="defaultRecordPolicyLength" class="form-control" ng-model="defaultPolicy.length" ng-change="changed()">
+                            </div>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="defaultRecordPolicyMinLowercase">Lowercase</label>
+                                <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useLowercase'); changed()"  ng-checked="checkFlag(defaultPolicy.flags, 'useLowercase')">
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="defaultRecordPolicyMinLowercase" class="form-control" ng-model="defaultPolicy.minLowercase" ng-change="changed()">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="defaultRecordPolicyMinUppercase">Uppercase</label>
+                                <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useUppercase'); changed()" ng-checked="checkFlag(defaultPolicy.flags, 'useUppercase')">
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="defaultRecordPolicyMinUppercase" class="form-control" ng-model="defaultPolicy.minUppercase" ng-change="changed()">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="defaultRecordPolicyMinDigits">Digits</label>
+                                <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useDigits'); changed()" ng-checked="checkFlag(defaultPolicy.flags, 'useDigits')">
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="defaultRecordPolicyMinDigits" class="form-control" ng-model="defaultPolicy.minDigit" ng-change="changed()">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="defaultRecordPolicyMinSymbols">Symbols</label>
+                                <input type="checkbox" ng-click="toggleFlag(defaultPolicy, 'useSymbols'); changed()" ng-checked="checkFlag(defaultPolicy.flags, 'useSymbols')"><br>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="defaultRecordPolicyMinSymbols" class="form-control" ng-model="defaultPolicy.minSymbol" ng-change="changed()">
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Symbols Used
+                                        </button>
+                                    </span>
+                                    <input type="text" id="defaultRecordPolicyOwnSymbols" class="form-control" ng-model="defaultSymbols" ng-change="changed()">
+                                </div>
+                            </div>
+                        </li>
                     </ul>
-                    <label for="defaultPolicyLength">Length</label>
-                    <input type="number" id="defaultPolicyLength" class="form-control" ng-model="defaultPolicy.length" ng-change="changed()">
-                    <label for="defaultPolicyMinLowercase">Minimum Lowercase</label>
-                    <input type="number" id="defaultPolicyMinLowercase" class="form-control" ng-model="defaultPolicy.minLowercase" ng-change="changed()">
-                    <label for="defaultPolicyMinUppercase">Minimum Uppercase</label>
-                    <input type="number" id="defaultPolicyMinUppercase" class="form-control" ng-model="defaultPolicy.minUppercase" ng-change="changed()">
-                    <label for="defaultPolicyMinDigits">Minimum Digits</label>
-                    <input type="number" id="defaultPolicyMinDigits" class="form-control" ng-model="defaultPolicy.minDigit" ng-change="changed()">
-                    <label for="defaultPolicyMinSymbols">Minimum Symbols</label>
-                    <input type="number" id="defaultPolicyMinSymbols" class="form-control" ng-model="defaultPolicy.minSymbol" ng-change="changed()">
-                    <label for="defaultPolicyOwnSymbols">Default Passphrase Symbols</label>
-                    <input type="text" id="defaultPolicyOwnSymbols" class="form-control" ng-model="defaultSymbols" ng-change="changed()">
                 </div>
                 <div class="tab-pane" id="masterPasswordTab">
-                    <label for="oldPassword">Old Password</label>
-                    <input type="password" id="oldPassword" class="form-control" ng-model="oldPassword">
-                    <label for="newPassword1">New Password</label>
-                    <input type="password" id="newDBPass1" class="form-control" ng-model="newPassword1">
-                    <label for="newPassword2">Confirm New Password</label>
-                    <input type="password" id="newDBPass2" class="form-control" ng-model="newPassword2">
-                    <button type="button" ng-click="changePassSuccess = changeMasterPassword(oldPassword, newPassword1); changed()" class="btn btn-primary" ng-disabled="!newPassword1 || newPassword1 !== newPassword2">Change Password</button>
+                    <ul class="list-group">
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="oldPassword">Old Password</label>
+                            </div>
+                            <div class="col-xs-8 form-group">
+                                <input type="password" id="oldPassword" class="form-control" ng-model="oldPassword">
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <label for="newPassword1">New Password</label>
+                            </div>
+                            <div class="col-xs-8 form-group">
+                                <input type="password" id="newDBPass1" class="form-control" ng-model="newPassword1">
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <label for="newPassword2">Confirm New Password</label>
+                            </div>
+                            <div class="col-xs-8 form-group">
+                                <input type="password" id="newDBPass2" class="form-control" ng-model="newPassword2">
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <button type="button" ng-click="changePassSuccess = changeMasterPassword(oldPassword, newPassword1); changed()" class="btn btn-primary" ng-disabled="!newPassword1 || newPassword1 !== newPassword2">Change Password</button>
+                            </div>
+                        </li>
+                    </ul>
                     <div class="alert alert-success" ng-if="changePassSuccess === true" role="alert">Password Successfully Changed! Please save the database to maintain the changes.</div>
                     <div class="alert alert-danger" ng-if="changePassSuccess === false" role="alert">Old password is incorrect, try again.</div>
                 </div>
