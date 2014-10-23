@@ -381,12 +381,6 @@ small {
 .icon-watch:before {
     content: "\e015";
 }
-.icon-cog:before {
-    content: "\e023";
-}
-.icon-search:before {
-    content: "\e036";
-}
 .icon-square-plus:before {
     content: "\e044";
 }
@@ -399,26 +393,14 @@ small {
 .icon-square-cross:before {
     content: "\e047";
 }
-.icon-shuffle:before {
-    content: "\e057";
-}
 .icon-folder:before {
     content: "\e059";
-}
-.icon-cloud-download:before {
-    content: "\e067";
 }
 .icon-download:before {
     content: "\e069";
 }
-.icon-head:before {
-    content: "\e074";
-}
 .icon-arrow-right:before {
     content: "\e095";
-}
-.icon-ban:before {
-    content: "\e107";
 }
 .icon-trash:before {
     content: "\e109";
@@ -440,9 +422,6 @@ small {
 }
 .icon-ellipsis:before {
     content: "\e129";
-}
-.icon-edit2:before {
-    content: "\f044";
 }
 .icon-angle-left:before {
     content: "\f104";
@@ -468,24 +447,6 @@ small {
 .icon-keyboard-o:before {
     content: "\f11c";
 }
-.icon-copy2:before {
-    content: "\e600";
-}
-.icon-paste:before {
-    content: "\e603";
-}
-.icon-paste2:before {
-    content: "\e604";
-}
-.icon-user:before {
-    content: "\e606";
-}
-.icon-globe:before {
-    content: "\e608";
-}
-.icon-earth:before {
-    content: "\e609";
-}
 .icon-notification:before {
     content: "\e60a";
 }
@@ -495,9 +456,6 @@ small {
 .icon-info:before {
     content: "\e60c";
 }
-.icon-copy4:before {
-    content: "\e602";
-}
 .icon-trash2:before {
     content: "\e60d";
 }
@@ -506,9 +464,6 @@ small {
 }
 .icon-key2:before {
     content: "\e60f";
-}
-.icon-search2:before {
-    content: "\e610";
 }
 .icon-settings:before {
     content: "\e611";
@@ -522,14 +477,14 @@ small {
 .icon-pen:before {
     content: "\e613";
 }
-.icon-diamond:before {
-    content: "\e605";
-}
 .icon-eye2:before {
     content: "\e614";
 }
 .icon-clock2:before {
     content: "\e615";
+}
+.icon-data:before {
+    content: "\e600";
 }
 .icon-lab:before {
     content: "\e607";

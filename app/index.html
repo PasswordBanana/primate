@@ -90,15 +90,17 @@
                 <div id="auditView" ng-if="auditMode">
                     <div ng-repeat="record in records | orderBy:auditValue" class="record">
                         <div>
+                            <span class="toolhint"><i class="icon-data" alt="Group"></i><span>{{(record.group) ? record.group : "No Group"}}</span></span>
                             <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
                         </div>
                         <strength-meter data-record-meter-uuid="{{record.uuid}}" value="record.password"></strength-meter><span> | Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</span>
-                        <span class="toolhint"><i class="icon-pen" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> Edit</span></span>
+                        <span class="toolhint"><i class="icon-pen" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span>Edit</span></span>
                     </div>
                 </div>
                 <div id="searchView" ng-if="searchMode && !auditMode">
                     <div ng-repeat="record in searchRecords" class="record">
                         <div>
+                            <span class="toolhint"><i class="icon-data" alt="Group"></i><span>{{(record.group) ? record.group : "No Group"}}</span></span>
                             <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
                         </div>
                         <span class="lightText">{{record.passphraseModifyTime | date : 'shortDate'}}</span>
