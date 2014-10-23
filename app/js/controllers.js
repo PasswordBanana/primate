@@ -170,6 +170,8 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
     $scope.lockDb = function() {
         db.lock();
         clearVars();
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
         $scope.setState("loaded");
     };
 
