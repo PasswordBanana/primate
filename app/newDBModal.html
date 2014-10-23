@@ -6,10 +6,28 @@
             <h4 class="modal-title" id="newDBModalLabel">Create New Database</h4>
         </div>
         <div class="modal-body form-group">
-            <label for="newDBPass1">Master Password</label>
-            <input type="password" id="newDBPass1" class="form-control" ng-model="newpass">
-            <label for="newDBPass2">Confirm Master Password</label>
-            <input type="password" id="newDBPass2" class="form-control" ng-model="newpass2">
+            <ul class="list-group">
+                <li class="list-group-item clearfix">
+                    <div class="col-xs-4 text-right">
+                        <label for="newDBPass1">Master Password</label>
+                    </div>
+                    <div class="col-xs-8 form-group">
+                        <input type="password" id="newDBPass1" class="form-control" ng-model="newpass" ng-change="updateNewDBStrengthMeter(newpass)">
+                    </div>
+                    <div class="col-xs-4 text-right">
+                        <label for="newDBPass2">Confirm Master Password</label>
+                    </div>
+                    <div class="col-xs-8 form-group">
+                        <input type="password" id="newDBPass2" class="form-control" ng-model="newpass2">
+                    </div>
+                    <div class="col-xs-4 text-right">
+                        <label>Strength</label>
+                    </div>
+                    <div class="col-xs-8 form-group">
+                        <strength-meter value="newpass || ''"></strength-meter>
+                    </div>
+                </li>
+            </ul>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

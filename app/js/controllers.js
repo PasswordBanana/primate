@@ -396,9 +396,8 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         return score;
     };
 
-    var updateStrengthMeter = function(record) {
-        var strength = zxcvbn(record.password).score;
-        var html = ['<div class="strengthMeterWrapper">',
+    var getStrengthMeter = function(strength) {
+        return ['<div class="strengthMeterWrapper">',
             '<div class="',
                 (strength < 1) ? 'strengthMeterBox' : 'strengthMeterBox1',
                 '"></div>',
@@ -412,9 +411,26 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
                 (strength < 4) ? 'strengthMeterBox' : 'strengthMeterBox4',
                 '"></div>',
         '</div>'].join('');
+    };
+
+    var updateStrengthMeter = function(record) {
+        var strength = zxcvbn(record.password).score;
+        var html = getStrengthMeter(strength);
         $("[data-record-meter-uuid=" + record.uuid + "]").each(function() {
             $(this).html(html);
         });
+    };
+
+    $scope.updateNewDBStrengthMeter = function(p) {
+        var p = p || '';
+        var strength = zxcvbn(p).score;
+        $("#newDBModal strength-meter").html(getStrengthMeter(strength));
+    };
+
+    $scope.updateNewMasterStrengthMeter = function(p) {
+        var p = p || '';
+        var strength = zxcvbn(p).score;
+        $("#masterPasswordTab strength-meter").html(getStrengthMeter(strength));
     };
 
     /* 

@@ -111,13 +111,19 @@
                                 <label for="newPassword1">New Password</label>
                             </div>
                             <div class="col-xs-8 form-group">
-                                <input type="password" id="newDBPass1" class="form-control" ng-model="newPassword1">
+                                <input type="password" id="newDBPass1" class="form-control" ng-model="newPassword1" ng-change="updateNewMasterStrengthMeter(newPassword1)">
                             </div>
                             <div class="col-xs-4 text-right">
                                 <label for="newPassword2">Confirm New Password</label>
                             </div>
                             <div class="col-xs-8 form-group">
                                 <input type="password" id="newDBPass2" class="form-control" ng-model="newPassword2">
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <label>Strength</label>
+                            </div>
+                            <div class="col-xs-8 form-group">
+                                <strength-meter value="newpass || ''"></strength-meter>
                             </div>
                             <div class="col-xs-12 text-center">
                                 <button type="button" ng-click="changePassSuccess = changeMasterPassword(oldPassword, newPassword1); changed()" class="btn btn-primary" ng-disabled="!newPassword1 || newPassword1 !== newPassword2">Change Password</button>
