@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div id="searchView" ng-if="searchMode && !auditMode">
-                    <div ng-repeat="record in searchRecords | orderBy:auditValue" class="record">
+                    <div ng-repeat="record in searchRecords" class="record">
                         <div>
                             <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
                         </div>
