@@ -317,8 +317,11 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
      * Generate a password for a given record
      */
     $scope.genPw = function(record) {
-        record.password = generatePassword(record.passphrasePolicy);
-        updateStrengthMeter(record);
+        var newPw = generatePassword(record.passphrasePolicy, record.ownPassphraseSymbols);
+        if (newPw != null) {
+            record.password = newPw;
+            updateStrengthMeter(record);
+        }
     };
 
     /*

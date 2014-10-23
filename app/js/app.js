@@ -150,6 +150,8 @@ var randomPassword = function(len, validChars){
     var str = "",
         charLen = validChars.length;
 
+    if (validChars == null) return null;
+
     for (var i = 0; i < len; i++) {
         str += validChars.charAt(Math.floor(Math.random() * charLen));
     }
@@ -173,17 +175,20 @@ var countOccurrences = function(charset, pass) {
  * Generate a password from the given password policy
  * or the default policy if one is not provided/undefined
  */
-var generatePassword = function(policy) {
+var generatePassword = function(policy, symbols) {
 
     if (policy === undefined) {
         policy = new DefaultPolicy();
+    }
+
+    if (symbols == "") {
+        symbols = defaultSymbols;
     }
 
     var validChars = "";
     var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lowercase = "abcdefghijklmnopqrstuvwxyz";
     var digits = "0123456789";
-    var symbols = defaultSymbols;
     var hexDigits = "0123456789ABCDEF";
 
     if (checkFlag(policy.flags, "useHexDigits")) {
@@ -197,8 +202,11 @@ var generatePassword = function(policy) {
 
     var pass = "";
 
-    if (policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol > policy.length) {
-        throw new Error("Policy invalid, impossible conditions");
+    if (policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol > policy.length ||
+        policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol <= 0 ||
+        validChars.length == 0) {
+        alert("Password policy invalid, impossible conditions!");
+        return null;
     }
 
     do {
@@ -265,8 +273,6 @@ $(window).resize(function() {
         $('#dbSelectButtons').removeClass('btn-group-vertical');
     }
 });
-
-
 
 /*
  * System Window Menu
