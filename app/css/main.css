@@ -196,10 +196,20 @@ header > span:hover, header > span:active {
     flex-wrap: wrap;
 
     padding: 10px;
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #ccc;
+    background-color: #FBF9F9;
+    border-bottom: 1px solid #FFF;
     vertical-align: middle;
     align-items: center;
+}
+
+.group{
+	background-color: #F3F3F3;
+}
+
+
+.record{
+	background-color :#EAEAEA;
+
 }
 
 .rootGroup > div {
