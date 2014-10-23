@@ -285,6 +285,69 @@ p { margin-right: 15px;}
     text-shadow: none;
 }
 
+/* Tooltips */
+p { margin-right: 15px;}
+
+.toolhint2 { position: relative; z-index: 20;}
+.toolhint2 span { display: none;}
+.toolhint2:hover { z-index: 21;}
+.toolhint2:hover span {
+    display: block;
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+    color: #FFF;
+    background: #535663;
+    font-size: 20px;
+    text-decoration: none;
+    position: absolute;
+    border-radius: 6px;
+    left: -110px;
+    text-shadow: none;
+}
+
+/* Tooltips */
+p { margin-right: 15px;}
+
+.toolhint3 { position: relative; z-index: 20;}
+.toolhint3 span { display: none;}
+.toolhint3:hover { z-index: 21;}
+.toolhint3:hover span {
+    display: block;
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+    color: #FFF;
+    background: #535663;
+    font-size: 20px;
+    text-decoration: none;
+    position: absolute;
+    border-radius: 6px;
+    left: -20px;
+    text-shadow: none;
+}
+
+/* Tooltips */
+p { margin-right: 15px;}
+
+.toolhint4 { position: relative; z-index: 20;}
+.toolhint4 span { display: none;}
+.toolhint4:hover { z-index: 21;}
+.toolhint4:hover span {
+    display: block;
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+    color: #FFF;
+    background: #535663;
+    font-size: 20px;
+    text-decoration: none;
+    position: absolute;
+    border-radius: 6px;
+    left: -110px;
+    text-shadow: none;
+}
+
 /* Strength meter */
 .strengthMeterWrapper {
     display: block;
