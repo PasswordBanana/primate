@@ -365,7 +365,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
     };
 
     document.addEventListener('blur', function() {
-        idleTimer = setTimeout(idleTimeout, 30000);
+        idleTimer = setTimeout(idleTimeout, 300000); //300,000 = 5 minutes
     });
 
     document.addEventListener('focus', function() {
