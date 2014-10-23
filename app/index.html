@@ -78,15 +78,15 @@
         <div id="treeView">
             <div class="rootGroup">
                 <span>{{databaseFilename}} {{(auditMode) ? " - Audit Mode" : "" }}<span class="hoverCursor" id="auditClose" ng-if="auditMode" ng-click="stopAudit(); $event.stopPropagation();"><i class="icon-cross"></i></span></span>
-                <a class="addRecord" ng-if="!auditMode" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="icon-plus"></i>Add Record</a>
-                <a class="addRecord" ng-if="!auditMode" ng-click="addGroup(); $event.stopPropagation();"><i class="icon-plus"></i>Add Group</a>
-                <a class="addRecord" ng-if="!auditMode" ng-click="startAudit(); $event.stopPropagation();"><i class="icon-lab"></i>Audit</a>
-                <div>
+                <a class="addRecord" ng-if="!auditMode && !searchMode" ng-click="addRecord(''); $event.stopPropagation(); recordShown = true;"><i class="icon-plus"></i>Add Record</a>
+                <a class="addRecord" ng-if="!auditMode && !searchMode" ng-click="addGroup(); $event.stopPropagation();"><i class="icon-plus"></i>Add Group</a>
+                <a class="addRecord" ng-if="!auditMode && !searchMode" ng-click="startAudit(); $event.stopPropagation();"><i class="icon-lab"></i>Audit</a>
+                <div ng-if="!auditMode">
                     <input type="text" maxlength="32" class="form-control" placeholder="search" id="searchField" ng-model="searchValue" ng-change="search(searchValue)">
                 </div>
             </div>
             <div class="rootGroupIndent">
-                <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
+                <div ng-repeat="data in recordTree" ng-if="!auditMode && !searchMode" ng-include="'templates/group_renderer.html'"></div>
                 <div id="auditView" ng-if="auditMode">
                     <div ng-repeat="record in records | orderBy:auditValue" class="record">
                         <div>
@@ -94,6 +94,15 @@
                         </div>
                         <span>Strength: {{record.password | passwordStrengthScore}} | Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</span>
                         <span class="toolhint"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> Edit</span></span>
+                    </div>
+                </div>
+                <div id="searchView" ng-if="searchMode && !auditMode">
+                    <div ng-repeat="record in searchRecords | orderBy:auditValue" class="record">
+                        <div>
+                            <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
+                        </div>
+                        <span class="lightText">{{record.passphraseModifyTime | date : 'shortDate'}}</span>
+                        <div class="recordButtonContainer" ng-include="'templates/record_button_container.html'"></div>
                     </div>
                 </div>
             </div>

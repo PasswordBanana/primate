@@ -21,6 +21,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         };
     $scope.state = "unloaded"; //State of the main database ["unloaded", "loaded", "unlocked"]
     $scope.auditMode = false;
+    $scope.searchMode = false;
     $scope.databaseFilename;
     $scope.records; //Array of all records in the database
     $scope.headers; //Object containing the database headers
@@ -42,6 +43,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         notSaved: false,
         autoLocked: false
     };
+    $scope.searchRecords = null;
 
     /*
      * Return the index for the record with the given UUID
@@ -376,10 +378,11 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
      */
     $scope.search = function(val) {
         if (val) {
-            var res = recordFuse.search(val);
-            updateRecordTree(res);
+            $scope.searchRecords = recordFuse.search(val);
+            $scope.searchMode = true;
         } else {
-            updateRecordTree();
+            $scope.searchMode = false;
+            $scope.searchRecords = null;
         }
     };
 
