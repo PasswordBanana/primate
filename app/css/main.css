@@ -276,12 +276,33 @@ p { margin-right: 15px;}
 }
 
 /* Strength meter */
+.strengthMeterWrapper {
+    display: block;
+    height: 32px;
+    vertical-align: middle;
+}
+
+strength-meter {
+    height: 32px;
+    margin: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 [class^="strengthMeterBox"], [class*=' strengthMeterBox'] {
     display: inline-block;
     width: 0.5em;
-    height: 1em;
+    height: 20px;
     background-color: #CCC;
-    margin: 2.5px;
+    margin: 6px 1.25px;
+}
+
+[class^="strengthMeterBox"]:first-child, [class*=' strengthMeterBox']:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+[class^="strengthMeterBox"]:last-child, [class*=' strengthMeterBox']:last-child {
+    border-radius: 0 4px 4px 0;
 }
 
 .strengthMeterBox1 {
@@ -298,6 +319,18 @@ p { margin-right: 15px;}
 
 .strengthMeterBox4 {
     background-color: green;
+}
+
+/*
+ * Tab pane
+ */
+.tab-pane {
+    padding-top: 5px;
+}
+
+small {
+    line-height: 42px;
+    vertical-align: middle;
 }
 
 /* IcoMoon Generated Font */
