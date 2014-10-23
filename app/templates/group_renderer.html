@@ -1,4 +1,4 @@
-<div ng-click="data.expanded = !data.expanded" class="group" ng-if="data.level !== 0" ng-show="!auditMode">
+<div ng-click="data.expanded = !data.expanded" class="group" ng-if="data.level !== 0" ng-show="!auditMode && !searchMode">
     <span ng-switch="data.expanded" class="groupChevronContainer hoverCursor">
         <i ng-switch-when="true" class="icon-angle-down groupChevronClose"></i>
         <i ng-switch-when="false" class="icon-angle-right groupChevronOpen"></i>

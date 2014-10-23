@@ -1,5 +1,5 @@
 <!-- Start record tree display -->
-<div class="record" ng-show="!auditMode">
+<div class="record" ng-show="!auditMode && !searchMode">
     <div>
         <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
     </div>

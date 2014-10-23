@@ -316,6 +316,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
      */
     $scope.genPw = function(record) {
         record.password = generatePassword(record.passphrasePolicy);
+        updateStrengthMeter(record);
     };
 
     /*
@@ -393,6 +394,27 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         return score;
     };
 
+    var updateStrengthMeter = function(record) {
+        var strength = zxcvbn(record.password).score;
+        var html = ['<div class="strengthMeterWrapper">',
+            '<div class="',
+                (strength < 1) ? 'strengthMeterBox' : 'strengthMeterBox1',
+                '"></div>',
+            '<div class="',
+                (strength < 2) ? 'strengthMeterBox' : 'strengthMeterBox2',
+                '"></div>',
+            '<div class="',
+                (strength < 3) ? 'strengthMeterBox' : 'strengthMeterBox3',
+                '"></div>',
+            '<div class="',
+                (strength < 4) ? 'strengthMeterBox' : 'strengthMeterBox4',
+                '"></div>',
+        '</div>'].join('');
+        $("[data-record-meter-uuid=" + record.uuid + "]").each(function() {
+            $(this).html(html);
+        });
+    };
+
     /* 
      * Called when any part of the database has been changed
      */
@@ -401,6 +423,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
 
         if (record) {
             record.passphraseModifyTime = new Date();
+            updateStrengthMeter(record);
         }
     };
 

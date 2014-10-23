@@ -86,14 +86,14 @@
                 </div>
             </div>
             <div class="rootGroupIndent">
-                <div ng-repeat="data in recordTree" ng-if="!auditMode && !searchMode" ng-include="'templates/group_renderer.html'"></div>
+                <div ng-repeat="data in recordTree" ng-include="'templates/group_renderer.html'"></div>
                 <div id="auditView" ng-if="auditMode">
                     <div ng-repeat="record in records | orderBy:auditValue" class="record">
                         <div>
                             <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
                         </div>
-                        <span>Strength: {{record.password | passwordStrengthScore}} | Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</span>
-                        <span class="toolhint"><i class="fa fa-edit" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> Edit</span></span>
+                        <strength-meter data-record-meter-uuid="{{record.uuid}}" value="record.password"></strength-meter><span> | Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</span>
+                        <span class="toolhint"><i class="icon-pen" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span> Edit</span></span>
                     </div>
                 </div>
                 <div id="searchView" ng-if="searchMode && !auditMode">

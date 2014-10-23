@@ -53,7 +53,7 @@
                                 <small>Strength</small>
                             </div>
                             <div class="col-xs-8 vertMiddle">
-                                <strength-meter value="record.password | passwordStrengthScore"></strength-meter><input type="button" class="btn btn-default" value="Generate New Password" ng-click="genPw(record)">
+                                <strength-meter data-record-meter-uuid="{{record.uuid}}" value="record.password"></strength-meter><input type="button" class="btn btn-default" value="Generate New Password" ng-click="genPw(record); changed(record)">
                             </div>
                             <div class="col-xs-12 text-center">
                                 <p>Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</p>
