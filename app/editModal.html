@@ -82,64 +82,84 @@
                 <div class="tab-pane editSettingsTab" id="editSettingsTab">
                     <input type="button" ng-if="record.passphrasePolicy === undefined" class="btn btn-default" value="Override Default Password Policy" ng-click="enableCustomPolicy(record)">
                     <ul class="list-group" ng-if="record.passphrasePolicy !== undefined">
-                        <li class="list-group-item">
-                            <label for="recordPolicyLength">Length</label>
-                            <input type="number" id="recordPolicyLength" class="form-control" ng-model="record.passphrasePolicy.length" ng-change="changed()">
-                        </li>
-                        <li class="list-group-item">
-                            <label for="recordPolicyMinLowercase">Lowercase</label>
-                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useLowercase'); changed()"  ng-checked="checkFlag(record.passphrasePolicy.flags, 'useLowercase')">
-                            <div class="form-group input-group">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-default">
-                                        Minimum
-                                    </button>
-                                </span>
-                                <input type="number" id="recordPolicyMinLowercase" class="form-control" ng-model="record.passphrasePolicy.minLowercase" ng-change="changed()">
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="recordPolicyLength">Length</label>
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="number" id="recordPolicyLength" class="form-control" ng-model="record.passphrasePolicy.length" ng-change="changed()">
                             </div>
                         </li>
-                        <li class="list-group-item">
-                            <label for="recordPolicyMinUppercase">Uppercase</label>
-                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useUppercase'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useUppercase')">
-                            <div class="form-group input-group">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-default">
-                                        Minimum
-                                    </button>
-                                </span>
-                                <input type="number" id="recordPolicyMinUppercase" class="form-control" ng-model="record.passphrasePolicy.minUppercase" ng-change="changed()">
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="recordPolicyMinLowercase">Lowercase</label>
+                                <input type="checkbox" ng-click="toggleRecordFlag(record, 'useLowercase'); changed()"  ng-checked="checkFlag(record.passphrasePolicy.flags, 'useLowercase')">
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="recordPolicyMinLowercase" class="form-control" ng-model="record.passphrasePolicy.minLowercase" ng-change="changed()">
+                                </div>
                             </div>
                         </li>
-                        <li class="list-group-item">
-                            <label for="recordPolicyMinDigits">Digits</label>
-                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useDigits'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useDigits')">
-                            <div class="form-group input-group">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-default">
-                                        Minimum
-                                    </button>
-                                </span>
-                                <input type="number" id="recordPolicyMinDigits" class="form-control" ng-model="record.passphrasePolicy.minDigit" ng-change="changed()">
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="recordPolicyMinUppercase">Uppercase</label>
+                                <input type="checkbox" ng-click="toggleRecordFlag(record, 'useUppercase'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useUppercase')">
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="recordPolicyMinUppercase" class="form-control" ng-model="record.passphrasePolicy.minUppercase" ng-change="changed()">
+                                </div>
                             </div>
                         </li>
-                        <li class="list-group-item">
-                            <label for="recordPolicyMinSymbols">Symbols</label>
-                            <input type="checkbox" ng-click="toggleRecordFlag(record, 'useSymbols'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useSymbols')"><br>
-                            <div class="form-group input-group">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-default">
-                                        Minimum
-                                    </button>
-                                </span>
-                                <input type="number" id="recordPolicyMinSymbols" class="form-control" ng-model="record.passphrasePolicy.minSymbol" ng-change="changed()">
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="recordPolicyMinDigits">Digits</label>
+                                <input type="checkbox" ng-click="toggleRecordFlag(record, 'useDigits'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useDigits')">
                             </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-default">
-                                        Symbols
-                                    </button>
-                                </span>
-                                <input type="text" id="recordPolicyOwnSymbols" class="form-control" ng-model="record.ownPassphraseSymbols" ng-change="changed()">
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="recordPolicyMinDigits" class="form-control" ng-model="record.passphrasePolicy.minDigit" ng-change="changed()">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <div class="col-xs-4 text-right">
+                                <label for="recordPolicyMinSymbols">Symbols</label>
+                                <input type="checkbox" ng-click="toggleRecordFlag(record, 'useSymbols'); changed()" ng-checked="checkFlag(record.passphrasePolicy.flags, 'useSymbols')"><br>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Minimum
+                                        </button>
+                                    </span>
+                                    <input type="number" id="recordPolicyMinSymbols" class="form-control" ng-model="record.passphrasePolicy.minSymbol" ng-change="changed()">
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            Symbols Used
+                                        </button>
+                                    </span>
+                                    <input type="text" id="recordPolicyOwnSymbols" class="form-control" ng-model="record.ownPassphraseSymbols" ng-change="changed()">
+                                </div>
                             </div>
                         </li>
                     </ul>
