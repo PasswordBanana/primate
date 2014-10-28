@@ -15,9 +15,24 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'app/js/libpwsafejs/jDataView/jquery/jquery-1.7.1-binary-ajax.js',
+      'app/js/libpwsafejs/jDataView/src/jdataview.js',
+      'app/js/libpwsafejs/jDataView/src/jdataview-jquery-converter.js',
+      'app/js/libpwsafejs/crypto-sha256-hmac.js',
+      'app/js/libpwsafejs/twofish.js',
+      'app/js/libpwsafejs/pwsafedb.js',
+      'app/bower_components/jquery/dist/jquery.min.js',
       'app/bower_components/angular/angular.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/js/*.js',
+      'app/bower_components/angular-animate/angular-animate.min.js',
+      'app/bower_components/bootstrap/dist/js/bootstrap.min.js',
+      'app/js/app.js',
+      'app/js/factories.js',
+      'app/js/filters.js',
+      'app/js/controllers.js',
+      'app/bower_components/zxcvbn/zxcvbn.js',
+      'app/bower_components/fuse.js/src/fuse.js',
+      'app/bower_components/file-saver/FileSaver.js',
       'app/**/test.*.js'
     ],
 
