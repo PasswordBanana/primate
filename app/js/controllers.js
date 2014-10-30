@@ -4,10 +4,10 @@
 **/
 
 /*
- * StateController handles all the primary application controls
+ * StateCtrl handles all the primary application controls
  * including the application state (unloaded, loaded, unlocked)
  */
-primate.controller("StateController", ["$scope", "Database", "$http", "$q", function($scope, db, $http, $q) {
+primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", "FileState", function($scope, db, $http, $q, Alerts, FileState, $tooltip) {
     var databaseFile, recordFuse,
         searchOptions = {
             caseSensitive: false,
@@ -19,7 +19,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
             maxPatternLength: 32,
             keys: ['title', 'username', 'notes']
         };
-    $scope.state = "unloaded"; //State of the main database ["unloaded", "loaded", "unlocked"]
+    $scope.state = FileState.state; //State of the main database ["unloaded", "loaded", "unlocked"]
     $scope.auditMode = false;
     $scope.searchMode = false;
     $scope.databaseFilename;
@@ -38,11 +38,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
     $scope.defaultPolicy = defaultPolicy;
     $scope.defaultSymbols = defaultSymbols;
 
-    $scope.alerts = {
-        invalidPassword: false,
-        notSaved: false,
-        autoLocked: false
-    };
+    $scope.alerts = Alerts.alerts;
     $scope.searchRecords = null;
 
     /*
@@ -92,21 +88,13 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
             $scope.setState("unlocked");
             deferred.resolve(true);
         }, function(failure) {
-            $scope.alerts.invalidPassword = true;
+            Alerts.set("invalidPassword");
             deferred.reject();
         });
 
         $scope.pass = "";
-        $scope.resetAlerts();
+        Alerts.reset();
         return deferred.promise;
-    };
-
-    $scope.resetAlerts = function() {
-        for (var i in $scope.alerts) {
-            if ($scope.alerts.hasOwnProperty(i)) {
-                $scope.alerts[i] = false;
-            }
-        }
     };
 
     $scope.setState = function(state) {
@@ -180,14 +168,14 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
      */
     $scope.saveDb = function() {
         db.save();
-        $scope.alerts.notSaved = false;
+        Alerts.clear("notSaved");
     };
 
     /*
      * Close the database and clear inputs, resetting whole application state
      */
     $scope.closeDb = function() {
-        db.close();
+        db.reset();
         clearVars();
         if ($scope.filePicker)
             $scope.filePicker.value = "";
@@ -358,7 +346,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
     var idleTimer;
     var idleTimeout = function() {
         if ($scope.state === "unlocked") {
-            $scope.alerts.autoLocked = true;
+            Alerts.set("autoLocked");
             $scope.lockDb();
             $scope.$apply();
         }
@@ -440,7 +428,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
      * Called when any part of the database has been changed
      */
     $scope.changed = function(record) {
-        $scope.alerts.notSaved = true;
+        Alerts.set("notSaved");
 
         if (record) {
             record.passphraseModifyTime = new Date();
@@ -456,3 +444,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         $scope.auditMode = false;
     };
 }]);
+
+primate.controller("EditModalCtrl", function() {
+
+});

@@ -4,33 +4,33 @@
 **/
 
 primate.service("Database", ["$q", function($q) {
-    var vm = this,
-        file, //Database File object
-        db, //Decrypted PWSafeDB() view of the database
-        pass, //Database password
-        name = "No database loaded"; //Filename of the database
-
     var service = {
+        reset: reset,
         setFile: setFile,
         unlock: unlock,
-        getDb: getDb,
-        save: save,
         lock: lock,
-        close: close,
         setPass: setPass,
-        setName: setName
-    };
+        setName: setName,
+        getDb: getDatabase
+    },
 
-    /*
-     * Set the database to File f and decrypt it with password p
-     * Returns a promise object
-     */
+    file,
+    name = "No database loaded",
+    db,
+    pass;
+
+    function reset() {
+        file = undefined;
+        db = undefined;
+        pass = undefined;
+        name = "No database loaded";
+    }
+
     function setFile(f) {
         file = f;
         name = f.name;
     }
 
-    //Unlock the loaded database file
     function unlock(p) {
         var deferred = $q.defer();
         var reader = new FileReader();
@@ -51,33 +51,17 @@ primate.service("Database", ["$q", function($q) {
         return deferred.promise;
     }
 
-    // Getter for the decrypted database
-    function getDb() {
-        return db;
-    }
-
-    // Save the database using the File-saver library
-    function save() {
-        var blob = db.getBlob(pass);
-        saveAs(blob, name);
-    }
-
-    // Lock the database, maintain state by switchig the file for a blob
     function lock() {
         file = db.getBlob(pass);
         db = undefined;
         pass = undefined;
     }
 
-    // Close the database and reset all variables
-    function close() {
-        db = undefined;
-        file = undefined;
-        pass = undefined;
-        name = "No database loaded";
+    function save() {
+        var blob = db.getBlob(pass);
+        saveAs(blob, name);
     }
 
-    // Set a new master database password
     function setPass(oldPass, newPass) {
         if (oldPass === pass) {
             pass = newPass;
@@ -91,5 +75,69 @@ primate.service("Database", ["$q", function($q) {
         name = newName;
     }
 
+    function getDatabase() {
+        return db;
+    }
+
     return service;
 }]);
+
+primate.service("Alerts", function() {
+    var alerts = {
+        invalidPassword: false,
+        notSaved: false,
+        autoLocked: false
+    },
+
+    service = {
+        reset: reset,
+        set: set,
+        clear: clear,
+        alerts: alerts
+    };
+
+    function reset() {
+        for (var i in alerts) {
+            if (alerts.hasOwnProperty(i)) {
+                alerts[i] = false;
+            }
+        }
+    }
+
+    function set(alertName) {
+        if (alerts.hasOwnProperty(alertName)) {
+            alerts[alertName] = true;
+        }
+    }
+
+    function clear(alertName) {
+        if (alerts.hasOwnProperty(alertName)) {
+            alerts[alertName] = false;
+        }
+    }
+
+    return service;
+});
+
+primate.service("FileState", function() {
+    var state = "unloaded",
+
+    states = [
+        "unloaded",
+        "locked",
+        "unlocked"
+    ]
+
+    service = {
+        set: set,
+        state: state
+    };
+
+    function set(stateName) {
+        if (states.indexOf(stateName) >= 0) {
+            state = stateName;
+        } 
+    }
+
+    return service;
+});

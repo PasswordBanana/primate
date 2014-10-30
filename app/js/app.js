@@ -7,7 +7,13 @@ try {
 }
 
 
-var primate = angular.module("primate", ['ngAnimate']);
+var primate = angular.module("primate", ['ngAnimate', 'mgcrea.ngStrap']);
+
+primate.config(function($tooltipProvider) {
+    angular.extend($tooltipProvider.defaults, {
+        html: true
+    });
+});
 
 primate.directive('strengthMeter', function() {
     return {

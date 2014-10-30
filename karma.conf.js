@@ -25,6 +25,8 @@ module.exports = function(config) {
       'app/bower_components/angular/angular.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/bower_components/angular-animate/angular-animate.min.js',
+      'bower_components/angular-strap/dist/angular-strap.min.js',
+      'bower_components/angular-strap/dist/angular-strap.tpl.min.js',
       'app/bower_components/bootstrap/dist/js/bootstrap.min.js',
       'app/js/app.js',
       'app/js/factories.js',
