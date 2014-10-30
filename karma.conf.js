@@ -32,6 +32,7 @@ module.exports = function(config) {
       'app/js/factories.js',
       'app/js/filters.js',
       'app/js/controllers.js',
+      'app/js/directives.js',
       'app/bower_components/zxcvbn/zxcvbn.js',
       'app/bower_components/fuse.js/src/fuse.js',
       'app/bower_components/file-saver/FileSaver.js',
