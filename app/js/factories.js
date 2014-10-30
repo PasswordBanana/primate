@@ -9,6 +9,7 @@ primate.service("Database", ["$q", function($q) {
         setFile: setFile,
         unlock: unlock,
         lock: lock,
+        save: save,
         setPass: setPass,
         setName: setName,
         getDb: getDatabase
