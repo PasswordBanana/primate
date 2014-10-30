@@ -1,4 +1,4 @@
-describe("Unit Testing: Filters - ", function() {
+describe("Unit Testing: Filters -", function() {
     var hash, passwordStrengthScore, recordIndent, groupIndent, flagValue;
 
     beforeEach(module('primate'));
@@ -10,7 +10,7 @@ describe("Unit Testing: Filters - ", function() {
         groupIndent = $filter("groupIndent");
         flagValue = $filter("flagValue");
     }));
-    
+
     // test hash filter
     it('should have a hash filter: ', function () {
         expect(hash).toBeDefined();

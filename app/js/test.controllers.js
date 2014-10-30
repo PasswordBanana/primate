@@ -1,4 +1,4 @@
-describe("Unit Testing: Controllers - ", function() {
+describe("Unit Testing: Controllers -", function() {
 
 	beforeEach(module('primate'));
 

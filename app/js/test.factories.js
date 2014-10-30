@@ -1,4 +1,4 @@
-describe("Unit Testing: Factories - ", function() {
+describe("Unit Testing: Factories -", function() {
 
     beforeEach(module('primate'));
 
