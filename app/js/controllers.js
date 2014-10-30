@@ -444,7 +444,3 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
         $scope.auditMode = false;
     };
 }]);
-
-primate.controller("EditModalCtrl", function() {
-
-});
