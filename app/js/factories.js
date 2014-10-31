@@ -25,7 +25,7 @@ primate.service("Database", ["$q", function($q) {
     },
 
     file,
-    name = "No database loaded",
+    name = "There is no database loaded",
     db,
     pass;
 
@@ -237,3 +237,4 @@ primate.service("FileState", function() {
 
     return service;
 });
+/** */

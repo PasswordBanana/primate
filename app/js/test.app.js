@@ -20,19 +20,20 @@ describe("Unit Testing: Globals -", function() {
 			expect(checkFlag).toBeDefined();
 		});
 		it("returns true when a flag is set", function() {
-
+			expect(checkFlag).toBeDefined("true");
 		});
 
 		it("returns false when a flag is not set", function() {
-
+			expect(checkFlag).toBeDefined("false");
 		});
 
 		it("returns false when a flag does not exist", function() {
-
+			expect(checkFlag).toBeDefined("not exit");
 		});
 
 		it("returns false when the flagName does not exist", function() {
-
+			var name = null;
+			expect(checkFlag.name).toBeDefined("not exist");
 		});
 	});
 
@@ -58,20 +59,69 @@ describe("Unit Testing: Globals -", function() {
 	});
 	
 	//Group()
+	describe("group", function() {
+		it("exists", function() {
+			expect(Group).toBeDefined();
+		});
+		
+		it("return true when the groupName does exist", function() {
+			expect(Group.name).toBeDefined("true");
+		});
 
+	});
+	
 	//groupIndex()
-
+	describe("groupIndex", function() {
+		it("exists", function() {
+			expect(groupIndex).toBeDefined();
+		});
+		it("return group if the name is equal to groupName",function(){
+			expect(groupIndex).toBeDefined("groupName");
+		});
+	});
 	//generateRecordTree()
-
+	describe("generateRecordTree", function() {
+		it("exists", function() {
+			expect(generateRecordTree).toBeDefined();
+		});
+		it("return true if there is any record in the recordTree", function() {
+			expect(generateRecordTree).toBeDefined("true");
+		});
+	});
 	//randomPassword()
-
+	describe("randomPassword", function() {
+		it("exists", function() {
+			expect(randomPassword).toBeDefined();
+		});
+	});
 	//countOccurrences()
-
+	describe("countOccurrences", function() {
+		it("exists", function() {
+			expect(countOccurrences).toBeDefined();
+		});
+	});
 	//generatePassword()
-
+	describe("generatePassword", function() {
+		it("exists", function() {
+			expect(generatePassword).toBeDefined();
+		});
+	});
 	//toggleNewDB()
-
+	describe("toggleNewDB", function() {
+		it("exists", function() {
+			expect(toggleNewDB).toBeDefined();
+		});
+	});
 	//resetDrag()
-
+	describe("resetDrag", function() {
+		it("exists", function() {
+			expect(resetDrag).toBeDefined();
+		});
+	});
 	//windowMenu()
+		describe("windowMenu", function() {
+		it("exists", function() {
+			expect(windowMenu).toBeDefined();
+		});
+	});
 });
