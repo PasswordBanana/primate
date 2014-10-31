@@ -23,6 +23,7 @@ describe("Unit Testing: Controllers -", function() {
 			noGroup: [{"uuid":"1d4865d9484b4d144a886260fc6b9d77","group":"","title":"Google","username":"Fred","notes":"Fred's Gmail account.","password":"zCnc4UaI","passphraseModifyTime":"2014-08-18T13:58:17.000Z","modifyTime":"2014-08-18T13:58:17.000Z","URL":"http://google.com"}]
 		}
 
+		var SHOW_UNFINISHED = false; //[!!TODO!!] Remove
 
 		beforeEach(inject(function($controller, $rootScope) {
 			scope = $rootScope.$new();
@@ -36,69 +37,221 @@ describe("Unit Testing: Controllers -", function() {
 		});
 
 		//getRecordIndex()
+		it('getRecordIndex() should return -1 for a uuid that doesn\'t exist', function() {
+			//UUID = null
+			//undefined
+			//corrupt
+			//valid but non-existing
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
+
+		it('getRecordIndex() should return the valid index for records with uuids that do exist', function() {
+			//first record
+			//third record
+			//last record
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//getRecord()
+		it('getRecord() should return null for records that don\'t exist', function() {
+			//null
+			//undefined
+			//corrupt
+			//valid non-existing
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
+
+		it('getRecord() should return a valid corresponding record for uuid\'s that exist', function() {
+			//first record
+			//third record
+			//last record
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.fileChanged()
+		it('$scope.fileChanged()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.open()
+		it('$scope.open()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.setState()
+		it('$scope.setState()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.newDb()
+		it('$scope.newDb()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//updateRecordTree()
+		it('updateRecordTree()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.setRecords()
+		it('$scope.setRecords()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//clearVars()
+		it('clearVars()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.lockDb()
+		it('$scope.lockDb()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.saveDb()
+		it('$scope.saveDb()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.closeDb()
+		it('$scope.closeDb()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.gotoUrl()
+		it('$scope.gotoUrl()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.enableCustomPolicy()
+		it('$scope.enableCustomPolicy()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.addRecord()
+		it('$scope.addRecord()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.deleteRecord()
+		it('$scope.deleteRecord()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.addGroup()
+		it('$scope.addGroup()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//getGroup()
+		it('getGroup()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.genPw()
+		it('$scope.genPw()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.toggleRecordFlag()
+		it('$scope.toggleRecordFlag()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.changeMasterPassword()
+		it('$scope.changeMasterPassword()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.removePolicy()
+		it('$scope.removePolicy()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//idleTimeout()
+		it('idleTimeout()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
-		//$scope.copyToClipboard
+		//$scope.copyToClipboard()
+		it('$scope.copyToClipboard()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.search()
+		it('$scope.search()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.auditValue()
+		it('$scope.auditValue()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//getStrengthMeter()
+		it('getStrengthMeter()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//updateStrengthMeter()
+		it('updateStrengthMeter()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.updateNewDBStrengthMeter()
+		it('$scope.updateNewDBStrengthMeter()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.updateNewMasterStrengthMeter()
+		it('$scope.updateNewMasterStrengthMeter()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.changed()
+		it('$scope.changed()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.startAudit()
+		it('$scope.startAudit()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 
 		//$scope.stopAudit()
+		it('$scope.stopAudit()', function() {
+			//[!!TODO!!]
+			expect(SHOW_UNFINISHED).toBe(false);
+		});
 	});
 });
