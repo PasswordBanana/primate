@@ -1,4 +1,32 @@
-var isNW;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var isNW;
 
 try {
     isNW = (typeof require('nw.gui') !== "undefined");
@@ -26,7 +54,7 @@ var defaultPolicy = {
     minSymbol: 1
 };
 
-var defaultSymbols = "+-=_@#$%^&<>/~\\?!|()";
+var defaultSymbols = "+-=_@#$%^&amp;&lt;>/~\\?!|()";
 
 /**
  * @constructor DefaultPolicy
@@ -63,7 +91,7 @@ var policyFlags = {
  * @returns {bool} whether or not the flag (flagName) is set in the flags bitfield/number
  */
 var checkFlag = function(flags, flagName) {
-    return !!(flags & policyFlags[flagName]);
+    return !!(flags &amp; policyFlags[flagName]);
 };
 
 /**
@@ -85,7 +113,7 @@ var setFlag = function(flags, flagName) {
  * @returns {number} flags with the flagName bits cleared
  */
 var clearFlag = function(flags, flagName) {
-    return flags &= ~policyFlags[flagName];
+    return flags &amp;= ~policyFlags[flagName];
 };
 
 /**
@@ -131,8 +159,8 @@ var Group = function(groupName, fullGroup, nestingLevel) {
  * @return {number} the index of the groupName, or -1 if it's not found.
  */
 var groupIndex = function(arr, groupName) {
-    for (var i = 0, il = arr.length; i < il; i++) {
-        if (arr[i].name && arr[i].name === groupName) {
+    for (var i = 0, il = arr.length; i &lt; il; i++) {
+        if (arr[i].name &amp;&amp; arr[i].name === groupName) {
             return i;
         }
     }
@@ -150,12 +178,12 @@ var generateRecordTree = (function(records) {
     var tree = [], currentNode;
     tree.push(new Group("", "", 0));
     tree[0].expanded = true;
-    for (var r = 0, rl = records.length; r < rl; r++) {
+    for (var r = 0, rl = records.length; r &lt; rl; r++) {
         var rGroups = (records[r].group) ? records[r].group.split(".") || [] : [];
 
         currentNode = tree[0];
 
-        for (var g = 0, gl = rGroups.length; g < gl; g++) {
+        for (var g = 0, gl = rGroups.length; g &lt; gl; g++) {
             var idx = groupIndex.call(this, currentNode.subgroups, rGroups[g]);
 
             if (idx >= 0) {
@@ -185,7 +213,7 @@ var randomPassword = function(len, validChars){
 
     if (validChars == null) return null;
 
-    for (var i = 0; i < len; i++) {
+    for (var i = 0; i &lt; len; i++) {
         str += validChars.charAt(Math.floor(Math.random() * charLen));
     }
     return str;
@@ -200,7 +228,7 @@ var randomPassword = function(len, validChars){
  */
 var countOccurrences = function(charset, pass) {
     var count = 0;
-    for (var i = 0, il = pass.length; i < il; i++) {
+    for (var i = 0, il = pass.length; i &lt; il; i++) {
         if (charset.indexOf(pass[i]) > -1) {
             count++;
         }
@@ -244,7 +272,7 @@ var generatePassword = function(policy, symbols) {
     var pass = "";
 
     if (policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol > policy.length ||
-        policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol <= 0 ||
+        policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol &lt;= 0 ||
         validChars.length == 0) {
         alert("Password policy invalid, impossible conditions!");
         return null;
@@ -252,10 +280,10 @@ var generatePassword = function(policy, symbols) {
 
     do {
         pass = randomPassword(policy.length, validChars);
-    } while (countOccurrences(lowercase, pass) < policy.minLowercase &&
-             countOccurrences(uppercase, pass) < policy.minUppercase &&
-             countOccurrences(digits, pass) < policy.minDigit &&
-             countOccurrences(symbols, pass) < policy.minSymbol);
+    } while (countOccurrences(lowercase, pass) &lt; policy.minLowercase &amp;&amp;
+             countOccurrences(uppercase, pass) &lt; policy.minUppercase &amp;&amp;
+             countOccurrences(digits, pass) &lt; policy.minDigit &amp;&amp;
+             countOccurrences(symbols, pass) &lt; policy.minSymbol);
 
     return pass;
 };
@@ -311,7 +339,7 @@ $(document).ready(function() {
 });
 
 $(window).resize(function() {
-    if ($(window).width() < 400) {
+    if ($(window).width() &lt; 400) {
         $('#dbSelectButtons').removeClass('btn-group');
         $('#dbSelectButtons').addClass('btn-group-vertical');
     } else {
@@ -516,3 +544,26 @@ var windowMenu = (function($scope) {
         setState: setState
     };
 }());
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="DefaultPolicy.html">DefaultPolicy</a></li><li><a href="Group.html">Group</a></li></ul><h3>Namespaces</h3><ul><li><a href="Controllers.html">Controllers</a></li><li><a href="Controllers.StateCtrl.html">StateCtrl</a></li><li><a href="Factories.html">Factories</a></li><li><a href="Factories.Alerts.html">Alerts</a></li><li><a href="Factories.Database.html">Database</a></li><li><a href="Factories.FileState.html">FileState</a></li><li><a href="Filters.html">Filters</a></li><li><a href="WindowMenu.html">WindowMenu</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkFlag">checkFlag</a></li><li><a href="global.html#clearFlag">clearFlag</a></li><li><a href="global.html#countOccurrences">countOccurrences</a></li><li><a href="global.html#generatePassword">generatePassword</a></li><li><a href="global.html#generateRecordTree">generateRecordTree</a></li><li><a href="global.html#groupIndex">groupIndex</a></li><li><a href="global.html#randomPassword">randomPassword</a></li><li><a href="global.html#resetDrag">resetDrag</a></li><li><a href="global.html#setFlag">setFlag</a></li><li><a href="global.html#toggleFlag">toggleFlag</a></li><li><a href="global.html#toggleNewDB">toggleNewDB</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha10</a> on Fri Oct 31 2014 19:43:58 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
