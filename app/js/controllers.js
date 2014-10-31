@@ -7,7 +7,7 @@
 /**
  * @name StateCtrl
  * @desc StateCtrl handles all the primary application controls
- * including the application state (unloaded, loaded, unlocked)
+ *      including the application state (unloaded, loaded, unlocked)
  *
  * @memberOf Controllers
  * @namespace StateCtrl
@@ -49,7 +49,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
     /**
      * getRecordIndex
      * @desc Get the index in the $scope.records array
-     *  for the record with the given UUID.
+     *      for the record with the given UUID.
      *
      * @param {string} uuid - the valid UUID of a record
      * @returns {number} index of the record with the given UUID.
@@ -170,7 +170,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
     /**
      * $scope.setRecords
      * @desc Update records array with current list from the database
-     * and re-generate recordTree.
+     *      and re-generate recordTree.
      * @param {object} db - PWSafeDB database object
      * @memberOf Controllers.StateCtrl
      */
@@ -298,7 +298,6 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
         getGroup(newRecord.group).expanded = true;
 
         //Show the edit modal for the new record
-        //TODO: update this to use promises rather than timeout
         setTimeout(function() {
             var newRecordElement = document.querySelector("[data-record-modal-uuid='" + newRecord.uuid + "']");
             var newRecordScope = angular.element(newRecordElement).scope();
