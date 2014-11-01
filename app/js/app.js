@@ -200,7 +200,7 @@ var randomPassword = function(len, validChars){
 var countOccurrences = function(charset, pass) {
     var count = 0;
     for (var i = 0, il = pass.length; i < il; i++) {
-        if (charset.indexOf(pass[i]) > -1) {
+        if (charset.indexOf(pass[i]) !== -1) {
             count++;
         }
     }
@@ -262,9 +262,9 @@ var generatePassword = function(policy, symbols) {
 
     do {
         pass = randomPassword(policy.length, validChars);
-    } while (countOccurrences(lowercase, pass) < policy.minLowercase &&
-             countOccurrences(uppercase, pass) < policy.minUppercase &&
-             countOccurrences(digits, pass) < policy.minDigit &&
+    } while (countOccurrences(lowercase, pass) < policy.minLowercase ||
+             countOccurrences(uppercase, pass) < policy.minUppercase ||
+             countOccurrences(digits, pass) < policy.minDigit ||
              countOccurrences(symbols, pass) < policy.minSymbol);
 
     return pass;
