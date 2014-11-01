@@ -1,14 +1,19 @@
 /**
- * AngularJS Controllers for DECO3801 Project
+ * @namespace Controllers
+ * @desc AngularJS Controllers for DECO3801 Project
  *
 **/
 
-/*
- * StateController handles all the primary application controls
- * including the application state (unloaded, loaded, unlocked)
+/**
+ * @name StateCtrl
+ * @desc StateCtrl handles all the primary application controls
+ *      including the application state (unloaded, loaded, unlocked)
+ *
+ * @memberOf Controllers
+ * @namespace StateCtrl
  */
-primate.controller("StateController", ["$scope", "Database", "$http", "$q", function($scope, db, $http, $q) {
-    var databaseFile, recordFuse,
+primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", "FileState", function($scope, db, $http, $q, Alerts, FileState, $tooltip) {
+    var databaseFile, recordFuse, idleTimer,
         searchOptions = {
             caseSensitive: false,
             includeScore: false,
@@ -19,16 +24,16 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
             maxPatternLength: 32,
             keys: ['title', 'username', 'notes']
         };
-    $scope.state = "unloaded"; //State of the main database ["unloaded", "loaded", "unlocked"]
+    $scope.state = FileState.state; //State of the main database ["unloaded", "loaded", "unlocked"]
     $scope.auditMode = false;
     $scope.searchMode = false;
-    $scope.databaseFilename;
-    $scope.records; //Array of all records in the database
-    $scope.headers; //Object containing the database headers
-    $scope.recordTree; //$scope.records organised in a tree, nested by groups
+    $scope.databaseFilename = undefined;
+    $scope.records = undefined; //Array of all records in the database
+    $scope.headers = undefined; //Object containing the database headers
+    $scope.recordTree = undefined; //$scope.records organised in a tree, nested by groups
     $scope.viewing = false; //Is the edit modal visible
-    $scope.pass; //Master password field contents
-    $scope.filePicker; //File input object
+    $scope.pass = undefined; //Master password field contents
+    $scope.filePicker = undefined; //File input object
     $scope.currentFlags = {
         useLowercase: false,
         useUppercase: false,
@@ -38,16 +43,18 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
     $scope.defaultPolicy = defaultPolicy;
     $scope.defaultSymbols = defaultSymbols;
 
-    $scope.alerts = {
-        invalidPassword: false,
-        notSaved: false,
-        autoLocked: false
-    };
+    $scope.alerts = Alerts.alerts;
     $scope.searchRecords = null;
 
-    /*
-     * Return the index for the record with the given UUID
-     * If it doesn't exist, return -1
+    /**
+     * getRecordIndex
+     * @desc Get the index in the $scope.records array
+     *      for the record with the given UUID.
+     *
+     * @param {string} uuid - the valid UUID of a record
+     * @returns {number} index of the record with the given UUID.
+     * If it doesn't exist, -1.
+     * @memberOf Controllers.StateCtrl
      */
     var getRecordIndex = function(uuid) {
         for (var i = 0, il = $scope.records.length; i < il; i++) {
@@ -58,16 +65,25 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         return -1;
     };
 
-    /*
-     * Return the record with the given UUID
+    /**
+     * getRecord
+     * @desc Get the record with the given UUID.
+     * 
+     * @param {string} uuid - the valid UUID of a record
+     * @returns {object | null} record object from the $scope.records array.
+     *      If the UUID doesn't exist, null.
+     * @memberOf Controllers.StateCtrl
      */
     var getRecord = function(uuid) {
         var idx = getRecordIndex(uuid);
         return (idx > -1) ? $scope.records[idx] : null;
     };
 
-    /*
-     * Handle file input object in open screen changing state
+    /**
+     * $scope.fileChanged
+     * @desc Handle file input object in open screen changing state
+     * @param {element} picker - file picker object to take database file from
+     * @memberOf Controllers.StateCtrl
      */
     $scope.fileChanged = function(picker) {
         $scope.filePicker = picker;
@@ -80,8 +96,10 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         document.getElementById("passwordField").focus();
     };
 
-    /*
-     * Open the database file
+    /**
+     * $scope.open
+     * @desc Open the database file
+     * @memberOf Controllers.StateCtrl
      */
     $scope.open = function() {
         var deferred = $q.defer();
@@ -92,30 +110,35 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
             $scope.setState("unlocked");
             deferred.resolve(true);
         }, function(failure) {
-            $scope.alerts.invalidPassword = true;
+            Alerts.set("invalidPassword");
             deferred.reject();
         });
 
         $scope.pass = "";
-        $scope.resetAlerts();
+        Alerts.reset();
         return deferred.promise;
     };
 
-    $scope.resetAlerts = function() {
-        for (var i in $scope.alerts) {
-            if ($scope.alerts.hasOwnProperty(i)) {
-                $scope.alerts[i] = false;
-            }
+    /**
+     * $scope.setState
+     * @desc Set the state of the application
+     * @param {string} state - one of either "unloaded", "loaded" or "unlocked"
+     * @memberOf Controllers.StateCtrl
+     */
+    $scope.setState = function(state) {
+        var validStates = ["unloaded", "loaded", "unlocked"];
+        if (state && validStates.indexOf(state) >= 0) {
+            $scope.state = state;
+            windowMenu.setState(state);
         }
     };
 
-    $scope.setState = function(state) {
-        $scope.state = state;
-		windowMenu.setState(state);
-    };
-
-    /*
-     * Create and open a new database with the given master password
+    /**
+     * $scope.newDb
+     * @desc Create and open a new database with the given master password
+     * @param {string} master - master password
+     * @param {string} filename - filename of the new database file
+     * @memberOf Controllers.StateCtrl
      */
     $scope.newDb = function(master, filename) {
         $http({
@@ -137,16 +160,22 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         }); 
     };
 
-    /*
-     * Update the Records tree view
+    /**
+     * updateRecordTree
+     * @desc Update the $scope.recordTree records tree view
+     * @param {array} recordList - an array of record objects
+     * @memberOf Controllers.StateCtrl
      */
     var updateRecordTree = function(recordList) {
         $scope.recordTree = generateRecordTree.call(this, (recordList || $scope.records));
     };
 
-    /*
-     * Update records with current list from the database
-     * and re-generate recordTree.
+    /**
+     * $scope.setRecords
+     * @desc Update records array with current list from the database
+     *      and re-generate recordTree.
+     * @param {object} db - PWSafeDB database object
+     * @memberOf Controllers.StateCtrl
      */
     $scope.setRecords = function(db) {
         $scope.records = db.records;
@@ -156,6 +185,11 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         recordFuse = new Fuse(db.records, searchOptions);
     };
 
+    /**
+     * clearVars
+     * @desc reset the shared controller variables back to their initial state
+     * @memberOf Controllers.StateCtrl
+     */
     var clearVars = function() {
         $scope.records = undefined;
         $scope.recordTree = undefined;
@@ -164,42 +198,53 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         $scope.recordFuse = undefined;
     };
 
-    /*
-     * Lock the database and clear variables
+    /**
+     * $scope.lockDb
+     * @desc Lock the database and reset controller variables
+     * @memberOf Controllers.StateCtrl
      */
     $scope.lockDb = function() {
-        db.lock();
-        clearVars();
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-        $scope.setState("loaded");
+        if ($scope.state === "unlocked") {
+            db.lock();
+            clearVars();
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            $scope.setState("loaded");
+        }
     };
 
-    /*
-     * Pass through a save call to the Database factory
+    /**
+     * $scope.saveDb
+     * @desc Pass through a save call to the Database factory
+     * @memberOf Controllers.StateCtrl
      */
     $scope.saveDb = function() {
         db.save();
-        $scope.alerts.notSaved = false;
+        Alerts.clear("notSaved");
     };
 
-    /*
-     * Close the database and clear inputs, resetting whole application state
+    /**
+     * $scope.closeDb
+     * @desc Close the database and clear inputs, resetting whole application state
+     * @memberOf Controllers.StateCtrl
      */
     $scope.closeDb = function() {
-        db.close();
+        db.reset();
         clearVars();
         if ($scope.filePicker)
             $scope.filePicker.value = "";
         $scope.setState("unloaded");
     };
 
-    /*
-     * Open a new window with the URL set in a record with the given UUID
+    /**
+     * $scope.gotoUrl
+     * @desc Open a new window with the URL set in a record with the given UUID
+     * @param {string} uuid - a valid record UUID
+     * @memberOf Controllers.StateCtrl
      */
     $scope.gotoUrl = function(uuid) {
         var url = getRecord(uuid).URL;
-        if (url == null) return;
+        if (!url) return;
         if (isNW) {
             var gui = require('nw.gui');
             gui.Shell.openExternal(url);
@@ -208,17 +253,23 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         }
     };
 
-    /*
-     * Enable a custom password policy for the given record
-     * Overrides the default policy for the database
+    /**
+     * $scope.enableCustomPolicy
+     * @desc Enable a custom password policy for the given record,
+     *      overriding the default policy for the database.
+     * @param {object} record - a valid record object
+     * @memberOf Controllers.StateCtrl
      */
     $scope.enableCustomPolicy = function(record) {
         record.passphrasePolicy = new DefaultPolicy();
         record.ownPassphraseSymbols = "";
     };
 
-    /*
-     * Add a new record to the given group
+    /**
+     * $scope.addRecord
+     * @desc Add a new record to the given group
+     * @param {object} group - a group object in the $scope.recordTree tree.
+     * @memberOf Controllers.StateCtrl
      */
     $scope.addRecord = function(group) {
         /*
@@ -227,8 +278,7 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
          * http://stackoverflow.com/a/2117523
          * Removed dashes as libpwsafejs/Password Gorilla don't support them (invalid implementation?)
          */
-        var group = group,
-            uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
                 return v.toString(16);
             });
@@ -249,20 +299,24 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         updateRecordTree();
         
         //Expand the group so the modal exists
-        getGroup(newRecord.group).expanded = true;
+        expandGroup(newRecord.group);
 
         //Show the edit modal for the new record
-        //TODO: update this to use promises rather than timeout
         setTimeout(function() {
-            var newRecordElement = document.querySelector("[data-record-modal-uuid='" + newRecord.uuid + "']");
-            var newRecordScope = angular.element(newRecordElement).scope();
-            newRecordScope.$apply();
-            $("*[data-record-modal-uuid=" + newRecord.uuid + "]").modal('show');
-        }, 200);
+            if (newRecord.uuid) {
+                var newRecordElement = document.querySelector("[data-record-modal-uuid='" + newRecord.uuid + "']");
+                var newRecordScope = angular.element(newRecordElement).scope();
+                newRecordScope.$apply();
+                $("*[data-record-modal-uuid=" + newRecord.uuid + "]").modal('show');
+            }
+        }, 400);
     };
 
-    /*
-     * Delete a record from the database
+    /**
+     * $scope.deleteRecord
+     * @desc Delete a record from the database.
+     * @param {string} uuid - a valid record UUID
+     * @memberOf Controllers.StateCtrl
      */
     $scope.deleteRecord = function(uuid) {
         if (window.confirm("Are you sure you want to delete this record?")) {
@@ -277,20 +331,28 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         }
     };
 
-    /*
-     * Add a group to the tree view.
+    /**
+     * $scope.addGroup
+     * @desc Add a group to the $scope.recordTree tree view.
+     * @param {object} group - a group in the $scope.recordTree tree.
+     * @memberOf Controllers.StateCtrl
      */
     $scope.addGroup = function(group) {
         var name = window.prompt("Group Name:");
-        if (group == null) {
+        if (!group) {
             this.recordTree[0].subgroups.push(new Group(name, name, 1));
         } else {
             group.subgroups.push(new Group(name, group.fullGroup + "." + name, group.level + 1));
         }
     };
 
-    /*
-     * Get a reference to the given group in the recordTree
+    /**
+     * getGroup
+     * @desc Get a reference to the given group in $scope.recordTree.
+     * @param {string} fullGroup - '.' delimited string which represents
+     *      a full group branch structure in the $scope.recordTree.
+     * @returns {object} A group object which is the leaf node for the branch represented by the given group string.
+     * @memberOf Controllers.StateCtrl
      */
     var getGroup = function(fullGroup) {
 
@@ -313,19 +375,47 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         return currentNode;
     };
 
-    /*
-     * Generate a password for a given record
+    /**
+     * expandGroup
+     * @desc Expand all the groups in a fullGroup string
+     * @param {string} fullGroup - '.' delimited string which represents
+     *      a full group branch structure in the $scope.recordTree.
+     * @memberOf Controllers.StateCtrl
+     */
+    var expandGroup = function(fullGroup) {
+        while (fullGroup !== "") {
+            var group = getGroup(fullGroup);
+            group.expanded = true;
+
+            var lastSep = fullGroup.lastIndexOf(".");
+            if (lastSep >= 0) {
+                fullGroup = fullGroup.substring(0, lastSep);
+            } else {
+                fullGroup = "";
+            }
+        }
+    };
+
+    /**
+     * $scope.genPw
+     * @desc Generate a password for a given record
+     * @param {object} record - a valid record object in the $scope.records array
+     * @memberOf Controllers.StateCtrl
      */
     $scope.genPw = function(record) {
         var newPw = generatePassword(record.passphrasePolicy, record.ownPassphraseSymbols);
-        if (newPw != null) {
+        if (newPw) {
             record.password = newPw;
             updateStrengthMeter(record);
         }
     };
 
-    /*
-     * Toggle policy flags for a given record
+    /**
+     * $scope.toggleRecordFlag
+     * @desc Toggle policy flags for a given record.
+     * @param {object} record - a valid record object in the $scope.records array
+     * @param {string} flagName - a flagName from the policyFlags object
+     * @memberof Controllers.StateCtrl
      */
     $scope.toggleRecordFlag = function(record, flagName) {
         if (checkFlag(record.passphrasePolicy.flags, flagName)) {
@@ -335,30 +425,50 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         }
     };
 
-    /*
-     * Maintain the state of the flag checkbox models
+    /**
+     * $scope.toggleFlag
+     * @see Global.toggleFlag()
+     * @memberOf Controllers.StateCtrl
      */
     $scope.toggleFlag = toggleFlag;
+    
+    /**
+     * $scope.checkFlag
+     * @see Global.checkFlag()
+     * @memberOf Controllers.StateCtrl
+     */
     $scope.checkFlag = checkFlag;
 
-    /*
-     * Pass new password through to the database factory
+    /**
+     * $scope.changeMasterPassword
+     * @desc Pass new password through to the database factory.
+     * @param {string} oldPass - the current master password
+     * @param {string} givenPass - the intended new master password
+     * @return {bool}
+     * @memberOf Controllers.StateCtrl
      */
     $scope.changeMasterPassword = function(oldPass, givenPass) {
         return db.setPass(oldPass, givenPass);
     };
 
-    /*
-     * Remove the passphrase policy from the given record
+    /**
+     * $scope.removePolicy
+     * @desc Remove the passphrase policy from the given record.
+     * @param {object} record - a valid record object in the $scope.records array.
+     * @memberOf Controllers.StateCtrl
      */
     $scope.removePolicy = function(record) {
         record.passphrasePolicy = undefined;
     };
 
-    var idleTimer;
+    /**
+     * idleTimeout
+     * @desc triggered when the user is considered to be idle
+     * @memberOf Controllers.StateCtrl
+     */
     var idleTimeout = function() {
         if ($scope.state === "unlocked") {
-            $scope.alerts.autoLocked = true;
+            Alerts.set("autoLocked");
             $scope.lockDb();
             $scope.$apply();
         }
@@ -371,16 +481,26 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
     document.addEventListener('focus', function() {
         clearTimeout(idleTimer);
     });
-	
-	$scope.copyToClipboard = function(text) {
-		if (isNW) {
-			var gui = require('nw.gui');
-			gui.Clipboard.get().set(text, 'text');	
-		}
-	};
+    
+    /**
+     * $scope.copyToClipboard
+     * @desc copy the given text to the system clipboard.
+     *      Only functions under Node-webkit.
+     * @param {string} text - the text to copy
+     * @memberOf Controllers.StateCtrl
+     */
+    $scope.copyToClipboard = function(text) {
+        if (isNW) {
+            var gui = require('nw.gui');
+            gui.Clipboard.get().set(text, 'text');  
+        }
+    };
 
-    /*
-     * Perform a fuzzy search on the list of records and show the results
+    /**
+     * $scope.search
+     * @desc Perform a fuzzy search on the list of records and show the results in the search view.
+     * @param {string} val - the text to search for
+     * @memberOf Controllers.StateCtrl
      */
     $scope.search = function(val) {
         if (val) {
@@ -392,6 +512,13 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         }
     };
 
+    /**
+     * $scope.auditValue
+     * @desc get the determined audit value of a given record
+     * @param {object} record - a valid record object in the $scope.records array.
+     * @returns {number} an arbitrary audit value for comparing with other records.
+     * @memberOf Controllers.StateCtrl
+     */
     $scope.auditValue = function(record) {
         var score = 0;
         score += record.passphraseModifyTime.getSeconds();
@@ -399,6 +526,13 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         return score;
     };
 
+    /**
+     * getStrengthMeter
+     * @desc get the HTML markup for a strength meter display with the given strength value.
+     * @param {number} strength - integer from 0 to 4
+     * @returns {string} HTML markup for a strength meter display
+     * @memberOf Controllers.StateCtrl
+     */
     var getStrengthMeter = function(strength) {
         return ['<div class="strengthMeterWrapper">',
             '<div class="',
@@ -416,6 +550,12 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         '</div>'].join('');
     };
 
+    /**
+     * updateStrengthMeter
+     * @desc update a strength meter associated with the given record
+     * @param {object} record - a valid record in the $scope.records array.
+     * @memberOf Controllers.StateCtrl
+     */
     var updateStrengthMeter = function(record) {
         var strength = zxcvbn(record.password).score;
         var html = getStrengthMeter(strength);
@@ -424,23 +564,42 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         });
     };
 
+    /**
+     * $scope.updateNewDBStrengthMeter
+     * @desc update the new master password strength meter on 
+     *      the new database modal.
+     *
+     * @param {string} p - the new master password
+     * @memberOf Controllers.StateCtrl
+     */
     $scope.updateNewDBStrengthMeter = function(p) {
-        var p = p || '';
+        p = p || '';
         var strength = zxcvbn(p).score;
         $("#newDBModal strength-meter").html(getStrengthMeter(strength));
     };
 
+    /**
+     * $scope.updateNewMasterStrengthMeter
+     * @desc update the new master password strength meter on
+     *      the new master password settings modal tab.
+     *
+     * @param {string} p - the new master password
+     * @memberOf Controllers.StateCtrl 
+     */
     $scope.updateNewMasterStrengthMeter = function(p) {
-        var p = p || '';
+        p = p || '';
         var strength = zxcvbn(p).score;
         $("#masterPasswordTab strength-meter").html(getStrengthMeter(strength));
     };
 
-    /* 
-     * Called when any part of the database has been changed
+    /**
+     * $scope.changed
+     * @desc Called when any part of the database has been changed
+     * @param {object} record - an associated record if it was a record that was updated
+     * @memberOf Controllers.StateCtrl
      */
     $scope.changed = function(record) {
-        $scope.alerts.notSaved = true;
+        Alerts.set("notSaved");
 
         if (record) {
             record.passphraseModifyTime = new Date();
@@ -448,10 +607,20 @@ primate.controller("StateController", ["$scope", "Database", "$http", "$q", func
         }
     };
 
+    /**
+     * $scope.startAudit
+     * @desc enable Audit mode
+     * @memberOf Controllers.StateCtrl
+     */
     $scope.startAudit = function() {
         $scope.auditMode = true;
     };
 
+    /**
+     * $scope.stopAudit
+     * @desc disable Audit mode
+     * @memberOf Controllers.StateCtrl
+     */
     $scope.stopAudit = function() {
         $scope.auditMode = false;
     };

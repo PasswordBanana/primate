@@ -6,35 +6,12 @@ try {
     isNW = false;
 }
 
+var primate = angular.module("primate", ['ngAnimate', 'mgcrea.ngStrap']);
 
-var primate = angular.module("primate", ['ngAnimate']);
-
-primate.directive('strengthMeter', function() {
-    return {
-        restrict: 'E',
-        scope: {
-            value: '='
-        },
-        link: function(scope, element, attrs) {
-            var strength = zxcvbn(scope.value).score;
-
-            var temp = ['<div class="strengthMeterWrapper">',
-                '<div class="',
-                    (strength < 1) ? 'strengthMeterBox' : 'strengthMeterBox1',
-                    '"></div>',
-                '<div class="',
-                    (strength < 2) ? 'strengthMeterBox' : 'strengthMeterBox2',
-                    '"></div>',
-                '<div class="',
-                    (strength < 3) ? 'strengthMeterBox' : 'strengthMeterBox3',
-                    '"></div>',
-                '<div class="',
-                    (strength < 4) ? 'strengthMeterBox' : 'strengthMeterBox4',
-                    '"></div>',
-            '</div>'].join('');
-            element.context.innerHTML = temp;
-        }
-    };
+primate.config(function($tooltipProvider) {
+    angular.extend($tooltipProvider.defaults, {
+        html: true
+    });
 });
 
 /*
@@ -51,6 +28,11 @@ var defaultPolicy = {
 
 var defaultSymbols = "+-=_@#$%^&<>/~\\?!|()";
 
+/**
+ * @constructor DefaultPolicy
+ * @desc returns a new DefaultPolicy object
+ * @returns {object} default password policy
+ */
 var DefaultPolicy = function() {
     return {
         flags: defaultPolicy.flags,
@@ -73,26 +55,69 @@ var policyFlags = {
     //unused: 0x01ff
 };
 
+/**
+ * @name checkFlag
+ * @desc Check if a flag is set in a given number
+ * @param {number} flags - a number which is treated as a bitfield
+ * @param {string} flagName - a flag name in the GLOBAL.policyFlags object
+ * @returns {bool} whether or not the flag (flagName) is set in the flags bitfield/number
+ */
 var checkFlag = function(flags, flagName) {
-    return !!(flags & policyFlags[flagName]);
+    if (flags && policyFlags.hasOwnProperty(flagName)) {
+        return !!(flags & policyFlags[flagName]);
+    } return false;
 };
 
+/**
+ * @name setFlag
+ * @desc Set a flag in a given number
+ * @param {number} flags - a number which is treated as a bitfield
+ * @param {string} flagName - a flag name in the GLOBAL.policyFlags object
+ * @returns {number} flags with the flagName bits set
+ */
 var setFlag = function(flags, flagName) {
-    return flags |= policyFlags[flagName];
+    if (typeof flags === "number" && policyFlags.hasOwnProperty(flagName)) {
+        return flags |= policyFlags[flagName];
+    } return flags;
 };
 
+/**
+ * @name clearFlag
+ * @desc Clear a flag in a given number
+ * @param {number} flags - a number which is treated as a bitfield
+ * @param {string} flagName - a flag name in the GLOBAL.policyFlags object
+ * @returns {number} flags with the flagName bits cleared
+ */
 var clearFlag = function(flags, flagName) {
-    return flags &= ~policyFlags[flagName];
+    if (typeof flags === "number" && policyFlags.hasOwnProperty(flagName)) {
+        return flags &= ~policyFlags[flagName];
+    } return flags;
 };
 
+/**
+ * @name toggleFlag
+ * @desc Toggle the state of flag bits in a given password policy
+ * @param {object} policy - a password policy object
+ * @param {string} flagName - a flag name in the GLOBAL.policyFlags object
+ * @returns {number} the new number/bitfield with the policies flags toggled, or false.
+ */
 var toggleFlag = function(policy, flagName) {
-    return policy.flags ^= policyFlags[flagName];
+    if (policy && typeof policy.flags === "number" && policyFlags.hasOwnProperty(flagName)) {
+        return policy.flags ^= policyFlags[flagName];
+    } return policy;
 };
 
+/**
+ * @constructor Group
+ * @desc a group object used in the construction of a recordTree
+ * @param {string} groupName - the name of the current group node
+ * @param {string} fullGroup - a period delimited string of the groupName and all parent groups names
+ * @param {number} nestingLevel - the level of this group in the recordTree
+ * @returns {object} new group object with the provided details filled in
+ */
 var Group = function(groupName, fullGroup, nestingLevel) {
     var name = groupName || "No name";
     var level = nestingLevel;
-    var fullGroup = fullGroup;
     var expanded = false; //TODO: Maintain expanded state
     return {
         name: name,
@@ -104,6 +129,14 @@ var Group = function(groupName, fullGroup, nestingLevel) {
     };
 };
 
+/**
+ * @name groupIndex
+ * @desc get the index of a groupName in an array
+ * @param {array} arr - an array of Group objects
+ * @param {string} groupName - the string to search for
+ *
+ * @return {number} the index of the groupName, or -1 if it's not found.
+ */
 var groupIndex = function(arr, groupName) {
     for (var i = 0, il = arr.length; i < il; i++) {
         if (arr[i].name && arr[i].name === groupName) {
@@ -113,9 +146,12 @@ var groupIndex = function(arr, groupName) {
     return -1;
 };
 
-/*
- * Generate a tree object containing the records
- * Organised by groups/subgroups
+/**
+ * @name generateRecordTree
+ * @desc Generate a tree object containing the given records
+ *      organised by groups/subgroups.
+ * @param {array} records - an array of record objects
+ * @returns {object} a recordTree object constructed from Group()s
  */
 var generateRecordTree = (function(records) {
     var tree = [], currentNode;
@@ -143,14 +179,18 @@ var generateRecordTree = (function(records) {
     return tree;
 });
 
-/*
- * Return a random string of characters in validChars of length len
+/**
+ * @name randomPassword
+ * @desc Return a random string of characters using the given valid characters
+ * @param {number} len - the length of the generated password
+ * @param {string} validChars - a non-empty string containing the valid characters that can make up the password
+ * @returns {string} the generated random password
  */
 var randomPassword = function(len, validChars){
+    if (!validChars) return null;
+
     var str = "",
         charLen = validChars.length;
-
-    if (validChars == null) return null;
 
     for (var i = 0; i < len; i++) {
         str += validChars.charAt(Math.floor(Math.random() * charLen));
@@ -158,72 +198,107 @@ var randomPassword = function(len, validChars){
     return str;
 };
 
-/*
- * Count occurrences of characters from charset in pass
+/**
+ * @name countOccurrences
+ * @desc Count occurrences of characters from a given set in a password
+ * @param {string} charset - a string containing all the characters to count
+ * @param {string} pass - the string to search (a password)
+ * @returns {number} the count of characters in charset that occur in pass.
  */
 var countOccurrences = function(charset, pass) {
+    if (charset === null || pass === null || 
+            typeof charset !== "string" || typeof pass !== "string") {
+        return false;
+    }
     var count = 0;
     for (var i = 0, il = pass.length; i < il; i++) {
-        if (charset.indexOf(pass[i]) > -1) {
+        if (charset.indexOf(pass[i]) !== -1) {
             count++;
         }
     }
     return count;
 };
 
-/*
- * Generate a password from the given password policy
- * or the default policy if one is not provided/undefined
+/**
+ * @name generatePassword
+ * @desc generate a password from the given password policy,
+ *      or the default policy if one is not provided/undefined.
+ * @param {object} policy - a password policy
+ * @param {string} symbols - a string containing the symbols to use if symbols are enabled for the password.
+ * @return {string} a generated password which meets the provided policy.
  */
 var generatePassword = function(policy, symbols) {
 
-    if (policy === undefined) {
+    if (!policy) {
         policy = new DefaultPolicy();
     }
 
-    if (symbols == "") {
+    if (!symbols) {
         symbols = defaultSymbols;
     }
 
     var validChars = "";
+    var totalMinLength = 0;
     var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lowercase = "abcdefghijklmnopqrstuvwxyz";
     var digits = "0123456789";
     var hexDigits = "0123456789ABCDEF";
 
+    var gen = {
+        lowercase: 0,
+        uppercase: 0,
+        digit: 0,
+        symbol: 0
+    };
+
     if (checkFlag(policy.flags, "useHexDigits")) {
         validChars += hexDigits;
     } else {
-        if (checkFlag(policy.flags, "useLowercase")) validChars += lowercase;
-        if (checkFlag(policy.flags, "useUppercase")) validChars += uppercase;
-        if (checkFlag(policy.flags, "useDigits")) validChars += digits;
-        if (checkFlag(policy.flags, "useSymbols")) validChars += symbols;
+        if (checkFlag(policy.flags, "useLowercase")) {
+            validChars += lowercase;
+            totalMinLength += policy.minLowercase;
+            gen.lowercase = policy.minLowercase;
+        }
+        if (checkFlag(policy.flags, "useUppercase")) {
+            validChars += uppercase;
+            totalMinLength += policy.minUppercase;  
+            gen.uppercase = policy.minUppercase;
+        } 
+        if (checkFlag(policy.flags, "useDigits")) {
+            validChars += digits;
+            totalMinLength += policy.minDigit;
+            gen.digit = policy.minDigit;
+        }
+        if (checkFlag(policy.flags, "useSymbols")) {
+            validChars += symbols;
+            totalMinLength += policy.minSymbol;
+            gen.symbol = policy.minSymbol;
+        }
     }
 
     var pass = "";
-
-    if (policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol > policy.length ||
-        policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol <= 0 ||
-        validChars.length == 0) {
+    if (totalMinLength > policy.length || totalMinLength <= 0 ||
+            validChars.length === 0) {
         alert("Password policy invalid, impossible conditions!");
         return null;
     }
 
     do {
         pass = randomPassword(policy.length, validChars);
-    } while (countOccurrences(lowercase, pass) < policy.minLowercase &&
-             countOccurrences(uppercase, pass) < policy.minUppercase &&
-             countOccurrences(digits, pass) < policy.minDigit &&
-             countOccurrences(symbols, pass) < policy.minSymbol);
+    } while (countOccurrences(lowercase, pass) < gen.lowercase ||
+             countOccurrences(uppercase, pass) < gen.uppercase ||
+             countOccurrences(digits, pass) < gen.digit ||
+             countOccurrences(symbols, pass) < gen.symbol);
 
     return pass;
 };
 
-/*
- * Toggle the new database modal
+/**
+ * @name toggleNewDB
+ * @desc toggle the new database modal
  */
 var toggleNewDB = function(e) {
-    var e = e || window.event;
+    e = e || window.event;
     e.stopPropagation();
     $("#newDBModal").modal('show');
 };
@@ -251,6 +326,10 @@ document.addEventListener('dragover', function(event) {
         });
 }, false);
 
+/**
+ * @name resetDrag
+ * @desc clean up after the drag events
+ */
 var resetDrag = function() {
     document.body.style.backgroundColor = "white";
     $('#follow').css('display', 'none');
@@ -274,16 +353,19 @@ $(window).resize(function() {
     }
 });
 
-/*
- * System Window Menu
- */
 
+/**
+ * @namespace WindowMenu
+ * @desc System Window Menu
+ */
 var windowMenu = (function($scope) {
     var menu, gui, win,
     debug = false,
 
-    /*
-     * Remove all menu items from the window menu
+    /**
+     * @name clearMenu
+     * @desc remove all menu items from the window menu
+     * @memberOf WindowMenu
      */
     clearMenu = function() {
         while (menu.items.length) {
@@ -291,154 +373,158 @@ var windowMenu = (function($scope) {
         }
     },
 
-    /*
-     * Load one of the configured states for the menubar
+    /**
+     * @name setState
+     * @desc load one of the configured states for the menubar
+     * @param {string} state - a state name from "loaded", "unlocked" and "unloaded"
+     * @memberOf WindowMenu
      */
     setState = function(state) {
         if (!isNW) return;
-		
-		if (process.platform === "darwin") {
-			menu.removeAt(1);
-		} else {
+        
+        if (process.platform === "darwin") {
+            menu.removeAt(1);
+        } else {
             clearMenu();
         }
-		
-		var submenu;
+        
+        var submenu;
         switch(state) {
             case "loaded":
-				submenu = (function() {
-					var submenu = new gui.Menu();
-					submenu.append(new gui.MenuItem({
-						label: "Open Database",
-						click: function() {
+                submenu = (function() {
+                    var submenu = new gui.Menu();
+                    submenu.append(new gui.MenuItem({
+                        label: "Open Database",
+                        click: function() {
                             $('.openCancelButton').click();
-							$('#fileInput').click();
-						}
-					}));
-					
-					submenu.append(new gui.MenuItem({
-						label: "Close Database",
-						click: function() {
-							$('.openCancelButton').click();
-						}
-					}));
+                            $('#fileInput').click();
+                        }
+                    }));
+                    
+                    submenu.append(new gui.MenuItem({
+                        label: "Close Database",
+                        click: function() {
+                            $('.openCancelButton').click();
+                        }
+                    }));
 
-					if (debug) {
-						submenu.append(new gui.MenuItem({ type: 'separator' }));
-						submenu.append(new gui.MenuItem({
-							label: "Dev Tools",
-							click: function() {
-								win.showDevTools();
-							}
-						}));
-					}
+                    if (debug) {
+                        submenu.append(new gui.MenuItem({ type: 'separator' }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Dev Tools",
+                            click: function() {
+                                win.showDevTools();
+                            }
+                        }));
+                    }
 
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Exit",
-						click: function() {
-							win.close();
-						}
-					}));
-					return submenu;
-				}());
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Exit",
+                        click: function() {
+                            win.close();
+                        }
+                    }));
+                    return submenu;
+                }());
                 break;
             case "unlocked":
                 submenu = (function() {
-					var submenu = new gui.Menu();
-					submenu.append(new gui.MenuItem({
-						label: "Lock Database",
-						click: function() {
+                    var submenu = new gui.Menu();
+                    submenu.append(new gui.MenuItem({
+                        label: "Lock Database",
+                        click: function() {
                             $('#lockButton').click();
-						}
-					}));
-					submenu.append(new gui.MenuItem({
-						label: "Close Database",
-						click: function() {
+                        }
+                    }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Close Database",
+                        click: function() {
                             $('#lockButton').click();
                             $('.openCancelButton').click();
-						}
-					}));
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Database Settings",
-						click: function() {
-							$('#settingsModal').modal('show');
-						}
-					}));
+                        }
+                    }));
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Database Settings",
+                        click: function() {
+                            $('#settingsModal').modal('show');
+                        }
+                    }));
 
-					if (debug) {
-						submenu.append(new gui.MenuItem({
-							label: "Dev Tools",
-							click: function() {
-								win.showDevTools();
-							}
-						}));
-					}
+                    if (debug) {
+                        submenu.append(new gui.MenuItem({
+                            label: "Dev Tools",
+                            click: function() {
+                                win.showDevTools();
+                            }
+                        }));
+                    }
 
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Exit",
-						click: function() {
-							win.close();
-						}
-					}));
-					return submenu;
-				}());
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Exit",
+                        click: function() {
+                            win.close();
+                        }
+                    }));
+                    return submenu;
+                }());
                 break;
-            case "unloaded":
             default:
-				submenu = (function() {
-					var submenu = new gui.Menu();
-					submenu.append(new gui.MenuItem({
-						label: "Open Database",
-						click: function() {
-							$('#fileInput').click();
-						}
-					}));
-					submenu.append(new gui.MenuItem({
-						label: "New Database",
-						click: function() {
-							$('#newDBModal').modal('show');
-						}
-					}));
+                submenu = (function() {
+                    var submenu = new gui.Menu();
+                    submenu.append(new gui.MenuItem({
+                        label: "Open Database",
+                        click: function() {
+                            $('#fileInput').click();
+                        }
+                    }));
+                    submenu.append(new gui.MenuItem({
+                        label: "New Database",
+                        click: function() {
+                            $('#newDBModal').modal('show');
+                        }
+                    }));
 
-					if (debug) {
-						submenu.append(new gui.MenuItem({ type: 'separator' }));
-						submenu.append(new gui.MenuItem({
-							label: "Dev Tools",
-							click: function() {
-								win.showDevTools();
-							}
-						}));
-					}
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Exit",
-						click: function() {
-							win.close();
-						}
-					}));
-					return submenu;
-				}());
+                    if (debug) {
+                        submenu.append(new gui.MenuItem({ type: 'separator' }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Dev Tools",
+                            click: function() {
+                                win.showDevTools();
+                            }
+                        }));
+                    }
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Exit",
+                        click: function() {
+                            win.close();
+                        }
+                    }));
+                    return submenu;
+                }());
                 break;
         }
-		
-		if (process.platform === "darwin") {
-			menu.insert(new gui.MenuItem({ 
-				label: "File",
-				submenu: submenu
-			}), 1);
-		} else {
-			menu.append(new gui.MenuItem({ 
-				label: "File",
-				submenu: submenu
-			}));
-		}
+        
+        if (process.platform === "darwin") {
+            menu.insert(new gui.MenuItem({ 
+                label: "File",
+                submenu: submenu
+            }), 1);
+        } else {
+            menu.append(new gui.MenuItem({ 
+                label: "File",
+                submenu: submenu
+            }));
+        }
     },
     
-    /*
-     * Create the initial menubar object and link it to the window
+    /**
+     * @name init
+     * @desc Create the initial menubar object and link it to the window. Called on load.
+     * @memberOf WindowMenu
      */
     init = function() {
         if (!isNW) return;
@@ -448,13 +534,13 @@ var windowMenu = (function($scope) {
 
         menu = new gui.Menu({ type: 'menubar' });
 
-		if (process.platform === "darwin") {
+        if (process.platform === "darwin") {
             menu.createMacBuiltin("Primate");
-			menu.insert(new gui.MenuItem({ label: "File" }), 1);
+            menu.insert(new gui.MenuItem({ label: "File" }), 1);
         }
-		
-		gui.Window.get().menu = menu;
-		
+        
+        gui.Window.get().menu = menu;
+        
         setState("unloaded");
     }();
 
