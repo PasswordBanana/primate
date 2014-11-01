@@ -226,6 +226,7 @@ var generatePassword = function(policy, symbols) {
     }
 
     var validChars = "";
+    var totalMinLength = 0;
     var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lowercase = "abcdefghijklmnopqrstuvwxyz";
     var digits = "0123456789";
@@ -234,17 +235,27 @@ var generatePassword = function(policy, symbols) {
     if (checkFlag(policy.flags, "useHexDigits")) {
         validChars += hexDigits;
     } else {
-        if (checkFlag(policy.flags, "useLowercase")) validChars += lowercase;
-        if (checkFlag(policy.flags, "useUppercase")) validChars += uppercase;
-        if (checkFlag(policy.flags, "useDigits")) validChars += digits;
-        if (checkFlag(policy.flags, "useSymbols")) validChars += symbols;
+        if (checkFlag(policy.flags, "useLowercase")) {
+            validChars += lowercase;
+            totalMinLength += policy.minLowercase;
+        }
+        if (checkFlag(policy.flags, "useUppercase")) {
+            validChars += uppercase;
+            totalMinLength += policy.minUppercase;  
+        } 
+        if (checkFlag(policy.flags, "useDigits")) {
+            validChars += digits;
+            totalMinLength += policy.minDigit;
+        }
+        if (checkFlag(policy.flags, "useSymbols")) {
+            validChars += symbols;
+            totalMinLength += policy.minSymbol;
+        }
     }
 
     var pass = "";
-
-    if (policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol > policy.length ||
-        policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol <= 0 ||
-        validChars.length === 0) {
+    if (totalMinLength > policy.length || totalMinLength <= 0 ||
+            validChars.length === 0) {
         alert("Password policy invalid, impossible conditions!");
         return null;
     }
