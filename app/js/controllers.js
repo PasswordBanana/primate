@@ -299,7 +299,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
         updateRecordTree();
         
         //Expand the group so the modal exists
-        getGroup(newRecord.group).expanded = true;
+        expandGroup(newRecord.group);
 
         //Show the edit modal for the new record
         setTimeout(function() {
@@ -373,6 +373,27 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
             }
         }
         return currentNode;
+    };
+
+    /**
+     * expandGroup
+     * @desc Expand all the groups in a fullGroup string
+     * @param {string} fullGroup - '.' delimited string which represents
+     *      a full group branch structure in the $scope.recordTree.
+     * @memberOf Controllers.StateCtrl
+     */
+    var expandGroup = function(fullGroup) {
+        while (fullGroup !== "") {
+            var group = getGroup(fullGroup);
+            group.expanded = true;
+
+            var lastSep = fullGroup.lastIndexOf(".");
+            if (lastSep >= 0) {
+                fullGroup = fullGroup.substring(0, lastSep);
+            } else {
+                fullGroup = "";
+            }
+        }
     };
 
     /**
