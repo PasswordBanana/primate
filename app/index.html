@@ -96,7 +96,7 @@
                             <span class="toolhint3"><i class="icon-data" alt="Group"></i><span>{{(record.group) ? record.group : "No Group"}}</span></span>
                             <a data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]">{{record.title}} {{record.username ? "(" + record.username + ")" : ""}}</a>
                         </div>
-                        <strength-meter data-record-meter-uuid="{{record.uuid}}" value="record.password"></strength-meter><span> | Last Modified: {{record.passphraseModifyTime | date : 'mediumDate'}}</span>
+                        <strength-meter data-record-meter-uuid="{{record.uuid}}" value="record.password"></strength-meter><span> | Last Modified: {{record.passphraseModifyTime | date : 'MMM dd, yyyy'}}</span>
                         <span class="toolhint4"><i class="icon-pen" data-toggle="modal" data-target="[data-record-modal-uuid={{record.uuid}}]" alt="Edit Account"></i><span>Edit here</span></span>
                     </div>
                 </div>
