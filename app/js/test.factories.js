@@ -249,7 +249,7 @@ describe("Unit Testing: Factories -", function() {
             expect(typeof FileState.set).toBe("function");
         });
 
-        xit('should set the state to all valid values', function() {
+        it('should set the state to all valid values', function() {
             expect(FileState.state).toEqual('unloaded');
 
             expect(FileState.set('locked')).toEqual(true);
