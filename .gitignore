@@ -10,6 +10,7 @@ pids
 #Exclude these for now, may be worth committing in the future: http://addyosmani.com/blog/checking-in-front-end-dependencies/
 node_modules
 bower_components
+docs
 
 dist
 cache
