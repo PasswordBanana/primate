@@ -28,8 +28,6 @@ describe("Unit Testing: Controllers -", function() {
 			headers: {}
 		};
 
-		var SHOW_UNFINISHED = false;
-
 		beforeEach(inject(function($controller, $rootScope) {
 			scope = $rootScope.$new();
 			ctrl = $controller('StateCtrl', {
