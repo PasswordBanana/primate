@@ -63,7 +63,9 @@ var policyFlags = {
  * @returns {bool} whether or not the flag (flagName) is set in the flags bitfield/number
  */
 var checkFlag = function(flags, flagName) {
-    return !!(flags & policyFlags[flagName]);
+    if (flags && policyFlags.hasOwnProperty(flagName)) {
+        return !!(flags & policyFlags[flagName]);
+    } return false;
 };
 
 /**
@@ -74,7 +76,9 @@ var checkFlag = function(flags, flagName) {
  * @returns {number} flags with the flagName bits set
  */
 var setFlag = function(flags, flagName) {
-    return flags |= policyFlags[flagName];
+    if (typeof flags === "number" && policyFlags.hasOwnProperty(flagName)) {
+        return flags |= policyFlags[flagName];
+    } return flags;
 };
 
 /**
@@ -85,7 +89,9 @@ var setFlag = function(flags, flagName) {
  * @returns {number} flags with the flagName bits cleared
  */
 var clearFlag = function(flags, flagName) {
-    return flags &= ~policyFlags[flagName];
+    if (typeof flags === "number" && policyFlags.hasOwnProperty(flagName)) {
+        return flags &= ~policyFlags[flagName];
+    } return flags;
 };
 
 /**
@@ -93,10 +99,12 @@ var clearFlag = function(flags, flagName) {
  * @desc Toggle the state of flag bits in a given password policy
  * @param {object} policy - a password policy object
  * @param {string} flagName - a flag name in the GLOBAL.policyFlags object
- * @returns {number} the new number/bitfield with the policies flags toggled
+ * @returns {number} the new number/bitfield with the policies flags toggled, or false.
  */
 var toggleFlag = function(policy, flagName) {
-    return policy.flags ^= policyFlags[flagName];
+    if (policy && typeof policy.flags === "number" && policyFlags.hasOwnProperty(flagName)) {
+        return policy.flags ^= policyFlags[flagName];
+    } return policy;
 };
 
 /**
