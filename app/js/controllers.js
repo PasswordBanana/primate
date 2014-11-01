@@ -303,11 +303,13 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
 
         //Show the edit modal for the new record
         setTimeout(function() {
-            var newRecordElement = document.querySelector("[data-record-modal-uuid='" + newRecord.uuid + "']");
-            var newRecordScope = angular.element(newRecordElement).scope();
-            newRecordScope.$apply();
-            $("*[data-record-modal-uuid=" + newRecord.uuid + "]").modal('show');
-        }, 200);
+            if (newRecord.uuid) {
+                var newRecordElement = document.querySelector("[data-record-modal-uuid='" + newRecord.uuid + "']");
+                var newRecordScope = angular.element(newRecordElement).scope();
+                newRecordScope.$apply();
+                $("*[data-record-modal-uuid=" + newRecord.uuid + "]").modal('show');
+            }
+        }, 400);
     };
 
     /**
