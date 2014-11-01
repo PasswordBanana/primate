@@ -118,7 +118,7 @@ describe("Unit Testing: Factories -", function() {
                 expect(Database.getDb()).not.toBeDefined();
                 done();
             });
-        })
+        });
 
         //save()
 
@@ -195,9 +195,9 @@ describe("Unit Testing: Factories -", function() {
                 }
             }
             Alerts.reset();
-            for (var a in Alerts.alerts) {
-                if (Alerts.alerts.hasOwnProperty(a)) {
-                    expect(Alerts.alerts[a]).toEqual(false);
+            for (var b in Alerts.alerts) {
+                if (Alerts.alerts.hasOwnProperty(b)) {
+                    expect(Alerts.alerts[b]).toEqual(false);
                 }
             }
         });

@@ -222,7 +222,7 @@ describe('Unit Testing: Globals -', function() {
             expect(randomPassword(10, '')).toEqual(null);
             expect(randomPassword(10, null)).toEqual(null);
             expect(randomPassword(10, undefined)).toEqual(null);
-        })
+        });
     });
 
     //countOccurrences()
