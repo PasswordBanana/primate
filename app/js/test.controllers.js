@@ -21,7 +21,7 @@ describe("Unit Testing: Controllers -", function() {
 			],
 			badUUID: [{"uuid":"1234","group":"Important","title":"Google","username":"Fred","notes":"Fred's Gmail account.","password":"zCnc4UaI","passphraseModifyTime":"2014-08-18T13:58:17.000Z","modifyTime":"2014-08-18T13:58:17.000Z","URL":"http://google.com"}],
 			noGroup: [{"uuid":"1d4865d9484b4d144a886260fc6b9d77","group":"","title":"Google","username":"Fred","notes":"Fred's Gmail account.","password":"zCnc4UaI","passphraseModifyTime":"2014-08-18T13:58:17.000Z","modifyTime":"2014-08-18T13:58:17.000Z","URL":"http://google.com"}]
-		}
+		};
 
 		var SHOW_UNFINISHED = false; //[!!TODO!!] Remove
 

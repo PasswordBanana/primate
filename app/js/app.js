@@ -110,7 +110,6 @@ var toggleFlag = function(policy, flagName) {
 var Group = function(groupName, fullGroup, nestingLevel) {
     var name = groupName || "No name";
     var level = nestingLevel;
-    var fullGroup = fullGroup;
     var expanded = false; //TODO: Maintain expanded state
     return {
         name: name,
@@ -183,7 +182,7 @@ var randomPassword = function(len, validChars){
     var str = "",
         charLen = validChars.length;
 
-    if (validChars == null) return null;
+    if (!validChars) return null;
 
     for (var i = 0; i < len; i++) {
         str += validChars.charAt(Math.floor(Math.random() * charLen));
@@ -222,7 +221,7 @@ var generatePassword = function(policy, symbols) {
         policy = new DefaultPolicy();
     }
 
-    if (symbols == "" || symbols == null || symbols == undefined) {
+    if (!symbols) {
         symbols = defaultSymbols;
     }
 
@@ -245,7 +244,7 @@ var generatePassword = function(policy, symbols) {
 
     if (policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol > policy.length ||
         policy.minLowercase + policy.minUppercase + policy.minDigit + policy.minSymbol <= 0 ||
-        validChars.length == 0) {
+        validChars.length === 0) {
         alert("Password policy invalid, impossible conditions!");
         return null;
     }
@@ -265,7 +264,7 @@ var generatePassword = function(policy, symbols) {
  * @desc toggle the new database modal
  */
 var toggleNewDB = function(e) {
-    var e = e || window.event;
+    e = e || window.event;
     e.stopPropagation();
     $("#newDBModal").modal('show');
 };
@@ -438,7 +437,6 @@ var windowMenu = (function($scope) {
 					return submenu;
 				}());
                 break;
-            case "unloaded":
             default:
 				submenu = (function() {
 					var submenu = new gui.Menu();

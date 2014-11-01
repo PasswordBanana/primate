@@ -216,7 +216,7 @@ primate.service("FileState", function() {
         "unloaded",
         "locked",
         "unlocked"
-    ]
+    ];
 
     service = {
         set: set,

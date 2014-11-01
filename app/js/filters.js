@@ -13,7 +13,7 @@
  */
 primate.filter("hash", function() {
     return function(input) {
-        var input = input || "";
+        input = input || "";
         var out = "";
         for (var i = 0, il = input.length; i < il; i++) {
             out += "*";
@@ -32,7 +32,7 @@ primate.filter("hash", function() {
  */
 primate.filter("passwordStrengthScore", function() {
     return function(input) {
-        var input = input || "";
+        input = input || "";
         return zxcvbn(input).score;
     };
 });
@@ -62,7 +62,7 @@ primate.filter("groupIndent", function() {
         if (!group || !group.level) return 0;
         var level = (Math.floor(group.level) >= 1) ? Math.floor(group.level - 1) : 0;
         return 20 * level;
-    }
+    };
 });
 
 /**
@@ -79,5 +79,5 @@ primate.filter("flagValue", function() {
         }
 
         return false;
-    }
+    };
 });

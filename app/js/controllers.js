@@ -27,13 +27,13 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
     $scope.state = FileState.state; //State of the main database ["unloaded", "loaded", "unlocked"]
     $scope.auditMode = false;
     $scope.searchMode = false;
-    $scope.databaseFilename;
-    $scope.records; //Array of all records in the database
-    $scope.headers; //Object containing the database headers
-    $scope.recordTree; //$scope.records organised in a tree, nested by groups
+    $scope.databaseFilename = undefined;
+    $scope.records = undefined; //Array of all records in the database
+    $scope.headers = undefined; //Object containing the database headers
+    $scope.recordTree = undefined; //$scope.records organised in a tree, nested by groups
     $scope.viewing = false; //Is the edit modal visible
-    $scope.pass; //Master password field contents
-    $scope.filePicker; //File input object
+    $scope.pass = undefined; //Master password field contents
+    $scope.filePicker = undefined; //File input object
     $scope.currentFlags = {
         useLowercase: false,
         useUppercase: false,
@@ -239,7 +239,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      */
     $scope.gotoUrl = function(uuid) {
         var url = getRecord(uuid).URL;
-        if (url == null) return;
+        if (!url) return;
         if (isNW) {
             var gui = require('nw.gui');
             gui.Shell.openExternal(url);
@@ -273,8 +273,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
          * http://stackoverflow.com/a/2117523
          * Removed dashes as libpwsafejs/Password Gorilla don't support them (invalid implementation?)
          */
-        var group = group,
-            uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
                 return v.toString(16);
             });
@@ -333,7 +332,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      */
     $scope.addGroup = function(group) {
         var name = window.prompt("Group Name:");
-        if (group == null) {
+        if (!group) {
             this.recordTree[0].subgroups.push(new Group(name, name, 1));
         } else {
             group.subgroups.push(new Group(name, group.fullGroup + "." + name, group.level + 1));
@@ -377,7 +376,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      */
     $scope.genPw = function(record) {
         var newPw = generatePassword(record.passphrasePolicy, record.ownPassphraseSymbols);
-        if (newPw != null) {
+        if (newPw) {
             record.password = newPw;
             updateStrengthMeter(record);
         }
@@ -546,7 +545,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      * @memberOf Controllers.StateCtrl
      */
     $scope.updateNewDBStrengthMeter = function(p) {
-        var p = p || '';
+        p = p || '';
         var strength = zxcvbn(p).score;
         $("#newDBModal strength-meter").html(getStrengthMeter(strength));
     };
@@ -560,7 +559,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      * @memberOf Controllers.StateCtrl 
      */
     $scope.updateNewMasterStrengthMeter = function(p) {
-        var p = p || '';
+        p = p || '';
         var strength = zxcvbn(p).score;
         $("#masterPasswordTab strength-meter").html(getStrengthMeter(strength));
     };
