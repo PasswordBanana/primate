@@ -129,7 +129,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
         var validStates = ["unloaded", "loaded", "unlocked"];
         if (state && validStates.indexOf(state) >= 0) {
             $scope.state = state;
-		    windowMenu.setState(state);
+            windowMenu.setState(state);
         }
     };
 
@@ -481,7 +481,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
     document.addEventListener('focus', function() {
         clearTimeout(idleTimer);
     });
-	
+    
     /**
      * $scope.copyToClipboard
      * @desc copy the given text to the system clipboard.
@@ -489,12 +489,12 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      * @param {string} text - the text to copy
      * @memberOf Controllers.StateCtrl
      */
-	$scope.copyToClipboard = function(text) {
-		if (isNW) {
-			var gui = require('nw.gui');
-			gui.Clipboard.get().set(text, 'text');	
-		}
-	};
+    $scope.copyToClipboard = function(text) {
+        if (isNW) {
+            var gui = require('nw.gui');
+            gui.Clipboard.get().set(text, 'text');  
+        }
+    };
 
     /**
      * $scope.search

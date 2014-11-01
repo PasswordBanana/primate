@@ -7,7 +7,7 @@
 /**
  * @name strengthMeter
  * @desc the strengthMeter directive handles the initial creation
- * 		of a strength meter by setting the HTML markup of the element.
+ *      of a strength meter by setting the HTML markup of the element.
  *
  * @memberOf Directives
  * @namespace strengthMeter

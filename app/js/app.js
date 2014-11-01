@@ -381,144 +381,144 @@ var windowMenu = (function($scope) {
      */
     setState = function(state) {
         if (!isNW) return;
-		
-		if (process.platform === "darwin") {
-			menu.removeAt(1);
-		} else {
+        
+        if (process.platform === "darwin") {
+            menu.removeAt(1);
+        } else {
             clearMenu();
         }
-		
-		var submenu;
+        
+        var submenu;
         switch(state) {
             case "loaded":
-				submenu = (function() {
-					var submenu = new gui.Menu();
-					submenu.append(new gui.MenuItem({
-						label: "Open Database",
-						click: function() {
+                submenu = (function() {
+                    var submenu = new gui.Menu();
+                    submenu.append(new gui.MenuItem({
+                        label: "Open Database",
+                        click: function() {
                             $('.openCancelButton').click();
-							$('#fileInput').click();
-						}
-					}));
-					
-					submenu.append(new gui.MenuItem({
-						label: "Close Database",
-						click: function() {
-							$('.openCancelButton').click();
-						}
-					}));
+                            $('#fileInput').click();
+                        }
+                    }));
+                    
+                    submenu.append(new gui.MenuItem({
+                        label: "Close Database",
+                        click: function() {
+                            $('.openCancelButton').click();
+                        }
+                    }));
 
-					if (debug) {
-						submenu.append(new gui.MenuItem({ type: 'separator' }));
-						submenu.append(new gui.MenuItem({
-							label: "Dev Tools",
-							click: function() {
-								win.showDevTools();
-							}
-						}));
-					}
+                    if (debug) {
+                        submenu.append(new gui.MenuItem({ type: 'separator' }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Dev Tools",
+                            click: function() {
+                                win.showDevTools();
+                            }
+                        }));
+                    }
 
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Exit",
-						click: function() {
-							win.close();
-						}
-					}));
-					return submenu;
-				}());
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Exit",
+                        click: function() {
+                            win.close();
+                        }
+                    }));
+                    return submenu;
+                }());
                 break;
             case "unlocked":
                 submenu = (function() {
-					var submenu = new gui.Menu();
-					submenu.append(new gui.MenuItem({
-						label: "Lock Database",
-						click: function() {
+                    var submenu = new gui.Menu();
+                    submenu.append(new gui.MenuItem({
+                        label: "Lock Database",
+                        click: function() {
                             $('#lockButton').click();
-						}
-					}));
-					submenu.append(new gui.MenuItem({
-						label: "Close Database",
-						click: function() {
+                        }
+                    }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Close Database",
+                        click: function() {
                             $('#lockButton').click();
                             $('.openCancelButton').click();
-						}
-					}));
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Database Settings",
-						click: function() {
-							$('#settingsModal').modal('show');
-						}
-					}));
+                        }
+                    }));
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Database Settings",
+                        click: function() {
+                            $('#settingsModal').modal('show');
+                        }
+                    }));
 
-					if (debug) {
-						submenu.append(new gui.MenuItem({
-							label: "Dev Tools",
-							click: function() {
-								win.showDevTools();
-							}
-						}));
-					}
+                    if (debug) {
+                        submenu.append(new gui.MenuItem({
+                            label: "Dev Tools",
+                            click: function() {
+                                win.showDevTools();
+                            }
+                        }));
+                    }
 
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Exit",
-						click: function() {
-							win.close();
-						}
-					}));
-					return submenu;
-				}());
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Exit",
+                        click: function() {
+                            win.close();
+                        }
+                    }));
+                    return submenu;
+                }());
                 break;
             default:
-				submenu = (function() {
-					var submenu = new gui.Menu();
-					submenu.append(new gui.MenuItem({
-						label: "Open Database",
-						click: function() {
-							$('#fileInput').click();
-						}
-					}));
-					submenu.append(new gui.MenuItem({
-						label: "New Database",
-						click: function() {
-							$('#newDBModal').modal('show');
-						}
-					}));
+                submenu = (function() {
+                    var submenu = new gui.Menu();
+                    submenu.append(new gui.MenuItem({
+                        label: "Open Database",
+                        click: function() {
+                            $('#fileInput').click();
+                        }
+                    }));
+                    submenu.append(new gui.MenuItem({
+                        label: "New Database",
+                        click: function() {
+                            $('#newDBModal').modal('show');
+                        }
+                    }));
 
-					if (debug) {
-						submenu.append(new gui.MenuItem({ type: 'separator' }));
-						submenu.append(new gui.MenuItem({
-							label: "Dev Tools",
-							click: function() {
-								win.showDevTools();
-							}
-						}));
-					}
-					submenu.append(new gui.MenuItem({ type: 'separator' }));
-					submenu.append(new gui.MenuItem({
-						label: "Exit",
-						click: function() {
-							win.close();
-						}
-					}));
-					return submenu;
-				}());
+                    if (debug) {
+                        submenu.append(new gui.MenuItem({ type: 'separator' }));
+                        submenu.append(new gui.MenuItem({
+                            label: "Dev Tools",
+                            click: function() {
+                                win.showDevTools();
+                            }
+                        }));
+                    }
+                    submenu.append(new gui.MenuItem({ type: 'separator' }));
+                    submenu.append(new gui.MenuItem({
+                        label: "Exit",
+                        click: function() {
+                            win.close();
+                        }
+                    }));
+                    return submenu;
+                }());
                 break;
         }
-		
-		if (process.platform === "darwin") {
-			menu.insert(new gui.MenuItem({ 
-				label: "File",
-				submenu: submenu
-			}), 1);
-		} else {
-			menu.append(new gui.MenuItem({ 
-				label: "File",
-				submenu: submenu
-			}));
-		}
+        
+        if (process.platform === "darwin") {
+            menu.insert(new gui.MenuItem({ 
+                label: "File",
+                submenu: submenu
+            }), 1);
+        } else {
+            menu.append(new gui.MenuItem({ 
+                label: "File",
+                submenu: submenu
+            }));
+        }
     },
     
     /**
@@ -534,13 +534,13 @@ var windowMenu = (function($scope) {
 
         menu = new gui.Menu({ type: 'menubar' });
 
-		if (process.platform === "darwin") {
+        if (process.platform === "darwin") {
             menu.createMacBuiltin("Primate");
-			menu.insert(new gui.MenuItem({ label: "File" }), 1);
+            menu.insert(new gui.MenuItem({ label: "File" }), 1);
         }
-		
-		gui.Window.get().menu = menu;
-		
+        
+        gui.Window.get().menu = menu;
+        
         setState("unloaded");
     }();
 
