@@ -25,7 +25,7 @@ primate.service("Database", ["$q", function($q) {
     },
 
     file,
-    name = "There is no database loaded",
+    name = "No database loaded",
     db,
     pass;
 
@@ -49,8 +49,12 @@ primate.service("Database", ["$q", function($q) {
      * @memberOf Factories.Database
      */
     function setFile(f) {
-        file = f;
-        name = f.name;
+        if (f && typeof f === "object") {
+            file = f;
+            name = f.name || "untitled";
+            return true;
+        } 
+        return false;
     }
 
     /**
@@ -63,6 +67,8 @@ primate.service("Database", ["$q", function($q) {
     function unlock(p) {
         var deferred = $q.defer();
         var reader = new FileReader();
+
+        if (!file) deferred.reject(Error.message);
 
         reader.onloadend = function(event) {
             PWSafeDB.prototype.decrypt(reader.result, p, {}, function(pdb) {
@@ -110,6 +116,7 @@ primate.service("Database", ["$q", function($q) {
      * @memberOf Factories.Database
      */
     function setPass(oldPass, newPass) {
+        if (typeof newPass !== "string") return false;
         if (oldPass === pass) {
             pass = newPass;
         } else {
@@ -125,7 +132,9 @@ primate.service("Database", ["$q", function($q) {
      * @memberOf Factories.Database
      */
     function setName(newName) {
+        if (!newName || typeof newName !== "string") return false;
         name = newName;
+        return true;
     }
 
     /**
@@ -230,11 +239,12 @@ primate.service("FileState", function() {
      * @memberOf Factories.FileState
      */
     function set(stateName) {
-        if (states.indexOf(stateName) >= 0) {
+        if (stateName && states.indexOf(stateName) >= 0) {
             state = stateName;
-        } 
+            return true;
+        }
+        return false;
     }
 
     return service;
 });
-/** */

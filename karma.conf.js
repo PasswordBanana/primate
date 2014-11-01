@@ -36,7 +36,8 @@ module.exports = function(config) {
       'app/bower_components/zxcvbn/zxcvbn.js',
       'app/bower_components/fuse.js/src/fuse.js',
       'app/bower_components/file-saver/FileSaver.js',
-      'app/**/test.*.js'
+      'app/**/test.*.js',
+      {pattern: 'app/*.psafe3', watched: false, included: false, served: true}
     ],
 
 
