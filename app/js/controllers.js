@@ -126,8 +126,11 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      * @memberOf Controllers.StateCtrl
      */
     $scope.setState = function(state) {
-        $scope.state = state;
-		windowMenu.setState(state);
+        var validStates = ["unloaded", "loaded", "unlocked"];
+        if (state && validStates.indexOf(state) >= 0) {
+            $scope.state = state;
+		    windowMenu.setState(state);
+        }
     };
 
     /**
@@ -201,11 +204,13 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
      * @memberOf Controllers.StateCtrl
      */
     $scope.lockDb = function() {
-        db.lock();
-        clearVars();
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-        $scope.setState("loaded");
+        if ($scope.state === "unlocked") {
+            db.lock();
+            clearVars();
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            $scope.setState("loaded");
+        }
     };
 
     /**

@@ -23,7 +23,12 @@ describe("Unit Testing: Controllers -", function() {
 			noGroup: [{"uuid":"1d4865d9484b4d144a886260fc6b9d77","group":"","title":"Google","username":"Fred","notes":"Fred's Gmail account.","password":"zCnc4UaI","passphraseModifyTime":"2014-08-18T13:58:17.000Z","modifyTime":"2014-08-18T13:58:17.000Z","URL":"http://google.com"}]
 		};
 
-		var SHOW_UNFINISHED = false; //[!!TODO!!] Remove
+		var mockDb = {
+			records: mockRecords.valid,
+			headers: {}
+		};
+
+		var SHOW_UNFINISHED = false;
 
 		beforeEach(inject(function($controller, $rootScope) {
 			scope = $rootScope.$new();
@@ -36,222 +41,242 @@ describe("Unit Testing: Controllers -", function() {
 			expect(scope.state).toEqual("unloaded");
 		});
 
-		//getRecordIndex()
-		it('getRecordIndex() should return -1 for a uuid that doesn\'t exist', function() {
-			//UUID = null
-			//undefined
-			//corrupt
-			//valid but non-existing
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
-
-		it('getRecordIndex() should return the valid index for records with uuids that do exist', function() {
-			//first record
-			//third record
-			//last record
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
-
-		//getRecord()
-		it('getRecord() should return null for records that don\'t exist', function() {
-			//null
-			//undefined
-			//corrupt
-			//valid non-existing
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
-
-		it('getRecord() should return a valid corresponding record for uuid\'s that exist', function() {
-			//first record
-			//third record
-			//last record
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
-
 		//$scope.fileChanged()
 		it('$scope.fileChanged()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.fileChanged).toBeDefined();
 		});
 
 		//$scope.open()
 		it('$scope.open()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.open).toBeDefined();
 		});
 
 		//$scope.setState()
-		it('$scope.setState()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.setState() should set $scope.state if the provided state is valid', function() {
+			expect(scope.setState).toBeDefined();
+
+			scope.setState("unloaded");
+			expect(scope.state).toEqual("unloaded");
+
+			scope.setState("loaded");
+			expect(scope.state).toEqual("loaded");
+
+			scope.setState("unlocked");
+			expect(scope.state).toEqual("unlocked");
+		});
+
+		it('$scope.setState() should not change anything if the provided state is invalid', function() {
+			scope.setState("unloaded");
+			expect(scope.state).toEqual("unloaded");
+
+			scope.setState();
+			expect(scope.state).toEqual("unloaded");
+
+			scope.setState(null);
+			expect(scope.state).toEqual("unloaded");
+
+			scope.setState("");
+			expect(scope.state).toEqual("unloaded");
+
+			scope.setState("unloade");
+			expect(scope.state).toEqual("unloaded");
+
+			scope.setState(-22);
+			expect(scope.state).toEqual("unloaded");
 		});
 
 		//$scope.newDb()
 		it('$scope.newDb()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
-
-		//updateRecordTree()
-		it('updateRecordTree()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.newDb).toBeDefined();
 		});
 
 		//$scope.setRecords()
-		it('$scope.setRecords()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
+		it('$scope.setRecords() should set $scope.records when provided with a database', function() {
+			expect(scope.setRecords).toBeDefined();
 
-		//clearVars()
-		it('clearVars()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.records).not.toBeDefined();
+			scope.setRecords(mockDb);
+			expect(scope.records).toEqual(mockRecords.valid);
 		});
 
 		//$scope.lockDb()
-		it('$scope.lockDb()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.lockDb() should lock the database if a file is unlocked', function() {
+			expect(scope.lockDb).toBeDefined();
+
+			scope.setState("unlocked");
+			scope.lockDb();
+			expect(scope.state).toEqual("loaded");
+		});
+
+		it('$scope.lockDb() should do nothing the database if a file is not unlocked', function() {
+			scope.setState("unloaded");
+			scope.lockDb();
+			expect(scope.state).toEqual("unloaded");
+
+			scope.setState("loaded");
+			scope.lockDb();
+			expect(scope.state).toEqual("loaded");
 		});
 
 		//$scope.saveDb()
 		it('$scope.saveDb()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.saveDb).toBeDefined();
 		});
 
 		//$scope.closeDb()
-		it('$scope.closeDb()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.closeDb() should go to an unloaded state', function() {
+			expect(scope.closeDb).toBeDefined();
+
+			scope.setState("loaded");
+			scope.closeDb();
+			expect(scope.state).toEqual("unloaded");
 		});
 
 		//$scope.gotoUrl()
 		it('$scope.gotoUrl()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.gotoUrl).toBeDefined();
 		});
 
 		//$scope.enableCustomPolicy()
-		it('$scope.enableCustomPolicy()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.enableCustomPolicy() should set the default policy on a given record', function() {
+			expect(scope.enableCustomPolicy).toBeDefined();
+
+			var record = {
+				passphrasePolicy: undefined
+			};
+
+			scope.enableCustomPolicy(record);
+
+			expect(record.passphrasePolicy).toBeDefined();
+			expect(record.passphrasePolicy).toEqual(new DefaultPolicy());
 		});
 
 		//$scope.addRecord()
 		it('$scope.addRecord()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.addRecord).toBeDefined();
 		});
 
 		//$scope.deleteRecord()
 		it('$scope.deleteRecord()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.deleteRecord).toBeDefined();
 		});
 
 		//$scope.addGroup()
 		it('$scope.addGroup()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
-
-		//getGroup()
-		it('getGroup()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.addGroup).toBeDefined();
 		});
 
 		//$scope.genPw()
-		it('$scope.genPw()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.genPw() should generate a password in a given record', function() {
+			expect(scope.genPw).toBeDefined();
+
+			var record = {};
+			scope.genPw(record);
+
+			expect(record.password).toBeDefined();
+			expect(typeof record.password).toEqual("string");
+			expect(record.password.length).toBeGreaterThan(0);
 		});
 
 		//$scope.toggleRecordFlag()
-		it('$scope.toggleRecordFlag()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.toggleRecordFlag() should toggle a flag on a given record', function() {
+			expect(scope.toggleRecordFlag).toBeDefined();
+			var record = {
+				passphrasePolicy: {
+					flags: 0x0000
+				}
+			};
+
+			scope.toggleRecordFlag(record, "useLowercase");
+			expect(record.passphrasePolicy.flags).toEqual(policyFlags["useLowercase"]);
+
+			scope.toggleRecordFlag(record, "useLowercase");
+			expect(record.passphrasePolicy.flags).toEqual(0x0000);
 		});
 
 		//$scope.changeMasterPassword()
 		it('$scope.changeMasterPassword()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.changeMasterPassword).toBeDefined();
 		});
 
 		//$scope.removePolicy()
-		it('$scope.removePolicy()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
+		it('$scope.removePolicy() should remove a password policy from a record', function() {
+			expect(scope.removePolicy).toBeDefined();
 
-		//idleTimeout()
-		it('idleTimeout()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			var record = {
+				passphrasePolicy: {
+					flags: 0x0000
+				}
+			};
+
+			scope.removePolicy(record);
+
+			expect(record.passphrasePolicy).not.toBeDefined();			
 		});
 
 		//$scope.copyToClipboard()
 		it('$scope.copyToClipboard()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.copyToClipboard).toBeDefined();
 		});
 
 		//$scope.search()
 		it('$scope.search()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.search).toBeDefined();
 		});
 
 		//$scope.auditValue()
-		it('$scope.auditValue()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
+		it('$scope.auditValue() should return an audit value for a given record', function() {
+			expect(scope.auditValue).toBeDefined();
 
-		//getStrengthMeter()
-		it('getStrengthMeter()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
-		});
+			var record1 = mockRecords.valid[0];
+			record1.passphraseModifyTime = new Date(record1.passphraseModifyTime);
+			var val1 = scope.auditValue(record1);
+			expect(val1).toEqual(51);
 
-		//updateStrengthMeter()
-		it('updateStrengthMeter()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			var record2 = mockRecords.valid[1];
+			record2.passphraseModifyTime = new Date(record2.passphraseModifyTime);
+			var val2 = scope.auditValue(record2);
+			expect(val2).toEqual(52);
+
+			var record3 = mockRecords.valid[2];
+			record3.passphraseModifyTime = new Date(record3.passphraseModifyTime);
+			var val3 = scope.auditValue(record3);
+			expect(val3).toEqual(0);
 		});
 
 		//$scope.updateNewDBStrengthMeter()
 		it('$scope.updateNewDBStrengthMeter()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.updateNewDBStrengthMeter).toBeDefined();
 		});
 
 		//$scope.updateNewMasterStrengthMeter()
 		it('$scope.updateNewMasterStrengthMeter()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.updateNewMasterStrengthMeter).toBeDefined();
 		});
 
 		//$scope.changed()
 		it('$scope.changed()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+			expect(scope.changed).toBeDefined();
 		});
 
 		//$scope.startAudit()
-		it('$scope.startAudit()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.startAudit() to enable audit mode', function() {
+			expect(scope.startAudit).toBeDefined();
+
+			expect(scope.auditMode).toEqual(false);
+			scope.startAudit();
+			expect(scope.auditMode).toEqual(true);
 		});
 
 		//$scope.stopAudit()
-		it('$scope.stopAudit()', function() {
-			//[!!TODO!!]
-			expect(SHOW_UNFINISHED).toBe(false);
+		it('$scope.stopAudit() to disable audit mode', function() {
+			expect(scope.stopAudit).toBeDefined();
+
+			expect(scope.auditMode).toEqual(false);
+			scope.startAudit();
+			expect(scope.auditMode).toEqual(true);
+			scope.stopAudit();
+			expect(scope.auditMode).toEqual(false);
 		});
 	});
 });

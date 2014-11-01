@@ -92,6 +92,7 @@ primate.service("Database", ["$q", function($q) {
      * @memberOf Factories.Database
      */
     function lock() {
+        if (!db) return;
         file = db.getBlob(pass);
         db = undefined;
         pass = undefined;
