@@ -132,7 +132,7 @@ var Group = function(groupName, fullGroup, nestingLevel) {
 /**
  * @name groupIndex
  * @desc get the index of a groupName in an array
- * @param {array} arr - an array of strings
+ * @param {array} arr - an array of Group objects
  * @param {string} groupName - the string to search for
  *
  * @return {number} the index of the groupName, or -1 if it's not found.
@@ -187,10 +187,10 @@ var generateRecordTree = (function(records) {
  * @returns {string} the generated random password
  */
 var randomPassword = function(len, validChars){
+    if (!validChars) return null;
+
     var str = "",
         charLen = validChars.length;
-
-    if (!validChars) return null;
 
     for (var i = 0; i < len; i++) {
         str += validChars.charAt(Math.floor(Math.random() * charLen));
@@ -206,6 +206,10 @@ var randomPassword = function(len, validChars){
  * @returns {number} the count of characters in charset that occur in pass.
  */
 var countOccurrences = function(charset, pass) {
+    if (charset === null || pass === null || 
+            typeof charset !== "string" || typeof pass !== "string") {
+        return false;
+    }
     var count = 0;
     for (var i = 0, il = pass.length; i < il; i++) {
         if (charset.indexOf(pass[i]) !== -1) {
