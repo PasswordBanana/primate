@@ -229,7 +229,7 @@ var countOccurrences = function(charset, pass) {
  */
 var generatePassword = function(policy, symbols) {
 
-    if (policy === undefined) {
+    if (!policy) {
         policy = new DefaultPolicy();
     }
 
@@ -244,24 +244,35 @@ var generatePassword = function(policy, symbols) {
     var digits = "0123456789";
     var hexDigits = "0123456789ABCDEF";
 
+    var gen = {
+        lowercase: 0,
+        uppercase: 0,
+        digit: 0,
+        symbol: 0
+    };
+
     if (checkFlag(policy.flags, "useHexDigits")) {
         validChars += hexDigits;
     } else {
         if (checkFlag(policy.flags, "useLowercase")) {
             validChars += lowercase;
             totalMinLength += policy.minLowercase;
+            gen.lowercase = policy.minLowercase;
         }
         if (checkFlag(policy.flags, "useUppercase")) {
             validChars += uppercase;
             totalMinLength += policy.minUppercase;  
+            gen.uppercase = policy.minUppercase;
         } 
         if (checkFlag(policy.flags, "useDigits")) {
             validChars += digits;
             totalMinLength += policy.minDigit;
+            gen.digit = policy.minDigit;
         }
         if (checkFlag(policy.flags, "useSymbols")) {
             validChars += symbols;
             totalMinLength += policy.minSymbol;
+            gen.symbol = policy.minSymbol;
         }
     }
 
@@ -274,10 +285,10 @@ var generatePassword = function(policy, symbols) {
 
     do {
         pass = randomPassword(policy.length, validChars);
-    } while (countOccurrences(lowercase, pass) < policy.minLowercase ||
-             countOccurrences(uppercase, pass) < policy.minUppercase ||
-             countOccurrences(digits, pass) < policy.minDigit ||
-             countOccurrences(symbols, pass) < policy.minSymbol);
+    } while (countOccurrences(lowercase, pass) < gen.lowercase ||
+             countOccurrences(uppercase, pass) < gen.uppercase ||
+             countOccurrences(digits, pass) < gen.digit ||
+             countOccurrences(symbols, pass) < gen.symbol);
 
     return pass;
 };

@@ -253,6 +253,50 @@ describe("Unit Testing: Globals -", function() {
 		it("exists", function() {
 			expect(generatePassword).toBeDefined();
 		});
+
+		it('generates a valid password for a given policy', function() {
+			var pw = generatePassword();
+			expect(typeof pw).toEqual("string");
+			expect(pw.length).toEqual(12);
+			expect(countOccurrences("abcdefghijklmnopqrstuvwxyz", pw)).toBeGreaterThan(0);
+			expect(countOccurrences("ABCDEFGHIJKLMNOPQRSTUVWXYZ", pw)).toBeGreaterThan(0);
+			expect(countOccurrences("0123456789", pw)).toBeGreaterThan(0);
+			expect(countOccurrences("+-=_@#$%^&<>/~\\?!|()", pw)).toBeGreaterThan(0);
+
+			//Lowercase only, length 5
+			var pw2policy = {
+				flags: 0x8000,
+				length: 5,
+				minLowercase: 1,
+				minUppercase: 1,
+				minDigit: 1,
+				minSymbol: 1
+			};
+			var pw2 = generatePassword(pw2policy);
+			expect(typeof pw2).toEqual("string");
+			expect(pw2.length).toEqual(5);
+			expect(countOccurrences("abcdefghijklmnopqrstuvwxyz", pw2)).toEqual(5);
+			expect(countOccurrences("ABCDEFGHIJKLMNOPQRSTUVWXYZ", pw2)).toEqual(0);
+			expect(countOccurrences("0123456789", pw2)).toEqual(0);
+			expect(countOccurrences("+-=_@#$%^&<>/~\\?!|()", pw2)).toEqual(0);
+
+			//Digits & Symbols, more minLowercase than length
+			var pw3policy = {
+				flags: 0x3000,
+				length: 8,
+				minLowercase: 9,
+				minUppercase: 1,
+				minDigit: 3,
+				minSymbol: 5
+			};
+			var pw3 = generatePassword(pw3policy);
+			expect(typeof pw3).toEqual("string");
+			expect(pw3.length).toEqual(8);
+			expect(countOccurrences("abcdefghijklmnopqrstuvwxyz", pw3)).toEqual(0);
+			expect(countOccurrences("ABCDEFGHIJKLMNOPQRSTUVWXYZ", pw3)).toEqual(0);
+			expect(countOccurrences("0123456789", pw3)).toBeGreaterThan(2);
+			expect(countOccurrences("+-=_@#$%^&<>/~\\?!|()", pw3)).toBeGreaterThan(4);
+		});
 	});
 
 	//toggleNewDB()
