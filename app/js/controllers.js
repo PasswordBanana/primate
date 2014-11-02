@@ -343,7 +343,9 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
         if (!group) {
             this.recordTree[0].subgroups.push(new Group(name, name, 1));
         } else {
-            group.subgroups.push(new Group(name, group.fullGroup + "." + name, group.level + 1));
+            var newFullGroup = [group.fullGroup, name].join(".");
+            group.subgroups.push(new Group(name, newFullGroup, group.level + 1));
+            expandGroup(newFullGroup);
         }
     };
 
