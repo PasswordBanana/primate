@@ -1,10 +1,11 @@
 {
   "name": "Primate",
-  "version": "0.1.0",
+  "version": "0.7.0",
   "main": "index.html",
   "window": {
 	"toolbar": false,
 	"width": 1280,
-	"height": 720
+	"height": 720,
+	"icon": "img/icon.png"
   }
 }

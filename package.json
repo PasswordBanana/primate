@@ -1,6 +1,6 @@
 {
   "name": "primate",
-  "version": "0.0.1",
+  "version": "0.7.0",
   "devDependencies": {
     "bower": "",
     "grunt": "^0.4.5",
