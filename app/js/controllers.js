@@ -297,6 +297,7 @@ primate.controller("StateCtrl", ["$scope", "Database", "$http", "$q", "Alerts", 
         var newRecord = new Record();
         $scope.records.push(newRecord);
         updateRecordTree();
+        $scope.changed(newRecord);
         
         //Expand the group so the modal exists
         expandGroup(newRecord.group);
