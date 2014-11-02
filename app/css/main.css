@@ -40,7 +40,7 @@ body {
     color: red;
 }
 
-i:hover, i:active {
+i:hover, i:active, .record a:hover, .record a:active {
     cursor: pointer;
 }
 
@@ -215,15 +215,6 @@ header > span:hover, header > span:active {
 .rootGroup > div {
     flex: 1;
     text-align: right;
-}
-
-
-.group:hover, .record:hover {
-    /*cursor: grab;*/
-}
-
-.group:active, .record:active {
-    /*cursor: grabbing;*/
 }
 
 .record > :first-child {

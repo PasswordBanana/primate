@@ -118,7 +118,7 @@ var toggleFlag = function(policy, flagName) {
 var Group = function(groupName, fullGroup, nestingLevel) {
     var name = groupName || "No name";
     var level = nestingLevel;
-    var expanded = false; //TODO: Maintain expanded state
+    var expanded = false;
     return {
         name: name,
         level: level,
